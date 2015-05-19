@@ -47,6 +47,8 @@
 			}
 		}
 
+    (в Debian 8 строка `include fastcgi_params;` должна выглядеть как `include fastcgi.conf;`)
+
 3. Веб-сервер должен уметь писать в следующие директории:
      * /www/assets
      * /www/i/book
