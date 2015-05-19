@@ -60,7 +60,15 @@
         sudo -u postgres createdb -O notabenoid notabenoid
         psql -U notabenoid < init.sql
 
-5. Настало время охуительных конфигов! В /protected/config/main.php найдите строки
+5. Отключаем E_NOTICE в `/etc/php5/fpm/php.ini`, переменная `error_reporting`. То есть если там была строка
+
+		error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT
+
+	то дописываем `& ~E_NOTICE`:
+
+		error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE
+
+6. Настало время охуительных конфигов! В /protected/config/main.php найдите строки
 
 		"connectionString" => "pgsql:host=localhost;dbname=notabenoid",
 		"username" => "notabenoid",
@@ -78,7 +86,7 @@
 	адреса, которые будут стоять в поле "From" всякого спама, который рассылает сайт. Аналогичный трюк надобно
 	провести с файлом `/protected/config/console.php`
 
-6. В крон прописываем:
+7. В крон прописываем:
 
 		0 0 * * * /usr/bin/php /srv/notabenoid.com/protected/yiic maintain midnight
 		0 4 * * * /usr/bin/php /srv/notabenoid.com/protected/yiic maintain dailyfixes
@@ -86,7 +94,7 @@
 	и последнюю команду (`/usr/bin/php /srv/notabenoid.com/protected/yiic maintain dailyfixes`) непременно
 	исполняем сами.
 
-7. Теперь, по идее, вся эта херня должна взлететь. Зарегистрируйте первого пользователя и пропишите его
+8. Теперь, по идее, вся эта херня должна взлететь. Зарегистрируйте первого пользователя и пропишите его
    логин в группах со спецправами в переменной `private static $roles` в файле `/protected/components/WebUser.php`.
    Полагаю, также будет мудро несколько подправить основной шаблон (`/protected/views/layouts/v3.php`) и морду
    (`/protected/views/site/index.php`).
