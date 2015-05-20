@@ -1,11 +1,11 @@
 <?php
-	Yii::app()->clientScript
-		->registerScriptFile("/js/jquery.scrollTo.js")
-		->registerScriptFile("/js/jquery.elastic.mod.js")
-		->registerScriptFile("/js/ff_comments.js?3")
-		->registerScriptFile("/js/blog.js");
+    Yii::app()->clientScript
+        ->registerScriptFile('/js/jquery.scrollTo.js')
+        ->registerScriptFile('/js/jquery.elastic.mod.js')
+        ->registerScriptFile('/js/ff_comments.js?3')
+        ->registerScriptFile('/js/blog.js');
 
-	$this->pageTitle = $post->title . ": блог перевода " . $book->fullTitle;
+    $this->pageTitle = $post->title.': блог перевода '.$book->fullTitle;
 ?>
 
 <script type='text/javascript'>
@@ -16,40 +16,42 @@
 
 <ul class='nav nav-tabs'>
 	<li><a href='<?=$book->url; ?>/'>оглавление</a></li>
-	<li><a href='<?=$book->getUrl("members"); ?>'>переводчики</a></li>
-	<li class='active'><a href='<?=$book->getUrl("blog"); ?>'>блог</a></li>
-	<li><a href='<?=$book->getUrl("announces"); ?>'>анонсы</a></li>
+	<li><a href='<?=$book->getUrl('members'); ?>'>переводчики</a></li>
+	<li class='active'><a href='<?=$book->getUrl('blog'); ?>'>блог</a></li>
+	<li><a href='<?=$book->getUrl('announces'); ?>'>анонсы</a></li>
 </ul>
 
 <?php
-	$this->renderPartial("//blog/_post", array("post" => $post, "placement" => "post", "has" => array("bookLink" => false)));
+    $this->renderPartial('//blog/_post', array('post' => $post, 'placement' => 'post', 'has' => array('bookLink' => false)));
 ?>
 
 <a name="Comments"></a><h2>Комментарии</h2>
 <div class='comments'>
 	<?php
-		$view = Yii::app()->user->ini["t.iface"] == 1 ? "//blog/_comment-1" : "//blog/_comment";
-		$prev_indent = $indent = 0;
-		foreach($comments as $comment) {
-			$comment->post = $post;
+        $view = Yii::app()->user->ini['t.iface'] == 1 ? '//blog/_comment-1' : '//blog/_comment';
+        $prev_indent = $indent = 0;
+        foreach ($comments as $comment) {
+            $comment->post = $post;
 
-			$indent = count($comment->mp);
-			$j = $indent - $prev_indent;
+            $indent = count($comment->mp);
+            $j = $indent - $prev_indent;
 
-			if($j <= 0) echo str_repeat("</div>", -$j + 1);
-			echo "<div class='thread'>";
+            if ($j <= 0) {
+                echo str_repeat('</div>', -$j + 1);
+            }
+            echo "<div class='thread'>";
 
-			$this->renderPartial($view, array("comment" => $comment));
+            $this->renderPartial($view, array('comment' => $comment));
 
-			$prev_indent = $indent;
-		}
-		echo str_repeat("</div>", $indent);
-	?>
+            $prev_indent = $indent;
+        }
+        echo str_repeat('</div>', $indent);
+    ?>
 
-	<?php if(!Yii::app()->user->isGuest && $book->can("blog_c")): ?>
+	<?php if (!Yii::app()->user->isGuest && $book->can('blog_c')): ?>
 	<div class="thread thread-form">
 		<div class="comment">
-			<form method="post" class="reply" action="<?=$post->getUrl("c0/reply"); ?>">
+			<form method="post" class="reply" action="<?=$post->getUrl('c0/reply'); ?>">
 				<div>
 					<textarea name="Comment[body]"></textarea>
 				</div>

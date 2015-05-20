@@ -13,7 +13,7 @@
 	<input type="hidden" name="go" value="1" />
 	<button type="submit" class="btn btn-large btn-danger"><i class="icon-fire icon-white"></i> Большая Красная Кнопка</button>
 	<br /><br />
-	<?php if(Yii::app()->user->can("geek")): ?>
+	<?php if (Yii::app()->user->can('geek')): ?>
     	<input type="checkbox" name="full" value="1" id="cb-full"/>
 		<label for="cb-full">
 			 Также пересчитать рейтинги, количество комментариев, количество переводов каждого фрагмента

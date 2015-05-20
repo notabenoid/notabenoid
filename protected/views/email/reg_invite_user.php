@@ -1,6 +1,6 @@
 <?php
 /**
- * @var RegInvite $invite
+ * @var RegInvite
  */
 ?>
 <p>Добрый день!</p>
@@ -14,7 +14,7 @@
 <p>
 	<a href='<?=$invite->urlAccept; ?>'><?=$invite->urlAccept; ?></a>
 </p>
-<?php if($invite->message != ""): ?>
+<?php if ($invite->message != ''): ?>
 	<p>
 		Кстати, <?=$invite->sender->login; ?> просил передать вам следующее:<br>
 		<?=nl2br(htmlspecialchars($invite->message)); ?>

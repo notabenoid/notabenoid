@@ -1,5 +1,5 @@
 <?php
-	$this->pageTitle = "Модерация: структура каталога";
+    $this->pageTitle = 'Модерация: структура каталога';
 ?>
 <style type="text/css">
 	#Tree div.n {padding:1px 4px}
@@ -81,7 +81,7 @@
 	$(T.init);
 </script>
 
-<?php $this->renderPartial("_header"); ?>
+<?php $this->renderPartial('_header'); ?>
 
 <h1>Каталог</h1>
 
@@ -89,25 +89,29 @@
 	<div class="span8">
 		<ul id="Tree">
 			<li>
-				<div id="n0" class="n<?=!$edit_node->id ? " current" : ""; ?>">
+				<div id="n0" class="n<?=!$edit_node->id ? ' current' : ''; ?>">
 					<a href="/moderator/catalog">Каталог</a>
 				</div>
 				<?php
-				$prev_indent = 0;
-				foreach($categories as $cat) {
-					$indent = count($cat->mp);
+                $prev_indent = 0;
+                foreach ($categories as $cat) {
+                    $indent = count($cat->mp);
 
-					if($indent > $prev_indent) {
-						echo "\n<ul>\n";
-					} else {
-						echo str_repeat("</li>\n</ul>\n", $prev_indent - $indent) . "</li>\n";
-					}
-					echo "<li>";
+                    if ($indent > $prev_indent) {
+                        echo "\n<ul>\n";
+                    } else {
+                        echo str_repeat("</li>\n</ul>\n", $prev_indent - $indent)."</li>\n";
+                    }
+                    echo '<li>';
 
-					echo "<div id='n{$cat->id}' class='n" . ($cat->id == $edit_node->id ? " current" : "") . "'>";
-					echo "<a href='?edit={$cat->id}' class='t'>{$cat->title}</a>";
-					if(!$cat->available) echo " (x)";
-					if($cat->booksCount > 0) echo " ({$cat->booksCount})";
+                    echo "<div id='n{$cat->id}' class='n".($cat->id == $edit_node->id ? ' current' : '')."'>";
+                    echo "<a href='?edit={$cat->id}' class='t'>{$cat->title}</a>";
+                    if (!$cat->available) {
+                        echo ' (x)';
+                    }
+                    if ($cat->booksCount > 0) {
+                        echo " ({$cat->booksCount})";
+                    }
 
 //					echo " <span style='color:#2b6'>[";
 //					echo join(",", $cat->path_id);
@@ -115,31 +119,32 @@
 //					echo join(",", $cat->path_title);
 //					echo "]</span>";
 
-					echo "</div>";
+                    echo '</div>';
 
-					$prev_indent = $indent;
-				}
-				echo str_repeat("</li>\n</ul>\n", $indent);
-				?>
+                    $prev_indent = $indent;
+                }
+                echo str_repeat("</li>\n</ul>\n", $indent);
+                ?>
 			</li>
 		</ul>
 	</div>
 
 	<div class="span4">
-		<?php if($edit_node->id) { ?>
+		<?php if ($edit_node->id) {
+    ?>
 		<?php
-			/** @var TbActiveForm $form */
-			$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-				"id" => "edit",
-				"type" => "vertical",
-				"inlineErrors" => false,
-				"action" => "/moderator/catedit/id/{$edit_node->id}",
-			));
+            /** @var TbActiveForm $form */
+            $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+                'id' => 'edit',
+                'type' => 'vertical',
+                'inlineErrors' => false,
+                'action' => "/moderator/catedit/id/{$edit_node->id}",
+            ));
 
-			echo "<h3>Свойства раздела</h3>";
-			echo $form->textFieldRow($edit_node, "title", array("placeholder" => "Название", "class" => "span3"));
-			echo $form->checkBoxRow($edit_node, "available");
-		?>
+    echo '<h3>Свойства раздела</h3>';
+    echo $form->textFieldRow($edit_node, 'title', array('placeholder' => 'Название', 'class' => 'span3'));
+    echo $form->checkBoxRow($edit_node, 'available');
+    ?>
 		<div style='margin-bottom:5px'>
 			<input type='submit' value='Сохранить' class='btn btn-success' />
 			<input type='button' value='Удалить' class='btn btn-danger' onclick='if(confirm("Удалить раздел?")) $("#remove").submit()' />
@@ -147,15 +152,19 @@
 			<input type='button' value='Поменять местами' class='btn' onclick="T.sel2_start('#swap')" />
 			<input type='button' value='Переместить' class='btn' onclick="T.sel2_start('#chpid')" />
 		</div>
-		<?php $this->endWidget(); ?>
+		<?php $this->endWidget();
+    ?>
 
 		<p>
-			<a href="<?=$cat->url; ?>">В каталоге &rarr;</a>
+			<a href="<?=$cat->url;
+    ?>">В каталоге &rarr;</a>
 		</p>
 
-		<form method='post' action='/moderator/catremove/id/<?=$edit_node->id; ?>' id="remove"></form>
+		<form method='post' action='/moderator/catremove/id/<?=$edit_node->id;
+    ?>' id="remove"></form>
 
-		<form method="post" action="/moderator/catswap/id/<?=$edit_node->id; ?>" id="swap">
+		<form method="post" action="/moderator/catswap/id/<?=$edit_node->id;
+    ?>" id="swap">
 			<p>
 				Выберите раздел, с которым нужно поменять текущий местами. Учтите, что он должен иметь такой же уровень вложенности.
 				Подразделы будут перенесены соответственно.
@@ -164,7 +173,8 @@
 			<input type="button" value="Отмена" class="btn" onclick="T.sel2_cancel()" />
 		</form>
 
-		<form method="post" action="/moderator/chpid/id/<?=$edit_node->id; ?>" id="chpid">
+		<form method="post" action="/moderator/chpid/id/<?=$edit_node->id;
+    ?>" id="chpid">
 			<p>
 				Выберите раздел, с которым станет новым "родительским" разделом для выбранного.
 			</p>
@@ -172,22 +182,23 @@
 			<input type="button" value="Отмена" class="btn" onclick="T.sel2_cancel()" />
 		</form>
 
-		<?php } ?>
+		<?php 
+} ?>
 
 		<h3>Создать подраздел</h3>
 		<?php
-			/** @var TbActiveForm $form */
-			$kitten = new Category();
-			$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-				"id" => "kitten",
-				"type" => "vertical",
-				"inlineErrors" => false,
-				"action" => "/moderator/kitten/pid/{$edit_node->id}",
-			));
+            /** @var TbActiveForm $form */
+            $kitten = new Category();
+            $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+                'id' => 'kitten',
+                'type' => 'vertical',
+                'inlineErrors' => false,
+                'action' => "/moderator/kitten/pid/{$edit_node->id}",
+            ));
 
-			echo $form->textFieldRow($kitten, "title", array("placeholder" => "Название", "class" => "span3"));
-			echo $form->checkBoxRow($kitten, "available");
-		?>
+            echo $form->textFieldRow($kitten, 'title', array('placeholder' => 'Название', 'class' => 'span3'));
+            echo $form->checkBoxRow($kitten, 'available');
+        ?>
 		<div>
 			<input type='submit' value='Создать подраздел' class='btn' />
 		</div>

@@ -29,7 +29,7 @@ Please contact <?php echo $data['admin']; ?> to report this problem.
 Thank you.
 </p>
 <div class="version">
-<?php echo date('Y-m-d H:i:s',$data['time']) .' '. $data['version']; ?>
+<?php echo date('Y-m-d H:i:s', $data['time']).' '.$data['version']; ?>
 </div>
 </body>
 </html>

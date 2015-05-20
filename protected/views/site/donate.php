@@ -1,5 +1,5 @@
 <?php
-	$this->pageTitle = "Сделать пожертвование на развитие сайта";
+    $this->pageTitle = 'Сделать пожертвование на развитие сайта';
 ?>
 <style type="text/css">
 	ul.a li {margin:10px 0;}

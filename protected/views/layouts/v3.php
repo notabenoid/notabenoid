@@ -1,10 +1,14 @@
 <?php
-function bold_if_nonzero($t) {
-	if($t != 0) return " <b>({$t})</b>";
-	else return " <b></b>";
+function bold_if_nonzero($t)
+{
+    if ($t != 0) {
+        return " <b>({$t})</b>";
+    } else {
+        return ' <b></b>';
+    }
 }
 
-$containerClass = $this->layoutOptions["fluid"] ? "container-fluid" : "container";
+$containerClass = $this->layoutOptions['fluid'] ? 'container-fluid' : 'container';
 
 Yii::app()->bootstrap->registerModal();
 ?>
@@ -12,7 +16,7 @@ Yii::app()->bootstrap->registerModal();
 <html lang="ru"><head>
 	<meta charset="utf-8" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title><?php echo $this->pageTitle != "" ? ($this->pageTitle . " :: ") : ""; ?><?=Yii::app()->name; ?></title>
+	<title><?php echo $this->pageTitle != '' ? ($this->pageTitle.' :: ') : ''; ?><?=Yii::app()->name; ?></title>
 	<meta name="description" content="Коллективные переводы субтитров и книжек" />
 	<meta name="language" content="ru" />
 	<meta name="keywords" content="перевод, translation, коллективный перевод, кино с субтитрами, кино по-английски с русскими субтитрами, кино по-немецки с русскими субтитрами, кино по-испански с русскими субтитрами, примеры перевода, краудсорсинг, crowdsourcing, нотабеноид" />
@@ -37,7 +41,7 @@ Yii::app()->bootstrap->registerModal();
 
 <header>
 <div class="<?=$containerClass; ?>" style="background-color:#fff;">
-	<a href="/" id="header-logo"><img src="/i/logo-v3.gif" width="124" height="130" alt="<?=CHtml::encode(Yii::app()->name); ?>" title="<?=p()["version"]; ?>" /></a>
+	<a href="/" id="header-logo"><img src="/i/logo-v3.gif" width="124" height="130" alt="<?=CHtml::encode(Yii::app()->name); ?>" title="<?=p()['version']; ?>" /></a>
 
 	<nav>
 	<ul id="header-menu">
@@ -50,8 +54,8 @@ Yii::app()->bootstrap->registerModal();
 		<li class="search">
 			<form class="form-search" method="get" action="/search">
 				<?php
-					$a = array("Вы что-то потеряли?", "Ищете что-нибудь?", "Поиск переводов", "Ищите и обрящете");
-				?>
+                    $a = array('Вы что-то потеряли?', 'Ищете что-нибудь?', 'Поиск переводов', 'Ищите и обрящете');
+                ?>
 				<input type="hidden" name="from" value="header">
 				<input type="text" name="t" class="input-medium search-query span3" placeholder="<?=$a[rand(0, count($a) - 1)]; ?>" title="Кстати, отсюда можно найти и переводчика, если собаку (@), а потом сразу его ник."/>
 				<input type="submit" value="&raquo;" class="btn" style="border-radius: 20px;" />
@@ -60,7 +64,7 @@ Yii::app()->bootstrap->registerModal();
 	</ul>
 
 	<ul id="header-submenu">
-	<?php if(Yii::app()->user->isGuest): ?>
+	<?php if (Yii::app()->user->isGuest): ?>
 		<li id="header-login">
 			<form method="post" action="/" class="form-inline btn-toolbar">
 				<input type="text" name="login[login]" placeholder="Логин" class="span1" />
@@ -91,9 +95,9 @@ Yii::app()->bootstrap->registerModal();
 
 
 <?php
-if(!Yii::app()->user->isGuest):
-	Yii::app()->bootstrap->registerButton();
-	?>
+if (!Yii::app()->user->isGuest):
+    Yii::app()->bootstrap->registerButton();
+    ?>
 <div id="bookmarks" class="modal hide">
     <div class="modal-header" style='padding-bottom:0;'>
         <a class="close" data-dismiss="modal">×</a>
@@ -112,7 +116,7 @@ if(!Yii::app()->user->isGuest):
                 <button class="btn btn-mini" data-v="s" title="Показывать названия на языке оригинала">О</button>
                 <button class="btn btn-mini" data-v="t" title="Показывать названия на языке перевода">П</button>
             </div>
-			<?php if(0): // @todo ?>
+			<?php if (0): // @todo ?>
             <div class="btn-group" id="bookmarks-tb-status">
                 <button class="btn btn-mini" data-toggle="button" title="Только те, где я - модератор"><i class="icon-briefcase"></i></button>
             </div>
@@ -144,8 +148,8 @@ if(!Yii::app()->user->isGuest):
 
 <div class="<?=$containerClass; ?>">
 <?php
-	$this->widget('bootstrap.widgets.TbAlert');
-	echo $content;
+    $this->widget('bootstrap.widgets.TbAlert');
+    echo $content;
 ?>
 </div>
 
@@ -154,14 +158,14 @@ if(!Yii::app()->user->isGuest):
 <footer>
     <div class="<?=$containerClass; ?>"><div class="row">
         <div class="span6">
-            &copy; <a href="http://romakhin.ru/" rel="nofollow">Дмитрий Ромахин</a> 2008&ndash;<?php echo date("Y"); ?>
+            &copy; <a href="http://romakhin.ru/" rel="nofollow">Дмитрий Ромахин</a> 2008&ndash;<?php echo date('Y'); ?>
             <br />
             <a href="/site/help">Справка</a> |
             <a href="/blog?topic=65">Техподдержка</a> |
 			<a href="/site/donate" style="color:#5d7b02;">Сказать &laquo;спасибо!&raquo;</a> |
 
-            <a href="mailto:abuse@<?=p()["domain"]; ?>?subj=<?=urlencode($_SERVER["REQUEST_URI"]); ?>">Abuse</a> |
-            <a href="mailto:<?=p()["adminEmail"]; ?>">E-mail для справок</a> |
+            <a href="mailto:abuse@<?=p()['domain']; ?>?subj=<?=urlencode($_SERVER['REQUEST_URI']); ?>">Abuse</a> |
+            <a href="mailto:<?=p()['adminEmail']; ?>">E-mail для справок</a> |
 			<a href="#" onclick="return Chat.toggle()" title="Ctrl + ~">Чат</a>
         </div>
         <div class="span4 sape">

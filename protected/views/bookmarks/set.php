@@ -1,11 +1,11 @@
 <?php
-	/**
-	 * @var Bookmark $bm
- 	 */
+/**
+ * @var Bookmark
+ */
 ?>
 <div class="modal-header" style='padding-bottom:0;'>
 	<a class="close" data-dismiss="modal">×</a>
-	<h3><?=$bm->isNewRecord ? "Поставить закладку" : "Закладка"; ?></h3>
+	<h3><?=$bm->isNewRecord ? 'Поставить закладку' : 'Закладка'; ?></h3>
 </div>
 <div class="modal-body">
 	<form method="post" action="/my/bookmarks/set">
@@ -17,12 +17,14 @@
 		</div>
 		<div class="control-group">
 			<label class="checkbox">
-				<input type="checkbox" name="watch" value="1" <?php if($bm->watch) echo "checked"; ?> /> Оповещать меня об изменении статуса перевода и добавлении новых глав
+				<input type="checkbox" name="watch" value="1" <?php if ($bm->watch) {
+    echo 'checked';
+} ?> /> Оповещать меня об изменении статуса перевода и добавлении новых глав
 			</label>
 		</div>
 		<div class="control-group">
 			<button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Сохранить</button>
-			<?php if(!$bm->isNewRecord): ?><button type="button" class="btn btn-danger" onclick="if(confirm('Серьёзно?')) $('#bookmark-set-form-rm').submit()"><i class="icon-ban-circle icon-white"></i> Удалить</button><?php endif; ?>
+			<?php if (!$bm->isNewRecord): ?><button type="button" class="btn btn-danger" onclick="if(confirm('Серьёзно?')) $('#bookmark-set-form-rm').submit()"><i class="icon-ban-circle icon-white"></i> Удалить</button><?php endif; ?>
 			<button type="button" class="btn" data-dismiss="modal"><i class="icon-remove"></i> Отмена</button>
 		</div>
 	</form>

@@ -1,6 +1,6 @@
 <p class="info">
-	<?=$result["msg"]; ?>
+	<?=$result['msg']; ?>
 </p>
 <p>
-	<a href="<?=$_SERVER["HTTP_REFERER"]; ?>">назад</a>
+	<a href="<?=$_SERVER['HTTP_REFERER']; ?>">назад</a>
 </p>

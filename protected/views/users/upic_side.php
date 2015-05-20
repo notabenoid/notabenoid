@@ -1,29 +1,28 @@
 <?php
-	/**
-	 * @var User $user
-	 * @var String $img
-	 * @var int $img_w
-	 * @var int $img_h
-	 */
+    /**
+     * @var User
+     * @var String
+     * @var int
+     * @var int
+     */
+    $Img = $_SESSION['upicEditor']['img'];
 
-	$Img = $_SESSION["upicEditor"]["img"];
-
-	if($Img["w"] < $Img["h"]) {
-		$ini_x = 0;
-		$ini_w = $ini_h = $Img["w"];
-		$ini_y = (int) (($Img["h"] - $ini_w) / 2);
-	} else {
-		$ini_y = 0;
-		$ini_h = $ini_w = $Img["h"];
-		$ini_x = (int) (($Img["w"] - $ini_h) / 2);
-	}
+    if ($Img['w'] < $Img['h']) {
+        $ini_x = 0;
+        $ini_w = $ini_h = $Img['w'];
+        $ini_y = (int) (($Img['h'] - $ini_w) / 2);
+    } else {
+        $ini_y = 0;
+        $ini_h = $ini_w = $Img['h'];
+        $ini_x = (int) (($Img['w'] - $ini_h) / 2);
+    }
 
 ?>
 <div class="tools">
 	<h5>Что получится</h5>
 
 	<div id="preview">
-        <img src="/i/tmp/upiccut/<?=$Img["name"]; ?>" width="<?=$Img["w"]; ?>" height="<?=$Img["h"]; ?>" alt="" />
+        <img src="/i/tmp/upiccut/<?=$Img['name']; ?>" width="<?=$Img['w']; ?>" height="<?=$Img['h']; ?>" alt="" />
 	</div>
 
     <form method="post" id="cropData">

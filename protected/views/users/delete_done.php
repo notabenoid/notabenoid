@@ -1,5 +1,5 @@
 <?php
-	$this->pageTitle = ":("
+    $this->pageTitle = ':('
 ?>
 <h1>Кот в депрессии</h1>
 <p>

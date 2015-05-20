@@ -1,7 +1,7 @@
 <?php
-	Yii::app()->clientScript->registerScriptFile("/js/jquery.scrollTo.js")->registerScriptFile("/js/blog.js");
+    Yii::app()->clientScript->registerScriptFile('/js/jquery.scrollTo.js')->registerScriptFile('/js/blog.js');
 
-	$this->pageTitle = "Блог";
+    $this->pageTitle = 'Блог';
 ?>
 <style type="text/css">
 .moder-topic { cursor: pointer; }
@@ -12,31 +12,33 @@
 
 <div id="Lenta">
 <?php
-	$has = array(
-		"mytalks" => true,
-	);
-	$user = Yii::app()->user;
-	if($user->can("blog_topic_moderate")) $has["extra"] = "<i class='moder-topic icon-chevron-down i'></i></a>";
+    $has = array(
+        'mytalks' => true,
+    );
+    $user = Yii::app()->user;
+    if ($user->can('blog_topic_moderate')) {
+        $has['extra'] = "<i class='moder-topic icon-chevron-down i'></i></a>";
+    }
 
-	foreach($lenta->getData() as $post) {
-		$has["edit"] = $post->user_id == $user->id || $user->can("blog_moderate");
-		$this->renderPartial("_post", array("post" => $post, "placement" => "index", "has" => $has));
-	}
+    foreach ($lenta->getData() as $post) {
+        $has['edit'] = $post->user_id == $user->id || $user->can('blog_moderate');
+        $this->renderPartial('_post', array('post' => $post, 'placement' => 'index', 'has' => $has));
+    }
 ?>
 </div>
 
 <?php
-	$this->widget('bootstrap.widgets.TbPager', array('pages' => $lenta->pagination));
+    $this->widget('bootstrap.widgets.TbPager', array('pages' => $lenta->pagination));
 
-	if($user->can("blog_topic_moderate")):
+    if ($user->can('blog_topic_moderate')):
 ?>
 <div id="moder-topic-menu">
 	<ul>
 		<?php
-			foreach(Yii::app()->params["blog_topics"]["common"] as $k => $v) {
-				echo "<li><a href='#' rel='{$k}'>{$v}</a></li>";
-			}
-		?>
+            foreach (Yii::app()->params['blog_topics']['common'] as $k => $v) {
+                echo "<li><a href='#' rel='{$k}'>{$v}</a></li>";
+            }
+        ?>
 	</ul>
 </div>
 <script type="text/javascript">

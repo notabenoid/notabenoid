@@ -1,8 +1,8 @@
 <?php
 /**
- * @var Comment $comment
- * @var Comment $parent
- * @var Orig $orig
+ * @var Comment
+ * @var Comment
+ * @var Orig
  */
 ?>
 <style type='text/css'>
@@ -11,12 +11,12 @@
     address {}
     blockquote {}
 </style>
-<base href="http://<?=Yii::app()->params["domain"]; ?>" />
+<base href="http://<?=Yii::app()->params['domain']; ?>" />
 <body>
 <p>Добрый день!</p>
 <p>
 	<?=$comment->author->ahref; ?> ответил<?=$comment->author->sexy(); ?> на ваш комментарий в переводе
-    &laquo;<a href="<?=$orig->url; ?>"><?php echo $orig->chap->book->fullTitle . ": " . $orig->chap->title; ?></a>&raquo;:<br />
+    &laquo;<a href="<?=$orig->url; ?>"><?php echo $orig->chap->book->fullTitle.': '.$orig->chap->title; ?></a>&raquo;:<br />
 </p>
 <p style="margin-left:10px;">
 	<?=nl2br($orig->body); ?>
@@ -34,10 +34,10 @@
 
 <address style="margin-top:20px; border-top:1px solid gray; width:200px;">
     С уважением,<br />
-	<a href='http://<?=Yii::app()->params["domain"]; ?>/'><?=Yii::app()->name; ?></a>
+	<a href='http://<?=Yii::app()->params['domain']; ?>/'><?=Yii::app()->name; ?></a>
 </address>
 
 <p style="color:#777; font-style:italic; font-size:11px;">
     P. S. Это письмо написано искусственным интеллектом, отвечать на него не надо. Вы можете отключить почтовые уведомления на странице
-    <a href="http://<?=Yii::app()->params["domain"]; ?>/register/settings">настроек сайта</a>.
+    <a href="http://<?=Yii::app()->params['domain']; ?>/register/settings">настроек сайта</a>.
 </p>

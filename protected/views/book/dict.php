@@ -1,12 +1,13 @@
 <?php
-/**
- * @var Dict[] $dict
- * @var Book $book
- * @var boolean $ajax
- */
-
-	$this->pageTitle = $book->fullTitle . " - словарь";
-	if(!$ajax) $book->registerJS();
+    /**
+     * @var Dict[]
+     * @var Book
+     * @var bool
+     */
+    $this->pageTitle = $book->fullTitle.' - словарь';
+    if (!$ajax) {
+        $book->registerJS();
+    }
 ?>
 <style type="text/css">
 #Dict dd {
@@ -152,11 +153,11 @@ var Dict = {
 $(Dict.init);
 </script>
 
-<?php if(!$ajax): ?>
+<?php if (!$ajax): ?>
 <ul class='nav nav-tabs'>
 	<li><a href='<?=$book->url; ?>/'>оглавление</a></li>
-	<li><a href='<?=$book->url("members"); ?>'>переводчики</a></li>
-	<li><a href='<?=$book->url("blog"); ?>'>блог</a></li>
+	<li><a href='<?=$book->url('members'); ?>'>переводчики</a></li>
+	<li><a href='<?=$book->url('blog'); ?>'>блог</a></li>
 </ul>
 
 <h1><?=$book->fullTitle; ?> - словарь</h1>
@@ -166,27 +167,33 @@ $(Dict.init);
 	<input type="text" id="dict-search-input" placeholder="Поиск по словарю..." />
 </form>
 
-<?php if(count($dict) == 0): ?>
+<?php if (count($dict) == 0): ?>
 	<p>Словарь этого перевода пуст.</p>
 <?php endif; ?>
 
 <?php
-	if($book->can("dict_edit")) echo "<form method='post' action='" . $book->getUrl("dict_edit") . "' id='dict-ed-form'>";
-	echo "<dl id='Dict'>";
-	foreach($dict as $d) {
-		echo "<dt rel='{$d->id}'>{$d->term}";
-		if($book->can("dict_edit")) echo " <a href='#' class='e'><i class='icon-edit'></i></a>";
-		echo "</dt>";
-		echo "<dd>{$d->descr}</dd>";
-	}
-	echo "</dl>";
-	if($book->can("dict_edit")) echo "</form>";
+    if ($book->can('dict_edit')) {
+        echo "<form method='post' action='".$book->getUrl('dict_edit')."' id='dict-ed-form'>";
+    }
+    echo "<dl id='Dict'>";
+    foreach ($dict as $d) {
+        echo "<dt rel='{$d->id}'>{$d->term}";
+        if ($book->can('dict_edit')) {
+            echo " <a href='#' class='e'><i class='icon-edit'></i></a>";
+        }
+        echo '</dt>';
+        echo "<dd>{$d->descr}</dd>";
+    }
+    echo '</dl>';
+    if ($book->can('dict_edit')) {
+        echo '</form>';
+    }
 ?>
 
-<?php if($book->can("dict_edit")): ?>
+<?php if ($book->can('dict_edit')): ?>
 <p id="dict-tools">
 	<a href="#" onclick="return Dict.ed(0)" class="btn btn-small"><i class="icon-plus-sign"></i> Добавить слово</a>
-	<?php if(!$ajax): ?>
+	<?php if (!$ajax): ?>
 		<a href="<?=$book->getUrl(); ?>" class="btn btn-small"><i class="icon-list"></i> К оглавлению</a>
 	<?php endif; ?>
 </p>

@@ -29,14 +29,14 @@
 <noindex>
 <div id="board">
 	<?php
-		$limit_words = 50;
-		$words = Yii::app()->db->createCommand("SELECT * FROM moving ORDER BY cdate DESC LIMIT {$limit_words}")->queryAll();
-		foreach($words as $n => $word) {
-			$op = ($limit_words - $n) / $limit_words;
-			$color = "rgba(" . substr($word["color"], 1, -1) . ", {$op})";
-			echo "<p style='top: {$word["y"]}px; left: {$word["x"]}px; color:{$color}'>{$word["t"]}</p>";
-		}
-	?>
+        $limit_words = 50;
+        $words = Yii::app()->db->createCommand("SELECT * FROM moving ORDER BY cdate DESC LIMIT {$limit_words}")->queryAll();
+        foreach ($words as $n => $word) {
+            $op = ($limit_words - $n) / $limit_words;
+            $color = 'rgba('.substr($word['color'], 1, -1).", {$op})";
+            echo "<p style='top: {$word['y']}px; left: {$word['x']}px; color:{$color}'>{$word['t']}</p>";
+        }
+    ?>
 	<form id="write" method="post" class="form-inline">
 		<input type="hidden" name="x" /><input type="hidden" name="y" />
 		<input type="text" name="t" class="t" maxlength="120" placeholder="Выскажитесь, не держите в себе." />

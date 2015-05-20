@@ -3,7 +3,7 @@
 	address {margin-top:20px; border-top:1px solid gray; width:200px;}
 	blockquote {border-left:2px solid #777; padding:10px 0px 10px 10px;}
 </style>
-<base href="http://<?=Yii::app()->params["domain"]; ?>" />
+<base href="http://<?=Yii::app()->params['domain']; ?>" />
 <body>
 <p>Добрый день, <?=$user->login; ?>!</p>
 <p>
@@ -11,7 +11,7 @@
 </p>
 <address>
 	С уважением,<br /.>
-	<a href='http://<?=Yii::app()->params["domain"]; ?>/'><?=Yii::app()->name; ?></a>
+	<a href='http://<?=Yii::app()->params['domain']; ?>/'><?=Yii::app()->name; ?></a>
 </address>
 
 <p class='note'>

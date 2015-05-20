@@ -26,13 +26,13 @@
 	Вход только для членов клуба.
 </p>
 <?php
-foreach(Yii::app()->user->getFlashes() as $key => $message) {
-	echo "<p class='flash {$key}'>{$message}</div>";
+foreach (Yii::app()->user->getFlashes() as $key => $message) {
+    echo "<p class='flash {$key}'>{$message}</div>";
 }
 ?>
 <form method="post" action="/">
 	<input type="text" name="login[login]" placeholder="Логин" class="form-control" autofocus
-		   value="<?=CHtml::encode(isset($_POST["login"]["login"]) ? $_POST["login"]["login"] : Yii::app()->user->getState("loginAs")); ?>"><br>
+		   value="<?=CHtml::encode(isset($_POST['login']['login']) ? $_POST['login']['login'] : Yii::app()->user->getState('loginAs')); ?>"><br>
 	<input type="password" name="login[pass]" placeholder="Пароль" class="form-control"><br>
 	<a href="/register/remind">забыли?</a>
 	<button type="submit" class="btn btn-success"><i class="icon icon-ok-circle icon-white"></i></button>

@@ -7,12 +7,12 @@
 <body>
 <p>Добрый день!</p>
 <p>
-	Ура, вы зарегистрировались на сайте <a href='http://<?=Yii::app()->params["domain"]; ?>/'><?=Yii::app()->name; ?></a>!
+	Ура, вы зарегистрировались на сайте <a href='http://<?=Yii::app()->params['domain']; ?>/'><?=Yii::app()->name; ?></a>!
 	На всякий случай, ваш логин - <b><?=$user->login; ?></b>.
 </p>
 <address>
 	С уважением,<br /.>
-	<a href='http://<?=Yii::app()->params["domain"]; ?>/'><?=Yii::app()->name; ?></a>
+	<a href='http://<?=Yii::app()->params['domain']; ?>/'><?=Yii::app()->name; ?></a>
 </address>
 
 <p class='note'>P. S. Это письмо написано искусственным интеллектом, отвечать на него не надо.</p>

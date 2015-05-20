@@ -1,5 +1,5 @@
 <?php
-	$this->pageTitle = "Огорчить котика";
+    $this->pageTitle = 'Огорчить котика';
 ?>
 <style type="text/css">
 #sadcat { display: block; margin: 15px auto; }

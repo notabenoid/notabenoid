@@ -1,7 +1,7 @@
 <?php
 /**
- * @var Bookmark[] $bookmarks
- * @var char $typ
+ * @var Bookmark[]
+ * @var char
  */
 ?>
 <style type="text/css">
@@ -89,22 +89,24 @@ $(E.init);
 <h1>Мои закладки</h1>
 <ul class='nav nav-pills'>
 <?php
-	foreach(Yii::app()->params["bookmark_types"] as $k => $v) {
-		if($k == "*") continue;
-		echo "<li" . ($k == $typ ? " class='active'" : "") . "><a href='?typ={$k}'>{$v}</a></li>";
-	}
+    foreach (Yii::app()->params['bookmark_types'] as $k => $v) {
+        if ($k == '*') {
+            continue;
+        }
+        echo '<li'.($k == $typ ? " class='active'" : '')."><a href='?typ={$k}'>{$v}</a></li>";
+    }
 ?>
 </ul>
 
 <ul id="BMList">
 	<?php
-	foreach($bookmarks as $bm) {
-		echo "<li id='b_{$bm->id}'>";
-		echo "<a href='{$bm->url}'>{$bm->title}</a> ";
-		echo "<a href='#' class='e' onclick='return E.ed({$bm->id})'><i class='icon-edit'></i></a> ";
-		echo "</li>";
-	}
-	?>
+    foreach ($bookmarks as $bm) {
+        echo "<li id='b_{$bm->id}'>";
+        echo "<a href='{$bm->url}'>{$bm->title}</a> ";
+        echo "<a href='#' class='e' onclick='return E.ed({$bm->id})'><i class='icon-edit'></i></a> ";
+        echo '</li>';
+    }
+    ?>
 </ul>
 
 <form method="post" action="/my/bookmarks_remove" id="form-rm"><input type="hidden" name="id" /></form>

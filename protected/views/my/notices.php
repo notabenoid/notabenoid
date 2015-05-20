@@ -1,13 +1,12 @@
 <?php
-	/**
-	 * @var CActiveDataProvider $notices_dp
-	 * @var Notice[] $notices
-	 * @var boolean $ajax
-	 */
-
-	$this->pageTitle = "Оповещения";
+    /**
+     * @var CActiveDataProvider
+     * @var Notice[]
+     * @var bool
+     */
+    $this->pageTitle = 'Оповещения';
 ?>
-<?php if(!$ajax): ?>
+<?php if (!$ajax): ?>
 <style type="text/css">
 #Notices {margin:0; padding:0; list-style: none;}
 #Notices li {
@@ -70,28 +69,32 @@ $(N.init);
 <h1>Оповещения</h1>
 <?php endif; ?>
 
-<?php if(!$ajax && $notices_dp->totalItemCount == 0): ?>
+<?php if (!$ajax && $notices_dp->totalItemCount == 0): ?>
 <div class="alert alert-info">
 	У вас нет оповещений.
 </div>
 <?php else: ?>
 
 <?php
-	$notices = $notices_dp->getData();
+    $notices = $notices_dp->getData();
 
-	if(!$ajax) $this->widget('bootstrap.widgets.TbPager', array("pages" => $notices_dp->pagination, "header" => "<div class='pagination' style='margin-bottom:0'>"));
+    if (!$ajax) {
+        $this->widget('bootstrap.widgets.TbPager', array('pages' => $notices_dp->pagination, 'header' => "<div class='pagination' style='margin-bottom:0'>"));
+    }
 
-	echo "<ul id='Notices'>";
-	foreach($notices as $notice) {
-		echo "<li" . ($notice->seen ? "" : " class='new'") . " id='n{$notice->id}'>";
-		echo "<p>" . $notice->render() . "</p>";
-		echo "<div class='u'><a href='#' class='rm'><i class='icon-remove'></i></a></div>";
-		echo "<p class='meta'>" . Yii::app()->dateFormatter->formatDateTime($notice->cdate, "medium", "medium") . "</p>";
-		echo "</li>";
-	}
-	echo "</ul>";
+    echo "<ul id='Notices'>";
+    foreach ($notices as $notice) {
+        echo '<li'.($notice->seen ? '' : " class='new'")." id='n{$notice->id}'>";
+        echo '<p>'.$notice->render().'</p>';
+        echo "<div class='u'><a href='#' class='rm'><i class='icon-remove'></i></a></div>";
+        echo "<p class='meta'>".Yii::app()->dateFormatter->formatDateTime($notice->cdate, 'medium', 'medium').'</p>';
+        echo '</li>';
+    }
+    echo '</ul>';
 
-	if(!$ajax) $this->widget('bootstrap.widgets.TbPager', array("pages" => $notices_dp->pagination, "header" => "<div class='pagination' style='margin-bottom:0'>"));
+    if (!$ajax) {
+        $this->widget('bootstrap.widgets.TbPager', array('pages' => $notices_dp->pagination, 'header' => "<div class='pagination' style='margin-bottom:0'>"));
+    }
 ?>
 
 

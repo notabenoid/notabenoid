@@ -1,7 +1,7 @@
 <?php
 /**
- * @var RegisterController $this
- * @var User $user
+ * @var RegisterController
+ * @var User
  */
 ?>
 <h1>Введите новый пароль</h1>

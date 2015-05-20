@@ -1,5 +1,5 @@
 <?php
-	$this->pageTitle = "Как пользоваться сайтом";
+    $this->pageTitle = 'Как пользоваться сайтом';
 ?>
 <style type="text/css" xmlns="http://www.w3.org/1999/html">
     span.note {border-bottom: 1px dotted #aaa;}

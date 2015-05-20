@@ -1,22 +1,22 @@
 <?php
 /**
- * @var UsersController $this
- * @var User $user
- * @var RegInvite $invite
- * @var RegInvite[] $sent
+ * @var UsersController
+ * @var User
+ * @var RegInvite
+ * @var RegInvite[]
  */
-$this->pageTitle = "Приглашения";
-$this->renderPartial("profile_head", array("user" => $user, "h1" => "приглашения"));
+$this->pageTitle = 'Приглашения';
+$this->renderPartial('profile_head', array('user' => $user, 'h1' => 'приглашения'));
 ?>
 <style type="text/css">
 	 .invite-who { display: none; }
 </style>
 
-<?php if($user->n_invites == 0): ?>
+<?php if ($user->n_invites == 0): ?>
 	<p>У вас нет приглашений.</p>
 <?php else: ?>
 <p>
-	Вы можете пригласить в наш клуб ещё <?=Yii::t("app", "{n} человека|{n} человек|{n} человек", $user->n_invites); ?>.
+	Вы можете пригласить в наш клуб ещё <?=Yii::t('app', '{n} человека|{n} человек|{n} человек', $user->n_invites); ?>.
 </p>
 <form method="post" class="form-horizontal" id="invite-send">
 	<h4>Кого вы хотите пригласить?</h4>
@@ -24,21 +24,21 @@ $this->renderPartial("profile_head", array("user" => $user, "h1" => "пригл�
 	<?=CHtml::errorSummary($invite, '<div class="alert alert-box alert-danger">', '</div>'); ?>
 
 	<label class="radio">
-		<input type="radio" name="invite[type]" value="user" <?=$invite->type == "user" ? "checked" : ""; ?>>
+		<input type="radio" name="invite[type]" value="user" <?=$invite->type == 'user' ? 'checked' : ''; ?>>
 		Уже зарегистрированного на Нотабеноиде, но пока неактивного пользователя
 	</label>
 	<label class="radio">
-		<input type="radio" name="invite[type]" value="new" <?=$invite->type == "new" ? "checked" : ""; ?>>
+		<input type="radio" name="invite[type]" value="new" <?=$invite->type == 'new' ? 'checked' : ''; ?>>
 		Нового переводчика
 	</label>
 
-	<div id="invite-send-more" <?=$invite->type == "" ? "style='display:none;'" : ""; ?>>
+	<div id="invite-send-more" <?=$invite->type == '' ? "style='display:none;'" : ''; ?>>
 		<p>
 			<span class="invite-who invite-who-user">Логин:</span>
 			<span class="invite-who invite-who-new">E-mail:</span>
 			<input type="text" name="invite[clue]" value="<?=CHtml::encode($invite->clue); ?>">
 
-			<?php if(Yii::app()->user->can("admin")): ?>
+			<?php if (Yii::app()->user->can('admin')): ?>
 			<span class="invite-who invite-who-user">
 				Отсыпать инвайтов:
 				<input type="text" class="span1" name="invite[giveInvites]" value="<?=CHtml::encode($invite->giveInvites); ?>">
@@ -70,22 +70,25 @@ $this->renderPartial("profile_head", array("user" => $user, "h1" => "пригл�
 </script>
 <?php endif ?>
 
-<?php if(count($sent) > 0): ?>
+<?php if (count($sent) > 0): ?>
 <h4>Отправленные приглашения</h4>
 <table class="table table-bordered table-striped" id="sent">
 <?php
-foreach($sent as $inv) {
-	echo "<tr data-id='{$inv->id}'>";
-	echo "<td>" . Yii::app()->dateFormatter->format("dd.MM.yyyy HH:mm", $inv->cdate) . "</td>";
-	echo "<td>";
-	if($inv->to_id) echo $inv->buddy->ahref;
-	else echo $inv->to_email;
-	echo "</td>";
-	echo "<td>";
-	echo "<a href='#' class='btn btn-small revoke'><i class='icon icon-remove'></i> отозвать</a> ";
-	echo "<a href='#' class='btn btn-small resend'><i class='icon icon-envelope'></i> ещё раз</a> ";
-	echo "<a href='#' class='btn btn-small code'><i class='icon icon-leaf'></i> получить код</a> ";
-	echo "</td>";
+foreach ($sent as $inv) {
+    echo "<tr data-id='{$inv->id}'>";
+    echo '<td>'.Yii::app()->dateFormatter->format('dd.MM.yyyy HH:mm', $inv->cdate).'</td>';
+    echo '<td>';
+    if ($inv->to_id) {
+        echo $inv->buddy->ahref;
+    } else {
+        echo $inv->to_email;
+    }
+    echo '</td>';
+    echo '<td>';
+    echo "<a href='#' class='btn btn-small revoke'><i class='icon icon-remove'></i> отозвать</a> ";
+    echo "<a href='#' class='btn btn-small resend'><i class='icon icon-envelope'></i> ещё раз</a> ";
+    echo "<a href='#' class='btn btn-small code'><i class='icon icon-leaf'></i> получить код</a> ";
+    echo '</td>';
 }
 ?>
 </table>

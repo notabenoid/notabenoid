@@ -1,8 +1,8 @@
 <?php
-	/**
-	 * @var integer[] $topics
-	 * @var integer $topic
-	 */
+/**
+ * @var integer[]
+ * @var int
+ */
 ?>
 <style type="text/css">
 #topics .c { display: block; float: left; margin: 5px 5px 0 0; }
@@ -15,18 +15,18 @@
 <form method="get" action="/blog">
 <ul class="nav nav-list" id="topics">
 <?php
-	foreach(Yii::app()->params["blog_topics"]["common"] as $k => $v) {
-		if(is_array($topics)) {
-			echo "<li" . (in_array($k, $topics) ? " class='active'" : "") . ">";
-			echo "<input type='checkbox' name='topics[]' value='{$k}'" . (in_array($k, $topics) ? " checked" : "") . " class='c' /> ";
-		} else {
-			echo "<li" . ($k == $topic ? " class='active'" : "") . ">";
-		}
-		echo "<a href='/blog/?topic={$k}'>{$v}</a>";
-		echo "</li>";
-	}
-	echo "<li class='buttons'><button class='btn btn-mini'>Показать</button></li>";
-	echo "<li" . (is_array($topics) && count($topics) == 0 ? " class='active'" : "") . "><a href='/blog?topics=all'>Все</a></li>";
+    foreach (Yii::app()->params['blog_topics']['common'] as $k => $v) {
+        if (is_array($topics)) {
+            echo '<li'.(in_array($k, $topics) ? " class='active'" : '').'>';
+            echo "<input type='checkbox' name='topics[]' value='{$k}'".(in_array($k, $topics) ? ' checked' : '')." class='c' /> ";
+        } else {
+            echo '<li'.($k == $topic ? " class='active'" : '').'>';
+        }
+        echo "<a href='/blog/?topic={$k}'>{$v}</a>";
+        echo '</li>';
+    }
+    echo "<li class='buttons'><button class='btn btn-mini'>Показать</button></li>";
+    echo '<li'.(is_array($topics) && count($topics) == 0 ? " class='active'" : '')."><a href='/blog?topics=all'>Все</a></li>";
 ?>
 
 </ul>
@@ -34,7 +34,9 @@
 </form>
 
 <?php
-	if(!Yii::app()->user->isGuest) echo "<p><a href='/blog/edit" . ($topic ? "?topics[]={$topic}" : "") . "'><i class='icon icon-pencil'></i> Написать пост</a></p>";
+    if (!Yii::app()->user->isGuest) {
+        echo "<p><a href='/blog/edit".($topic ? "?topics[]={$topic}" : '')."'><i class='icon icon-pencil'></i> Написать пост</a></p>";
+    }
 ?>
 
 </div>

@@ -1,8 +1,8 @@
 <?php
-	/**
-	 * @var integer $topic
-	 * @var Book $book
-	 */
+/**
+ * @var int
+ * @var Book
+ */
 ?>
 <div class='tools'>
 <h5>Анонсы</h5>
@@ -22,4 +22,3 @@
 	</ol>
 </p>
 </div>
-

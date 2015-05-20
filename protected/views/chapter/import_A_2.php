@@ -1,10 +1,9 @@
 <?php
-	/**
-	 * @var Array $text
-	 * @var Chapter $chap
-	 */
-
-	$this->pageTitle = "Импортировать текст в перевод {$chap->book->fullTitle}";
+    /**
+     * @var Array
+     * @var Chapter
+     */
+    $this->pageTitle = "Импортировать текст в перевод {$chap->book->fullTitle}";
 ?>
 <style type="text/css">
 	#TextSource_text {height:200px;}
@@ -110,28 +109,32 @@ $(C.init);
 	Кликами мыши разбейте текст на удобные для перевода фрагменты. Имейте в виду, что одна глава не может содержать более 4000 фрагментов.
 </p>
 
-<form method='post' id='form-chop-text' action="<?=$chap->getUrl("import_text_save"); ?>">
+<form method='post' id='form-chop-text' action="<?=$chap->getUrl('import_text_save'); ?>">
 <div id="Chopper">
 <?php
-	foreach($text as $p) {
-		if(trim($p) == "") continue;
-		$class = "";
-		if(mb_strlen($p) > 1024) $class = " class='toobig'";
-		$p = htmlspecialchars($p);
+    foreach ($text as $p) {
+        if (trim($p) == '') {
+            continue;
+        }
+        $class = '';
+        if (mb_strlen($p) > 1024) {
+            $class = " class='toobig'";
+        }
+        $p = htmlspecialchars($p);
 
-		$p = "<span>" . preg_replace('/(\s+)/', '\1</span><span>', $p . "\n") . "</span>";
+        $p = '<span>'.preg_replace('/(\s+)/', '\1</span><span>', $p."\n").'</span>';
 
-		echo "<p{$class}>";
-		echo nl2br($p);
-		echo "<a href='#' class='glue'>(склеить)</a> ";
-		echo "<a href='#' class='rm'>(удалить)</a> ";
-		echo "</p>";
-	}
+        echo "<p{$class}>";
+        echo nl2br($p);
+        echo "<a href='#' class='glue'>(склеить)</a> ";
+        echo "<a href='#' class='rm'>(удалить)</a> ";
+        echo '</p>';
+    }
 ?>
 </div>
 
 <div class="form-actions">
-	<button type="button" class="btn btn-success cancel" onclick="location.href='<?=$chap->getUrl("import"); ?>'">
+	<button type="button" class="btn btn-success cancel" onclick="location.href='<?=$chap->getUrl('import'); ?>'">
 		<i class="icon-arrow-left icon-white"></i>
 		Назад
 	</button>

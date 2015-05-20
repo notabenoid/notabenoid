@@ -1,11 +1,10 @@
 <?php
-	/**
-	 * @var Book $book
-	 */
+    /**
+     * @var Book
+     */
+    $book->registerJS();
 
-	$book->registerJS();
-
-	$this->pageTitle = $book->isNewRecord ? "Создать перевод: права доступа" : "Права доступа в перевод " . $book->fulltitle;
+    $this->pageTitle = $book->isNewRecord ? 'Создать перевод: права доступа' : 'Права доступа в перевод '.$book->fulltitle;
 ?>
 <style type='text/css'>
 	#facecontrol-change-msg {display:none;}
@@ -102,37 +101,37 @@ $(E.init);
 <h1>Права доступа</h1>
 
 <?php
-	/** @var TbActiveForm $form */
-	$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-		"id" => "form-edit",
-		"type" => "horizontal",
-		"inlineErrors" => false,
-	));
+    /** @var TbActiveForm $form */
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+        'id' => 'form-edit',
+        'type' => 'horizontal',
+        'inlineErrors' => false,
+    ));
 
-	echo $form->errorSummary($book);
+    echo $form->errorSummary($book);
 
-	$ac = array(
-		"ac_read" =>       array("войти<sup>*</sup>", "кто может в принципе зайти на любую страницу перевода; можно указать для каждой главы индивидуально"),
-		"ac_trread" =>     array("видеть чужие версии<sup>*</sup>", "кому видны все предложенные версии перевода"),
-		"ac_gen" =>        array("скачивать результат<sup>*</sup>", "можно указать для каждой главы индивидуально"),
-		"ac_rate" =>       array("оценивать перевод<sup>*</sup>", "можно указать для каждой главы индивидуально"),
-		"ac_comment" =>    array("комментировать перевод<sup>*</sup>", "можно указать для каждой главы индивидуально"),
-		"ac_tr" =>         array("переводить<sup>*</sup>", "добавлять новые версии перевода; можно указать для каждой главы индивидуально"),
+    $ac = array(
+        'ac_read' => array('войти<sup>*</sup>', 'кто может в принципе зайти на любую страницу перевода; можно указать для каждой главы индивидуально'),
+        'ac_trread' => array('видеть чужие версии<sup>*</sup>', 'кому видны все предложенные версии перевода'),
+        'ac_gen' => array('скачивать результат<sup>*</sup>', 'можно указать для каждой главы индивидуально'),
+        'ac_rate' => array('оценивать перевод<sup>*</sup>', 'можно указать для каждой главы индивидуально'),
+        'ac_comment' => array('комментировать перевод<sup>*</sup>', 'можно указать для каждой главы индивидуально'),
+        'ac_tr' => array('переводить<sup>*</sup>', 'добавлять новые версии перевода; можно указать для каждой главы индивидуально'),
 
-		"ac_blog_r" =>     array("читать блог", "если выбрать &laquo;никто&raquo; то ссылка на блог вообще исчезнет из меню перевода"),
-		"ac_blog_c" =>     array("комментировать блог", "оставлять комментарии в блоге перевода"),
-		"ac_blog_w" =>     array("писать в блог", "писать посты в блоге перевода"),
+        'ac_blog_r' => array('читать блог', 'если выбрать &laquo;никто&raquo; то ссылка на блог вообще исчезнет из меню перевода'),
+        'ac_blog_c' => array('комментировать блог', 'оставлять комментарии в блоге перевода'),
+        'ac_blog_w' => array('писать в блог', 'писать посты в блоге перевода'),
 
-		"ac_announce" =>   array("анонсировать", "размещать анонсы перевода в <a href='/announce/'>соответствующем разделе</a>."),
-		"ac_chap_edit" =>  array("редактировать оригинал", "добавлять/изменять главы, импортировать и редактировать оригинал"),
-		"ac_book_edit" =>  array("редактировать описание перевода", "изменять название, описание, языки перевода, загружать новую картинку"),
-		"ac_membership" => array("управлять группой", "рассматривать заявки на вступление в группу перевода, удалять из группы, приглашать в группу"),
-	);
-	$who = array("a" => "все", "g" => "группа", "m" => "модераторы", "o" => "никто");
-	$who3 = array("g" => "группа", "m" => "модераторы", "o" => "никто");
-	$who2 = array("m" => "модераторы", "o" => "никто");
+        'ac_announce' => array('анонсировать', "размещать анонсы перевода в <a href='/announce/'>соответствующем разделе</a>."),
+        'ac_chap_edit' => array('редактировать оригинал', 'добавлять/изменять главы, импортировать и редактировать оригинал'),
+        'ac_book_edit' => array('редактировать описание перевода', 'изменять название, описание, языки перевода, загружать новую картинку'),
+        'ac_membership' => array('управлять группой', 'рассматривать заявки на вступление в группу перевода, удалять из группы, приглашать в группу'),
+    );
+    $who = array('a' => 'все', 'g' => 'группа', 'm' => 'модераторы', 'o' => 'никто');
+    $who3 = array('g' => 'группа', 'm' => 'модераторы', 'o' => 'никто');
+    $who2 = array('m' => 'модераторы', 'o' => 'никто');
 
-	if($book->opts_get(Book::OPTS_BAN_COPYRIGHT)):
+    if ($book->opts_get(Book::OPTS_BAN_COPYRIGHT)):
 ?>
 <div class="alert alert-box alert-danger">
 	<a class="close" data-dismiss="alert">×</a>
@@ -177,13 +176,13 @@ $(E.init);
 <h2>Подробности:</h2>
 <?php
 
-	echo $form->dropDownListRow(
-		$book, "facecontrol",
-		array(Book::FC_OPEN => "нет группы", Book::FC_CONFIRM => "после подтверждения модераторами", Book::FC_INVITE => "только по приглашению модераторов"),
-		array("onchange" => "E.facecontrol_ch()")
-	);
+    echo $form->dropDownListRow(
+        $book, 'facecontrol',
+        array(Book::FC_OPEN => 'нет группы', Book::FC_CONFIRM => 'после подтверждения модераторами', Book::FC_INVITE => 'только по приглашению модераторов'),
+        array('onchange' => 'E.facecontrol_ch()')
+    );
 
-	if(!$book->isNewRecord && $book->facecontrol != Book::FC_OPEN):
+    if (!$book->isNewRecord && $book->facecontrol != Book::FC_OPEN):
 ?>
 <div id="facecontrol-change-msg" class="alert alert-block alert-warning">
 	<a class="close" data-dismiss="alert">×</a>
@@ -192,38 +191,38 @@ $(E.init);
 	группа будет распущена, впрочем, модераторы и забаненные останутся в своём прежнем статусе. Статистика участия каждого переводчика также будет сохранена.
 </div>
 <?php
-	endif;
-	endif;
+    endif;
+    endif;
 ?>
 <table id="ac_details" class="table">
 	<thead><tr>
 		<th>что могут:</th>
-		<th class='w'><?php echo join("</th><th class='w'>", $who); ?></th>
+		<th class='w'><?php echo implode("</th><th class='w'>", $who); ?></th>
 	</tr></thead>
 	<?php
-		foreach($ac as $role => $title) {
-			echo "<tr>\n";
-			echo "\t<th class='a'>{$title[0]}</th>\n";
+        foreach ($ac as $role => $title) {
+            echo "<tr>\n";
+            echo "\t<th class='a'>{$title[0]}</th>\n";
 
-			if($role == "ac_chap_edit" || $role == "ac_book_edit" || $role == "ac_membership") {
-				$w = $who2;
-				echo "<td>-</td><td>-</td>";
-			} elseif($role == "ac_announce") {
-				$w = $who3;
-				echo "<td>-</td>";
-			} else {
-				$w = $who;
-			}
+            if ($role == 'ac_chap_edit' || $role == 'ac_book_edit' || $role == 'ac_membership') {
+                $w = $who2;
+                echo '<td>-</td><td>-</td>';
+            } elseif ($role == 'ac_announce') {
+                $w = $who3;
+                echo '<td>-</td>';
+            } else {
+                $w = $who;
+            }
 
-			// echo "<td>" . $form->radioButtonList($model, $role, $w, array("template" => "{input}", "separator" => "</td><td>", "uncheckValue" => null)) . "</td>\n";
-			foreach($w as $val => $t) {
-				echo "<td><input type='radio' name='Book[{$role}]' value='{$val}' " . ($book->$role == $val ? "checked" : "") . ($book->opts_get(Book::OPTS_BAN_COPYRIGHT) && $val == "a" ? " disabled" : "") . "/></td>";
-			};
+            // echo "<td>" . $form->radioButtonList($model, $role, $w, array("template" => "{input}", "separator" => "</td><td>", "uncheckValue" => null)) . "</td>\n";
+            foreach ($w as $val => $t) {
+                echo "<td><input type='radio' name='Book[{$role}]' value='{$val}' ".($book->$role == $val ? 'checked' : '').($book->opts_get(Book::OPTS_BAN_COPYRIGHT) && $val == 'a' ? ' disabled' : '').'/></td>';
+            };
 
 //			echo "<td class='hint'>{$title[1]}</td>";
-			echo "</tr>\n";
-		}
-	?>
+            echo "</tr>\n";
+        }
+    ?>
 </table>
 <p class="help-block">
 	<sup>*</sup> эти права можно также указать индивидуально для каждой главы.
@@ -231,13 +230,13 @@ $(E.init);
 
 <div class="form-actions">
 <?php
-	if($book->isNewRecord) {
-		echo "<a class='btn btn-primary' href='" . $book->getUrl("edit/info") . "'><i class='icon-arrow-left icon-white'></i> Назад</a> ";
-		echo CHtml::htmlButton("Сохранить", array("type" => "submit", "class" => "btn btn-primary pull-right")) . " ";
-	} else {
-		echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Сохранить", array("type" => "submit", "class" => "btn btn-primary")) . " ";
-		echo CHtml::htmlButton("<i class='icon-remove icon-white'></i> Отмена", array("onclick" => "location.href='" . ($book->isNewRecord ? Yii::app()->user->url : $book->url) . "'", "class" => "btn btn-success"));
-	}
+    if ($book->isNewRecord) {
+        echo "<a class='btn btn-primary' href='".$book->getUrl('edit/info')."'><i class='icon-arrow-left icon-white'></i> Назад</a> ";
+        echo CHtml::htmlButton('Сохранить', array('type' => 'submit', 'class' => 'btn btn-primary pull-right')).' ';
+    } else {
+        echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Сохранить", array('type' => 'submit', 'class' => 'btn btn-primary')).' ';
+        echo CHtml::htmlButton("<i class='icon-remove icon-white'></i> Отмена", array('onclick' => "location.href='".($book->isNewRecord ? Yii::app()->user->url : $book->url)."'", 'class' => 'btn btn-success'));
+    }
 ?>
 </div>
 <?php $this->endWidget(); ?>

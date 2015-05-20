@@ -27,7 +27,7 @@ If you entered the URL manually please check your spelling and try again.
 If you think this is a server error, please contact <?php echo $data['admin']; ?>.
 </p>
 <div class="version">
-<?php echo date('Y-m-d H:i:s',$data['time']) .' '. $data['version']; ?>
+<?php echo date('Y-m-d H:i:s', $data['time']).' '.$data['version']; ?>
 </div>
 </body>
 </html>

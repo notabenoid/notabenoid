@@ -1,6 +1,6 @@
 <?php
 /**
- * @var Chapter $chap
+ * @var Chapter
  */
 ?>
 <h1>Скачать перевод <?php echo "{$chap->book->fullTitle}: {$chap->title}"; ?></h1>
@@ -9,5 +9,7 @@
 </p>
 <p>
 	<a href="<?=$chap->book->url; ?>">К оглавлению</a> |
-	<?php if($chap->can("tr")) echo "<a href='{$chap->url}'>Перевести</a>"; ?>
+	<?php if ($chap->can('tr')) {
+    echo "<a href='{$chap->url}'>Перевести</a>";
+} ?>
 </p>

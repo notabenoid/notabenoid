@@ -1,5 +1,5 @@
 <?php
-	$this->pageTitle = "Пригласить друга";
+    $this->pageTitle = 'Пригласить друга';
 ?>
 
 <style type='text/css'>
@@ -9,20 +9,20 @@
 <h1>Пригласить друга</h1>
 
 <?php
-	/** @var TbActiveForm $form */
-	$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-		"id" => "form-invite",
-		"type" => "vertical",
-		"focus" => array($model, "login"),
-	));
+    /** @var TbActiveForm $form */
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+        'id' => 'form-invite',
+        'type' => 'vertical',
+        'focus' => array($model, 'login'),
+    ));
 
-	echo $form->errorSummary($model);
-	echo $form->textFieldRow($model, "email");
-	echo $form->textFieldRow($model, "who");
+    echo $form->errorSummary($model);
+    echo $form->textFieldRow($model, 'email');
+    echo $form->textFieldRow($model, 'who');
 ?>
 
 <div class="form-summary">
-	<?php echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Пригласить", array("type" => "submit", "class" => "btn btn-primary")) . " "; ?>
+	<?php echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Пригласить", array('type' => 'submit', 'class' => 'btn btn-primary')).' '; ?>
 </div>
 
 <?php $this->endWidget(); ?>

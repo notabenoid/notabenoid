@@ -1,9 +1,8 @@
 <?php
-	/**
-	 * @var Mail $message
-	 */
-
-	$this->pageTitle = "Письмо " . ($message->folder == Mail::INBOX ? "от" : "к") . " {$message->buddy->login}";
+    /**
+     * @var Mail
+     */
+    $this->pageTitle = 'Письмо '.($message->folder == Mail::INBOX ? 'от' : 'к')." {$message->buddy->login}";
 ?>
 <script type="text/javascript">
 var P = {
@@ -21,10 +20,10 @@ var P = {
 </script>
 
 <?php
-	echo "<h1>" . ($message->subj == "" ? "Письмо" : $message->subj) . "</h1>";
-	echo "<div class='body'>";
-	echo Yii::app()->parser->parse($message->body);
-	echo "</div>";
+    echo '<h1>'.($message->subj == '' ? 'Письмо' : $message->subj).'</h1>';
+    echo "<div class='body'>";
+    echo Yii::app()->parser->parse($message->body);
+    echo '</div>';
 ?>
 
 <form id="form-rm" method="post" action="/my/mail/?folder=<?=$message->folder; ?>">

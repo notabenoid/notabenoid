@@ -1,7 +1,7 @@
 <?php
 /**
- * @var User $user
- * @var RemindToken $token
+ * @var User
+ * @var RemindToken
  */
 ?>
 <body>
@@ -17,7 +17,7 @@
 </p>
 <address style="margin-top:20px; border-top:1px solid gray; width:200px;">
 	С уважением,<br /.>
-	<a href='http://<?=Yii::app()->params["domain"]; ?>/'><?=Yii::app()->name; ?></a>
+	<a href='http://<?=Yii::app()->params['domain']; ?>/'><?=Yii::app()->name; ?></a>
 </address>
 
 <p style="color:#777; font-style:italic;">

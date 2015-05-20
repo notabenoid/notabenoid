@@ -3,11 +3,12 @@
 #join_msg {display:none;}
 </style>
 <?php
-	if(Yii::app()->user->isGuest) {
-		echo "Вам нужно зарегистрироваться или войти на сайт и подать заявку на вступление в эту группу.";
-	} else {
-?>
-	<form method="post" action="<?=$book->getUrl("members_join"); ?>" class="well form-horizontal" style="margin-top:10px;">
+    if (Yii::app()->user->isGuest) {
+        echo 'Вам нужно зарегистрироваться или войти на сайт и подать заявку на вступление в эту группу.';
+    } else {
+        ?>
+	<form method="post" action="<?=$book->getUrl('members_join');
+        ?>" class="well form-horizontal" style="margin-top:10px;">
 		<div id="join_btn">
 			<button type="button" onclick="$('#join_btn').hide(); $('#join_msg').show(); $('#join [name=message]').focus();" class="btn btn-success" />
 			<i class="icon-plus icon-white"></i> Вступить в группу
@@ -15,7 +16,8 @@
 		</div>
 		<div id="join_msg">
 			<label>
-				Ваша заявка сначала будет рассмотрена <?php echo $book->ac_membership == "m" ? "модераторами" : "создателем перевода"; ?>.
+				Ваша заявка сначала будет рассмотрена <?php echo $book->ac_membership == 'm' ? 'модераторами' : 'создателем перевода';
+        ?>.
 				Вы можете написать им короткое сообщение:
 			</label>
 			<input type="text" name="message" maxlength="200" class="span4" />
@@ -24,5 +26,6 @@
 		</div>
 	</form>
 <?php
-	}
+
+    }
 ?>

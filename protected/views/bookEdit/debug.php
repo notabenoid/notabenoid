@@ -10,14 +10,17 @@
 </style>
 <ul class='debug-model-dump'>
 <?php
-	$default = new Book();
-	foreach($book->attributes as $k => $v) {
-		echo "<li" . ($book->$k != $default->$k ? " class='changed'" : "") . ">";
-		echo "{$k} = ";
-		if(is_array($v)) echo "[" . join(",", $v) . "]";
-		else echo "'{$v}'";
-		echo "</li>";
-	};
+    $default = new Book();
+    foreach ($book->attributes as $k => $v) {
+        echo '<li'.($book->$k != $default->$k ? " class='changed'" : '').'>';
+        echo "{$k} = ";
+        if (is_array($v)) {
+            echo '['.implode(',', $v).']';
+        } else {
+            echo "'{$v}'";
+        }
+        echo '</li>';
+    };
 ?>
 </ul>
 IMG:

@@ -1,5 +1,5 @@
 <?php
-	$this->pageTitle = "Создать перевод";
+    $this->pageTitle = 'Создать перевод';
 ?>
 <style type="text/css">
 	.t { float:left; margin-top:30px; margin-bottom:30px; text-align: center; }

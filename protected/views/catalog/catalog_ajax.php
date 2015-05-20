@@ -14,28 +14,30 @@
 
 <ul id="Tree">
 <?php
-	$prev_indent = 0;
-	$indent = 0;
-	foreach($tree as $cat) {
-		$indent = count($cat->mp);
+    $prev_indent = 0;
+    $indent = 0;
+    foreach ($tree as $cat) {
+        $indent = count($cat->mp);
 
-		if($indent > $prev_indent) {
-			echo "\n<ul>\n";
-		} else {
-			echo str_repeat("</li>\n</ul>\n", $prev_indent - $indent) . "</li>\n";
-		}
-		echo "<li>";
+        if ($indent > $prev_indent) {
+            echo "\n<ul>\n";
+        } else {
+            echo str_repeat("</li>\n</ul>\n", $prev_indent - $indent)."</li>\n";
+        }
+        echo '<li>';
 
-		echo "<div id='n{$cat->id}' class='n" . ($book->cat_id == $cat->id ? " current" : "") . "'>";
-		echo "<a href='/search/?cat={$cat->id}' class='cat'>";
-		echo $cat->title;
-		echo "</a>";
-		if($cat->booksCount > 0) echo " ({$cat->booksCount})";
-		echo "</div>";
+        echo "<div id='n{$cat->id}' class='n".($book->cat_id == $cat->id ? ' current' : '')."'>";
+        echo "<a href='/search/?cat={$cat->id}' class='cat'>";
+        echo $cat->title;
+        echo '</a>';
+        if ($cat->booksCount > 0) {
+            echo " ({$cat->booksCount})";
+        }
+        echo '</div>';
 
-		$prev_indent = $indent;
-	}
-	echo str_repeat("</li>\n</ul>\n", $indent);
+        $prev_indent = $indent;
+    }
+    echo str_repeat("</li>\n</ul>\n", $indent);
 ?>
 </ul>
 

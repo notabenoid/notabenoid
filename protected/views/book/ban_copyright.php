@@ -1,41 +1,40 @@
 <?php
-	/**
-	 * @var Book $book
-	 * @var BookBanReason $reason
-	 * @var Controller $this
-	 */
-
-	$this->pageTitle = "Заблокировать перевод";
+    /**
+     * @var Book
+     * @var BookBanReason
+     * @var Controller
+     */
+    $this->pageTitle = 'Заблокировать перевод';
 ?>
 <h1>Заблокировать перевод</h1>
 
 <?php
-	/** @var TbActiveForm $form  */
-	$form = $this->beginWidget("bootstrap.widgets.TbActiveForm", ["method" => "post", "type" => "horizontal"]);
-	echo $form->errorSummary($reason);
+    /** @var TbActiveForm $form  */
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', ['method' => 'post', 'type' => 'horizontal']);
+    echo $form->errorSummary($reason);
 ?>
 <div class="control-group">
 	<label class="control-label">Название организации</label>
 	<div class="controls">
-		<?php echo $form->textField($reason, "title", ["class" => "span6"]); ?>
+		<?php echo $form->textField($reason, 'title', ['class' => 'span6']); ?>
 	</div>
 </div>
 <div class="control-group">
 	<label class="control-label">URL</label>
 	<div class="controls">
-		<?php echo $form->textField($reason, "url", ["class" => "span6"]); ?>
+		<?php echo $form->textField($reason, 'url', ['class' => 'span6']); ?>
 	</div>
 </div>
 <div class="control-group">
 	<label class="control-label">E-mail</label>
 	<div class="controls">
-		<?php echo $form->textField($reason, "email", ["class" => "span6"]); ?>
+		<?php echo $form->textField($reason, 'email', ['class' => 'span6']); ?>
 	</div>
 </div>
 <div class="control-group">
 	<label class="control-label">Сообщение</label>
 	<div class="controls">
-		<?php echo $form->textArea($reason, "message", ["class" => "span6", "rows" => 6]); ?>
+		<?php echo $form->textArea($reason, 'message', ['class' => 'span6', 'rows' => 6]); ?>
 	</div>
 </div>
 <div class="form-actions">

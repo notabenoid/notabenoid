@@ -1,5 +1,5 @@
 <?php
-	$this->pageTitle = "Склероз";
+    $this->pageTitle = 'Склероз';
 ?>
 <h1>Готово!</h1>
 

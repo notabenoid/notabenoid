@@ -1,9 +1,9 @@
 <?php
-	/**
-	 * @var Orig $orig
-	 */
+/**
+ * @var Orig
+ */
 ?>
-<form id='form-orig' method='post' action='<?=$orig->getUrl("edit"); ?>' class="form-inline">
+<form id='form-orig' method='post' action='<?=$orig->getUrl('edit'); ?>' class="form-inline">
     <input type="hidden" name="Orig[ord]" value="<?=htmlspecialchars($orig->ord); ?>" class="span1" />
 
 	<div class="control-group">
@@ -17,6 +17,6 @@
 
 	<div class="control-group">
 		<button type='submit' class='btn btn-mini btn-primary'>Сохранить</button>
-		<button type='button' class='btn btn-mini cancel' onclick="<?=$ajax ? "" : "location.href='{$orig->url}'"; ?>">Отмена</button>
+		<button type='button' class='btn btn-mini cancel' onclick="<?=$ajax ? '' : "location.href='{$orig->url}'"; ?>">Отмена</button>
 	</div>
 </form>

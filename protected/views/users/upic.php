@@ -1,15 +1,14 @@
 <?php
-/**
- * @var User $user
- * @var String $img
- * @var int $img_w
- * @var int $img_h
- */
+    /**
+     * @var User
+     * @var String
+     * @var int
+     * @var int
+     */
+    Yii::app()->clientScript->registerScriptFile('/js/jquery.Jcrop.min.js')
+    ->registerCssFile('/css/jquery.Jcrop.min.css');
 
-	Yii::app()->clientScript->registerScriptFile("/js/jquery.Jcrop.min.js")
-	->registerCssFile("/css/jquery.Jcrop.min.css");
-
-	$Img = $_SESSION["upicEditor"]["img"];
+    $Img = $_SESSION['upicEditor']['img'];
 ?>
 <script type="text/javascript">
 $(function() {
@@ -22,8 +21,8 @@ $(function() {
         var ry = 50 / coords.h;
 
         $('#preview img').css({
-            width: Math.round(rx * <?=$Img["w"]; ?>) + 'px',
-            height: Math.round(ry * <?=$Img["h"]; ?>) + 'px',
+            width: Math.round(rx * <?=$Img['w']; ?>) + 'px',
+            height: Math.round(ry * <?=$Img['h']; ?>) + 'px',
             marginLeft: '-' + Math.round(rx * coords.x) + 'px',
             marginTop: '-' + Math.round(ry * coords.y) + 'px'
         });
@@ -51,4 +50,4 @@ $(function() {
 
 <h1>Вырежьте квадратную аватарку из картинки</h1>
 
-<img src="/i/tmp/upiccut/<?=$Img["name"]; ?>" width="<?=$Img["w"]; ?>" height="<?=$Img["h"]; ?>" id="ava" alt="" />
+<img src="/i/tmp/upiccut/<?=$Img['name']; ?>" width="<?=$Img['w']; ?>" height="<?=$Img['h']; ?>" id="ava" alt="" />

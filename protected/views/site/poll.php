@@ -1,9 +1,8 @@
 <?php
-	/**
-	 * @var array $Questions
-	 */
-
-	$this->pageTitle = "Опрос";
+    /**
+     * @var array
+     */
+    $this->pageTitle = 'Опрос';
 ?>
 <style type="text/css">
 #poll .control-group {margin-bottom: 30px; }
@@ -32,27 +31,32 @@ $(function() {
 
 <form method="post" id="poll" action="/site/poll">
 <?php
-	foreach($Questions as $q) {
-		$id = $q["id"];
-		$error = (isset($_POST["answer"]) || isset($_POST["custom"])) && ($_POST["answer"][$id] == "" && $_POST["custom"][$id] == "");
+    foreach ($Questions as $q) {
+        $id = $q['id'];
+        $error = (isset($_POST['answer']) || isset($_POST['custom'])) && ($_POST['answer'][$id] == '' && $_POST['custom'][$id] == '');
 
-		echo "<div class='control-group" . ($error ? " error" : "") . "'>";
-		echo "<label class='control-label'>{$q["text"]}</label>";
-		if($q["options"] === "bool") $options = ["Да", "Нет"];
-		else $options = $q["options"];
-		foreach($options as $o) {
-			echo "<label class='radio'>";
-			echo CHtml::radioButton("answer[{$id}]", $_POST["answer"][$id] == $o, ["value" => $o]);
-			echo $o;
-			echo "</label>";
-		}
-		if($q["allowCustom"]) {
-			$opts = ["class" => "span4 custom", "placeholder" => "Свой вариант"];
-			if($q["customMaxLength"] > 0) $opts["maxlength"] = intval($q["customMaxLength"]);
-			echo CHtml::textField("custom[{$id}]", $_POST["custom"][$id], $opts);
-		}
-		echo "</div>";
-	}
+        echo "<div class='control-group".($error ? ' error' : '')."'>";
+        echo "<label class='control-label'>{$q['text']}</label>";
+        if ($q['options'] === 'bool') {
+            $options = ['Да', 'Нет'];
+        } else {
+            $options = $q['options'];
+        }
+        foreach ($options as $o) {
+            echo "<label class='radio'>";
+            echo CHtml::radioButton("answer[{$id}]", $_POST['answer'][$id] == $o, ['value' => $o]);
+            echo $o;
+            echo '</label>';
+        }
+        if ($q['allowCustom']) {
+            $opts = ['class' => 'span4 custom', 'placeholder' => 'Свой вариант'];
+            if ($q['customMaxLength'] > 0) {
+                $opts['maxlength'] = intval($q['customMaxLength']);
+            }
+            echo CHtml::textField("custom[{$id}]", $_POST['custom'][$id], $opts);
+        }
+        echo '</div>';
+    }
 ?>
 <div class="form-actions">
 	<button type="submit" class="btn btn-primary">Готово!</button>

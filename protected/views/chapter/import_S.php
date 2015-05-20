@@ -1,10 +1,9 @@
 <?php
-	/**
-	 * @var ImportSubsForm $options
-	 * @var Chapter $chap
-	 */
-
-	$this->pageTitle = "Импортировать субтитры";
+    /**
+     * @var ImportSubsForm
+     * @var Chapter
+     */
+    $this->pageTitle = 'Импортировать субтитры';
 ?>
 <style type="text/css">
 form.form-hide-errors .error span.help-block {display:none;}
@@ -14,27 +13,27 @@ form.form-hide-errors .error span.help-block {display:none;}
 	Перевод: <?=$chap->ahref; ?>
 </p>
 <?php
-	if($chap->n_verses != 0) {
-		echo "<div class='alert alert-block alert-warning'><strong>Внимание!</strong> В этой главе уже есть оригинальный текст. Если вы импортируете новый оригинал, старый текст будет уничтожен вместе с переводами и комментариями!</div>";
-	}
+    if ($chap->n_verses != 0) {
+        echo "<div class='alert alert-block alert-warning'><strong>Внимание!</strong> В этой главе уже есть оригинальный текст. Если вы импортируете новый оригинал, старый текст будет уничтожен вместе с переводами и комментариями!</div>";
+    }
 
-	/** @var TbActiveForm $form */
-	$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-		"id" => "form-import",
-		"type" => "horizontal",
-		"inlineErrors" => false,
-		"action" => $chap->getUrl("import_subs"),
-		"htmlOptions" => array(
-			"class" => "form-hide-errors",
-			"enctype" => "multipart/form-data",
-		),
-	));
+    /** @var TbActiveForm $form */
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+        'id' => 'form-import',
+        'type' => 'horizontal',
+        'inlineErrors' => false,
+        'action' => $chap->getUrl('import_subs'),
+        'htmlOptions' => array(
+            'class' => 'form-hide-errors',
+            'enctype' => 'multipart/form-data',
+        ),
+    ));
 
-	echo $form->errorSummary($options);
+    echo $form->errorSummary($options);
 
-	echo $form->fileFieldRow($options, "src", array("hint" => "Не более 1 мегабайта, пожалуйста"));
-	echo $form->dropDownListRow($options, "format", array("srt" => "SRT"));
-	echo $form->dropDownListRow($options, "encoding", Yii::app()->params["encodings"]);
+    echo $form->fileFieldRow($options, 'src', array('hint' => 'Не более 1 мегабайта, пожалуйста'));
+    echo $form->dropDownListRow($options, 'format', array('srt' => 'SRT'));
+    echo $form->dropDownListRow($options, 'encoding', Yii::app()->params['encodings']);
 ?>
 <div class="form-actions">
 	<button type="submit" class="btn btn-primary">
@@ -47,5 +46,5 @@ form.form-hide-errors .error span.help-block {display:none;}
 	</button>
 </div>
 <?php
-	$this->endWidget();
+    $this->endWidget();
 ?>

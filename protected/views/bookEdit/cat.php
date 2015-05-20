@@ -1,10 +1,9 @@
 <?php
-	/**
-	 * @var Book $book
-	 * @var Category[] $cats
-	 */
-
-	$this->pageTitle = $book->isNewRecord ? "Создать перевод: выбор раздела" : "Раздел каталога для " . $book->fulltitle;
+    /**
+     * @var Book
+     * @var Category[]
+     */
+    $this->pageTitle = $book->isNewRecord ? 'Создать перевод: выбор раздела' : 'Раздел каталога для '.$book->fulltitle;
 ?>
 
 <style type="text/css">
@@ -44,45 +43,51 @@ var T = {
 
 <ul id="Tree">
 	<?php
-		$branches = Yii::app()->params["catalog_branches"];
-		$prev_indent = 0;
-		$indent = 0;
-		foreach($cats as $cat) {
-			if($branches[$cat->mp[0]] != $book->typ) continue;
+        $branches = Yii::app()->params['catalog_branches'];
+        $prev_indent = 0;
+        $indent = 0;
+        foreach ($cats as $cat) {
+            if ($branches[$cat->mp[0]] != $book->typ) {
+                continue;
+            }
 
-			$indent = count($cat->mp);
+            $indent = count($cat->mp);
 
-			if($indent > $prev_indent) {
-				echo "\n<ul>\n";
-			} else {
-				echo str_repeat("</li>\n</ul>\n", $prev_indent - $indent) . "</li>\n";
-			}
-			echo "<li>";
+            if ($indent > $prev_indent) {
+                echo "\n<ul>\n";
+            } else {
+                echo str_repeat("</li>\n</ul>\n", $prev_indent - $indent)."</li>\n";
+            }
+            echo '<li>';
 
-			echo "<div id='n{$cat->id}' class='n" . ($book->cat_id == $cat->id ? " current" : "") . "'>";
-			if($cat->available) echo "<a href='#' onclick='return T.s({$cat->id})'>";
-			echo $cat->title;
-			if($cat->available) echo "</a>";
-			echo "</div>";
+            echo "<div id='n{$cat->id}' class='n".($book->cat_id == $cat->id ? ' current' : '')."'>";
+            if ($cat->available) {
+                echo "<a href='#' onclick='return T.s({$cat->id})'>";
+            }
+            echo $cat->title;
+            if ($cat->available) {
+                echo '</a>';
+            }
+            echo '</div>';
 
-			$prev_indent = $indent;
-		}
-		echo str_repeat("</li>\n</ul>\n", $indent);
-	?>
+            $prev_indent = $indent;
+        }
+        echo str_repeat("</li>\n</ul>\n", $indent);
+    ?>
 </ul>
 
-<form method="post" action="<?=$book->getUrl("edit/cat"); ?>" id="form-edit">
+<form method="post" action="<?=$book->getUrl('edit/cat'); ?>" id="form-edit">
 	<input type="hidden" name="cat_id" />
 </form>
 
 <div class="form-actions">
 <?php
-	if($book->isNewRecord) {
-		echo "<a class='btn btn-primary pull-right' href='" . $book->getUrl('edit/info') . "'>Пропустить <i class='icon-arrow-right icon-white'></i></a>";
-	} else {
-		echo "<a href='{$book->url}' class='btn'>Отмена</a> ";
-		echo "<button class='btn' onclick='T.s(0)'>Не публиковать в каталоге</button> ";
-	}
+    if ($book->isNewRecord) {
+        echo "<a class='btn btn-primary pull-right' href='".$book->getUrl('edit/info')."'>Пропустить <i class='icon-arrow-right icon-white'></i></a>";
+    } else {
+        echo "<a href='{$book->url}' class='btn'>Отмена</a> ";
+        echo "<button class='btn' onclick='T.s(0)'>Не публиковать в каталоге</button> ";
+    }
 ?>
 
 </div>
