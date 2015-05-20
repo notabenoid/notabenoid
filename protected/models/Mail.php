@@ -26,38 +26,38 @@ class Mail extends CActiveRecord
     const INBOX = 1;
     const SENT = 2;
 
-    public static $folders = array(
+    public static $folders = [
         self::INBOX => 'входящие',
         self::SENT => 'исходящие',
-    );
+    ];
 
     public $sendTo;
 
     public function attributeLabels()
     {
-        return array(
+        return [
             'sendTo' => 'Кому',
             'subj' => 'Тема',
             'body' => 'Сообщение',
-        );
+        ];
     }
 
     public function relations()
     {
-        return array(
-            'buddy' => array(self::BELONGS_TO, 'User', 'buddy_id', 'select' => array('id', 'login', 'sex', 'upic', 'email', 'can', 'ini')),
-        );
+        return [
+            'buddy' => [self::BELONGS_TO, 'User', 'buddy_id', 'select' => ['id', 'login', 'sex', 'upic', 'email', 'can', 'ini']],
+        ];
     }
 
     public function rules()
     {
-        return array(
-            array('sendTo', 'required', 'message' => 'Пожалуйста, введите ник получателя письма.'),
-            array('sendTo', 'validateSendTo'),
-            array('subj', 'validateSubj'),
-            array('body', 'validateBody'),
-            array('body', 'required', 'message' => 'Письмо без текста &dash; слишком многозначительный акт коммуникации. Напишите что-нибудь.'),
-        );
+        return [
+            ['sendTo', 'required', 'message' => 'Пожалуйста, введите ник получателя письма.'],
+            ['sendTo', 'validateSendTo'],
+            ['subj', 'validateSubj'],
+            ['body', 'validateBody'],
+            ['body', 'required', 'message' => 'Письмо без текста &dash; слишком многозначительный акт коммуникации. Напишите что-нибудь.'],
+        ];
     }
 
     public function validateSendTo($attr, $params)
@@ -99,7 +99,7 @@ class Mail extends CActiveRecord
     public function setSeen()
     {
         if ($this->id) {
-            Yii::app()->db->createCommand('UPDATE mail SET seen = true WHERE id = :id')->execute(array(':id' => $this->id));
+            Yii::app()->db->createCommand('UPDATE mail SET seen = true WHERE id = :id')->execute([':id' => $this->id]);
         }
     }
 
@@ -140,9 +140,9 @@ class Mail extends CActiveRecord
         if ($this->buddy->ini_get(User::INI_MAIL_PMAIL)) {
             $msg = new YiiMailMessage('Вам письмо! Тема: "'.$this->subj.'"');
             $msg->view = 'mail';
-            $msg->setFrom(array(Yii::app()->params['systemEmail'] => Yii::app()->user->login.' - письмо'));
+            $msg->setFrom([Yii::app()->params['systemEmail'] => Yii::app()->user->login.' - письмо']);
             $msg->addTo($this->buddy->email);
-            $msg->setBody(array('message' => $this), 'text/html');
+            $msg->setBody(['message' => $this], 'text/html');
             Yii::app()->mail->send($msg);
         }
 

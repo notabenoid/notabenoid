@@ -1,11 +1,11 @@
 <?php
     $this->pageTitle = "Ошибка {$code}";
 
-    $codes = array(
+    $codes = [
         '404' => 'Страница не найдена',
         '403' => 'Доступ запрещён',
         '500' => 'Системная ошибка',
-    );
+    ];
 ?>
 <div class="errorpage">
 	<h1><?php echo isset($codes[$code]) ? $codes[$code] : "Ошибка {$code}"; ?></h1>

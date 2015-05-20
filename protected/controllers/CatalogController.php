@@ -16,21 +16,21 @@ class CatalogController extends Controller
 
         if ($cat) {
             $n = count($cat->mp);
-            $books_dp = new CActiveDataProvider(Book::model()->with('cat'), array(
-                'criteria' => array(
+            $books_dp = new CActiveDataProvider(Book::model()->with('cat'), [
+                'criteria' => [
                     'condition' => "cat.mp[1:{$n}] = '{$cat->mpPacked}'",
                     'order' => 't.s_title',
-                ),
-                'pagination' => array('pageSize' => 50),
-            ));
+                ],
+                'pagination' => ['pageSize' => 50],
+            ]);
         } else {
             $books_dp = null;
         }
 
         if ($_GET['ajax']) {
-            $this->renderPartial('catalog_ajax', array('tree' => $tree));
+            $this->renderPartial('catalog_ajax', ['tree' => $tree]);
         } else {
-            $this->render('catalog', array('cat' => $cat, 'tree' => $tree, 'books_dp' => $books_dp));
+            $this->render('catalog', ['cat' => $cat, 'tree' => $tree, 'books_dp' => $books_dp]);
         }
     }
 }

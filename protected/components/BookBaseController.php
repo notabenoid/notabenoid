@@ -58,7 +58,7 @@ class BookBaseController extends Controller
                 if ($this->book->membership->status != GroupMember::BANNED) {
                     if ($this->book->ac_read == 'g') {
                         if ($this->book->facecontrol == Book::FC_CONFIRM) {
-                            $msg .= $this->renderPartial('//book/_join', array('book' => $this->book), true);
+                            $msg .= $this->renderPartial('//book/_join', ['book' => $this->book], true);
                         } elseif ($this->book->facecontrol == Book::FC_INVITE) {
                             if ($this->book->user_invited(Yii::app()->user->id)) {
                                 $msg .= '<br /><br />И, кстати, это приглашение у вас есть.<br /><br />'.

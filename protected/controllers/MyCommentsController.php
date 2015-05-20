@@ -4,9 +4,9 @@ class MyCommentsController extends Controller
 {
     public function filters()
     {
-        return array(
+        return [
             'accessControl',
-        );
+        ];
     }
 
     public function accessRules()
@@ -20,7 +20,7 @@ class MyCommentsController extends Controller
     public function actionIndex()
     {
         $user = Yii::app()->user;
-        $modes = array('p' => 'в постах', 'o' => 'в фрагментах оригинала');
+        $modes = ['p' => 'в постах', 'o' => 'в фрагментах оригинала'];
 
         if (isset($modes[$_GET['mode']])) {
             $mode = $_GET['mode'];
@@ -42,9 +42,9 @@ class MyCommentsController extends Controller
         }
 
         $this->side_view = 'index_side';
-        $this->side_params = array('mode' => $mode);
+        $this->side_params = ['mode' => $mode];
 
-        $this->render('index', array('lenta' => $lenta, 'modes' => $modes, 'mode' => $mode));
+        $this->render('index', ['lenta' => $lenta, 'modes' => $modes, 'mode' => $mode]);
     }
 
     public function actionIni()
@@ -71,7 +71,7 @@ class MyCommentsController extends Controller
 						s.n_comments < p.n_comments
 				)
 				UPDATE seen SET n_comments = unseen.n_comments, seen = unseen.lastcomment FROM unseen WHERE seen.user_id = :user_id AND seen.post_id = unseen.post_id
-			')->execute(array(':user_id' => Yii::app()->user->id));
+			')->execute([':user_id' => Yii::app()->user->id]);
         } elseif ($mode == 'o') {
             Yii::app()->db->createCommand('
 				WITH unseen AS (
@@ -85,7 +85,7 @@ class MyCommentsController extends Controller
 						s.n_comments < p.n_comments
 				)
 				UPDATE seen SET n_comments = unseen.n_comments FROM unseen WHERE seen.user_id = :user_id AND seen.orig_id = unseen.orig_id
-			')->execute(array(':user_id' => Yii::app()->user->id));
+			')->execute([':user_id' => Yii::app()->user->id]);
         }
 
         $this->redirect('/my/comments');
@@ -120,7 +120,7 @@ class MyCommentsController extends Controller
         }
 
         if ($_POST['ajax']) {
-            echo json_encode(array('status' => 'ok', 'id' => $orig_id ? $orig_id : $post_id));
+            echo json_encode(['status' => 'ok', 'id' => $orig_id ? $orig_id : $post_id]);
             Yii::app()->end();
         } else {
             $this->redirect('/my/comments/?mode='.($orig_id ? 'o' : 'p'));
@@ -134,12 +134,12 @@ class MyCommentsController extends Controller
 
         if ($orig_id) {
             Yii::app()->db->createCommand('UPDATE seen SET track = false WHERE user_id = :user_id AND orig_id = :orig_id')
-                ->execute(array(':user_id' => Yii::app()->user->id, ':orig_id' => $orig_id));
+                ->execute([':user_id' => Yii::app()->user->id, ':orig_id' => $orig_id]);
 
             $this->redirect('/my/comments/?mode=o');
         } elseif ($post_id) {
             Yii::app()->db->createCommand('UPDATE seen SET track = false WHERE user_id = :user_id AND post_id = :post_id')
-                ->execute(array(':user_id' => Yii::app()->user->id, ':post_id' => $post_id));
+                ->execute([':user_id' => Yii::app()->user->id, ':post_id' => $post_id]);
 
             $this->redirect('/my/comments/?mode=p');
         } else {

@@ -18,21 +18,21 @@ form.form-hide-errors .error span.help-block {display:none;}
     }
 
     /** @var TbActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
         'id' => 'form-import',
         'type' => 'horizontal',
         'inlineErrors' => false,
         'action' => $chap->getUrl('import_subs'),
-        'htmlOptions' => array(
+        'htmlOptions' => [
             'class' => 'form-hide-errors',
             'enctype' => 'multipart/form-data',
-        ),
-    ));
+        ],
+    ]);
 
     echo $form->errorSummary($options);
 
-    echo $form->fileFieldRow($options, 'src', array('hint' => 'Не более 1 мегабайта, пожалуйста'));
-    echo $form->dropDownListRow($options, 'format', array('srt' => 'SRT'));
+    echo $form->fileFieldRow($options, 'src', ['hint' => 'Не более 1 мегабайта, пожалуйста']);
+    echo $form->dropDownListRow($options, 'format', ['srt' => 'SRT']);
     echo $form->dropDownListRow($options, 'encoding', Yii::app()->params['encodings']);
 ?>
 <div class="form-actions">

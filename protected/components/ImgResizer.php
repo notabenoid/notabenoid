@@ -123,6 +123,6 @@
             touch($dst_file);
             ImageJPEG($dst, $dst_file);
 
-            return array($w, $h);
+            return [$w, $h];
         }
     }

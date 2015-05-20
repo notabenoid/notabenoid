@@ -12,25 +12,25 @@ class KarmaMark extends CActiveRecord
     }
     public function primaryKey()
     {
-        return array('to_uid', 'from_uid');
+        return ['to_uid', 'from_uid'];
     }
 
     public $dat, $from_uid, $to_uid, $mark = 0, $note;
 
     public function attributeLabels()
     {
-        return array(
+        return [
             'mark' => 'Оценка',
             'note' => 'Комментарий',
-        );
+        ];
     }
 
     public function rules()
     {
-        return array(
-            array('mark', 'in', 'range' => array(-1, 0, 1)),
-            array('note', 'clean'),
-        );
+        return [
+            ['mark', 'in', 'range' => [-1, 0, 1]],
+            ['note', 'clean'],
+        ];
     }
 
     public function clean($attr, $params)
@@ -40,26 +40,26 @@ class KarmaMark extends CActiveRecord
 
     public function relations()
     {
-        return array(
-            'from' => array(self::BELONGS_TO, 'User', 'from_uid'),
-            'to' => array(self::BELONGS_TO, 'User', 'to_uid'),
-        );
+        return [
+            'from' => [self::BELONGS_TO, 'User', 'from_uid'],
+            'to' => [self::BELONGS_TO, 'User', 'to_uid'],
+        ];
     }
 
     public function to_user($user_id)
     {
-        $this->getDbCriteria()->mergeWith(array(
+        $this->getDbCriteria()->mergeWith([
             'condition' => 't.to_uid = '.intval($user_id),
-        ));
+        ]);
 
         return $this;
     }
 
     public function from_user($user_id)
     {
-        $this->getDbCriteria()->mergeWith(array(
+        $this->getDbCriteria()->mergeWith([
             'condition' => 't.from_uid = '.intval($user_id),
-        ));
+        ]);
 
         return $this;
     }
@@ -82,10 +82,10 @@ class KarmaMark extends CActiveRecord
         // Инкрементируем users.n_karma
         if ($this->mark != 0) {
             if ($this->isNewRecord) {
-                Yii::app()->db->createCommand('UPDATE users SET n_karma = n_karma + 1, rate_u = rate_u + :mark WHERE id = :to_uid')->execute(array(':to_uid' => $this->to_uid, ':mark' => $this->mark));
+                Yii::app()->db->createCommand('UPDATE users SET n_karma = n_karma + 1, rate_u = rate_u + :mark WHERE id = :to_uid')->execute([':to_uid' => $this->to_uid, ':mark' => $this->mark]);
             } else {
                 // Пересчитываем users.rate_i
-                Yii::app()->db->createCommand('UPDATE users SET rate_u = COALESCE((SELECT SUM(mark) FROM karma_rates WHERE to_uid = :to_uid), 0)::int WHERE id = :to_uid')->execute(array(':to_uid' => $this->to_uid));
+                Yii::app()->db->createCommand('UPDATE users SET rate_u = COALESCE((SELECT SUM(mark) FROM karma_rates WHERE to_uid = :to_uid), 0)::int WHERE id = :to_uid')->execute([':to_uid' => $this->to_uid]);
             }
         }
     }
@@ -102,6 +102,6 @@ class KarmaMark extends CActiveRecord
 				FROM karma_rates WHERE to_uid = :to_uid
 			) AS subquery
 			WHERE users.id = :to_uid
-		')->execute(array(':to_uid' => $this->to_uid));
+		')->execute([':to_uid' => $this->to_uid]);
     }
 }

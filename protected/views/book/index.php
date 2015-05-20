@@ -116,13 +116,13 @@
         echo '</div>';
 
         // Tools
-        $Tools = array();
+        $Tools = [];
         if (count($chapters) > 0) {
-            $Tools[] = array('#', "<i class='icon-random'></i> Изменить порядок глав", 'onclick' => 'return CE.reorder()');
+            $Tools[] = ['#', "<i class='icon-random'></i> Изменить порядок глав", 'onclick' => 'return CE.reorder()'];
         }
-        $Tools[] = array($book->getUrl('recalc'), "<i class='icon-refresh'></i> Пересчитать статистику перевода");
+        $Tools[] = [$book->getUrl('recalc'), "<i class='icon-refresh'></i> Пересчитать статистику перевода"];
         if ($book->can('dict_edit')) {
-            $Tools[] = array($book->getUrl('dict_copy'), "<i class='icon-book'></i> Скопировать словарь из другого перевода");
+            $Tools[] = [$book->getUrl('dict_copy'), "<i class='icon-book'></i> Скопировать словарь из другого перевода"];
         }
         if (count($Tools) > 0) {
             echo "<div class='btn-group'>";
@@ -173,7 +173,7 @@
 </tr></thead>
 <tbody>
 <?php
-    $AC = array('ac_read', 'ac_trread', 'ac_gen', 'ac_rate', 'ac_comment', 'ac_tr');
+    $AC = ['ac_read', 'ac_trread', 'ac_gen', 'ac_rate', 'ac_comment', 'ac_tr'];
     foreach ($chapters as $chap) {
         echo "<tr id='c_{$chap->id}' data-id='{$chap->id}'>";
 

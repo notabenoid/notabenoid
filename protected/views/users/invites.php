@@ -6,7 +6,7 @@
  * @var RegInvite[]
  */
 $this->pageTitle = 'Приглашения';
-$this->renderPartial('profile_head', array('user' => $user, 'h1' => 'приглашения'));
+$this->renderPartial('profile_head', ['user' => $user, 'h1' => 'приглашения']);
 ?>
 <style type="text/css">
 	 .invite-who { display: none; }

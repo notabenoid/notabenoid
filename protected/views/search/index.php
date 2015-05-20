@@ -72,7 +72,7 @@ document.write('<sc'+'ript type="text/javascript" src="http://an.yandex.ru/code/
 HTML;
     } else {
         echo '<h3>'.Yii::t('app', 'Найден {n} перевод|Найдено {n} перевода|Найдено {n} переводов', $dp->totalItemCount).'</h3>';
-        $this->widget('bootstrap.widgets.TbPager', array('pages' => $dp->pagination, 'header' => "<div class='pagination' style='margin-bottom:0'>"));
+        $this->widget('bootstrap.widgets.TbPager', ['pages' => $dp->pagination, 'header' => "<div class='pagination' style='margin-bottom:0'>"]);
         ?>
 
     <!-- Яндекс.Директ должен быть размещен на первом экране страницы с результатами поиска -->
@@ -115,7 +115,7 @@ HTML;
             echo '</li>';
         }
         echo '</ul>';
-        $this->widget('bootstrap.widgets.TbPager', array('pages' => $dp->pagination));
+        $this->widget('bootstrap.widgets.TbPager', ['pages' => $dp->pagination]);
     }
 ?>
 <?php else: ?>

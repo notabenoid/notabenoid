@@ -2,9 +2,9 @@
 
 class MigrateCommand extends CConsoleCommand
 {
-    public $migrations = array(
-        'languages' => array(),
-    );
+    public $migrations = [
+        'languages' => [],
+    ];
 
     public function pg($sql)
     {
@@ -29,7 +29,7 @@ class MigrateCommand extends CConsoleCommand
             $params[":{$k}"] = $v;
         }
 
-        return array($fields, $values, $params);
+        return [$fields, $values, $params];
     }
 
     public function actionIndex()
@@ -102,9 +102,9 @@ class MigrateCommand extends CConsoleCommand
                 @TODO: перенести юзерпики из ../../notabenoid.com/www/i/upic, переименовать их так, чтобы upic[0] был smallint, upic[1:2] = [witdh:height] большой картинки.
                 большие картинки - /i/upic/$N/$id-$seed.jpg, маленькие - /i/upic/$N/$id-seed_th.jpg
             **/
-            $upic = array(0, 0, 0);
+            $upic = [0, 0, 0];
 
-            $row = array(
+            $row = [
                 'id' => $res['id'],
                 'cdate' => $res['cdate'],
                 'lastseen' => $res['lastlogin'] == 0 ? $res['cdate'] : $res['lastlogin'],
@@ -121,7 +121,7 @@ class MigrateCommand extends CConsoleCommand
                 'rate_u' => $res['rate_u'],
                 'n_trs' => $res['ntrs'] > 2000000000 ? 0 : $res['ntrs'],
                 'n_comments' => $res['ncomments'] > 2000000000 ? 0 : $res['ncomments'],
-            );
+            ];
             list($fields, $values, $params) = $this->array2insert($row);
             Yii::app()->db_pg->createCommand("INSERT INTO users ({$fields}) VALUES ({$values})")->execute($params);
 
@@ -167,13 +167,13 @@ class MigrateCommand extends CConsoleCommand
 			WHERE bb.typ = 'A'
 		");
         foreach ($r as $res) {
-            $row = array(
+            $row = [
                 'chap_id' => $res['chap_id'],
                 'body' => $res['body'],
                 'n_comments' => $res['nnotes'],
                 'ord' => $res['id'],
                 'old_id' => $res['id'],
-            );
+            ];
             list($fields, $values, $params) = $this->array2insert($row);
             Yii::app()->db_pg->createCommand("INSERT INTO orig ({$fields}) VALUES ({$values})")->execute($params);
         }

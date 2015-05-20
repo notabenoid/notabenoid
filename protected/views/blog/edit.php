@@ -24,18 +24,18 @@ $(E.init);
 
 <?php
     /** @var TbActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
         'id' => 'form-edit',
         'type' => 'horizontal',
-        'htmlOptions' => array(
+        'htmlOptions' => [
             'enctype' => 'multipart/form-data',
-        ),
-    ));
+        ],
+    ]);
 
     echo $form->errorSummary($post);
 
-    echo $form->textFieldRow($post, 'title', array('class' => 'span6'));
-    echo $form->textAreaRow($post, 'body', array('class' => 'span6', 'hint' => 'Здесь можно использовать некоторые HTML-теги'));
+    echo $form->textFieldRow($post, 'title', ['class' => 'span6']);
+    echo $form->textAreaRow($post, 'body', ['class' => 'span6', 'hint' => 'Здесь можно использовать некоторые HTML-теги']);
     $topics = Yii::app()->params['blog_topics'][$post->book_id ? 'book' : 'common'];
     if (Yii::app()->user->id != 1) {
         unset($topics[64]);
@@ -44,9 +44,9 @@ $(E.init);
 ?>
 <div class="form-actions">
 	<?php
-        echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Сохранить", array('type' => 'submit', 'class' => 'btn btn-primary')).' ';
+        echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Сохранить", ['type' => 'submit', 'class' => 'btn btn-primary']).' ';
         if (!$post->isNewRecord) {
-            echo CHtml::htmlButton("<i class='icon-ban-circle icon-white'></i> Удалить", array('onclick' => 'E.rm()', 'class' => 'btn btn-danger')).' ';
+            echo CHtml::htmlButton("<i class='icon-ban-circle icon-white'></i> Удалить", ['onclick' => 'E.rm()', 'class' => 'btn btn-danger']).' ';
         }
         if ($post->isNewRecord) {
             if ($post->book_id) {
@@ -57,7 +57,7 @@ $(E.init);
         } else {
             $back = $post->url;
         }
-        echo CHtml::htmlButton("<i class='icon-remove icon-white'></i> Отмена", array('onclick' => "location.href='{$back}'", 'class' => 'btn btn-success'));
+        echo CHtml::htmlButton("<i class='icon-remove icon-white'></i> Отмена", ['onclick' => "location.href='{$back}'", 'class' => 'btn btn-success']);
     ?>
 </div>
 <?php $this->endWidget(); ?>

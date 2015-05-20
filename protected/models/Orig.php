@@ -28,11 +28,11 @@ class Orig extends CActiveRecord
 
     public function rules()
     {
-        return array(
-            array('t1, t2', 'validateTiming', 'on' => 'edit_S'),
-            array('ord', 'numerical', 'integerOnly' => true, 'on' => 'edit_A, edit_S'),
-            array('body', 'validateBody'),
-        );
+        return [
+            ['t1, t2', 'validateTiming', 'on' => 'edit_S'],
+            ['ord', 'numerical', 'integerOnly' => true, 'on' => 'edit_A, edit_S'],
+            ['body', 'validateBody'],
+        ];
     }
 
     public function validateTiming($attr, $params)
@@ -62,31 +62,31 @@ class Orig extends CActiveRecord
 
     public function relations()
     {
-        $rel = array(
-            'chap' => array(self::BELONGS_TO, 'Chapter',     'chap_id'),
-            'book' => array(self::BELONGS_TO, 'Book',        'book_id'),
-            'trs' => array(self::HAS_MANY,   'Translation', 'orig_id'),
-        );
+        $rel = [
+            'chap' => [self::BELONGS_TO, 'Chapter',     'chap_id'],
+            'book' => [self::BELONGS_TO, 'Book',        'book_id'],
+            'trs' => [self::HAS_MANY,   'Translation', 'orig_id'],
+        ];
         if (!Yii::app()->user->isGuest) {
-            $rel['seen'] = array(
+            $rel['seen'] = [
                 self::HAS_ONE, 'SeenOrig', 'orig_id',
-                'select' => array('seen', 'n_comments', 'track'),
+                'select' => ['seen', 'n_comments', 'track'],
                 'on' => 'seen.user_id = '.intval(Yii::app()->user->id),
-            );
-            $rel['bookmark'] = array(
+            ];
+            $rel['bookmark'] = [
                 self::HAS_ONE, 'Bookmark', 'orig_id', 'on' => 'bookmark.user_id = '.Yii::app()->user->id,
-            );
+            ];
         } else {
             // дешёвый трюк, расчитанный на то, что планировщик postgresql заметит, что seen.user_id NOT NULL и не будет ничего джойнить вообще
             // нужно как-то изящнее тут поступить.
-            $rel['seen'] = array(
+            $rel['seen'] = [
                 self::HAS_ONE, 'SeenOrig', 'post_id',
-                'select' => array('seen', 'n_comments', 'track'),
+                'select' => ['seen', 'n_comments', 'track'],
                 'on' => 'seen.user_id IS NULL',
-            );
-            $rel['bookmark'] = array(
+            ];
+            $rel['bookmark'] = [
                 self::HAS_ONE, 'Bookmark', 'orig_id', 'on' => 'bookmark.user_id IS NULL',
-            );
+            ];
         }
 
         return $rel;
@@ -94,9 +94,9 @@ class Orig extends CActiveRecord
 
     public function chapter($id)
     {
-        $this->getDbCriteria()->mergeWith(array(
+        $this->getDbCriteria()->mergeWith([
             'condition' => 't.chap_id = '.intval($id),
-        ));
+        ]);
 
         return $this;
     }
@@ -143,18 +143,18 @@ class Orig extends CActiveRecord
     {
         $after = false;
         if ($after_id) {
-            $after = self::model()->findByPk((int) $_GET['after'], 'chap_id = :chap_id', array(':chap_id' => $this->chap_id));
+            $after = self::model()->findByPk((int) $_GET['after'], 'chap_id = :chap_id', [':chap_id' => $this->chap_id]);
         }
 
         if ($this->chap->book->typ == 'S') {
             if ($after) {
                 $t1 = $after->mstime('t2') + 1;
 
-                $next = self::model()->find(array(
+                $next = self::model()->find([
                     'condition' => 'chap_id = :chap_id AND t1 >= :t1 AND id != :id',
-                    'params' => array(':chap_id' => $this->chap_id, ':t1' => $after->t1, ':id' => $after->id),
+                    'params' => [':chap_id' => $this->chap_id, ':t1' => $after->t1, ':id' => $after->id],
                     'order' => 't1',
-                ));
+                ]);
 
                 if ($next) {
                     $t2 = $next->mstime('t1') - 1;
@@ -169,7 +169,7 @@ class Orig extends CActiveRecord
                 $this->t1 = self::ms2std($t1);
                 $this->t2 = self::ms2std($t2);
             } else {
-                list($this->t1, $this->t2) = Yii::app()->db->createCommand("SELECT COALESCE(MAX(t2) + interval '0:0:1', '0:0:0') as t1, COALESCE(MAX(t2) + interval '0:0:2', '0:0:1') as t2 FROM orig WHERE chap_id = :chap_id")->queryRow(false, array(':chap_id' => $this->chap_id));
+                list($this->t1, $this->t2) = Yii::app()->db->createCommand("SELECT COALESCE(MAX(t2) + interval '0:0:1', '0:0:0') as t1, COALESCE(MAX(t2) + interval '0:0:2', '0:0:1') as t2 FROM orig WHERE chap_id = :chap_id")->queryRow(false, [':chap_id' => $this->chap_id]);
             }
         } else {
         }
@@ -177,14 +177,14 @@ class Orig extends CActiveRecord
         if ($after) {
             $this->ord = $after->ord + 1;
         } else {
-            $this->ord = Yii::app()->db->createCommand('SELECT COALESCE(MAX(ord), 0) + 1 FROM orig WHERE chap_id = :chap_id')->queryScalar(array(':chap_id' => $this->chap_id));
+            $this->ord = Yii::app()->db->createCommand('SELECT COALESCE(MAX(ord), 0) + 1 FROM orig WHERE chap_id = :chap_id')->queryScalar([':chap_id' => $this->chap_id]);
         }
     }
 
     protected function afterDelete()
     {
         // Так как у нас нет foreign-ключа на translate.orig_id из-за соображений производительности, удаляем переводы вручную
-        Yii::app()->db->createCommand('DELETE FROM translate WHERE orig_id = :id')->execute(array(':id' => $this->id));
+        Yii::app()->db->createCommand('DELETE FROM translate WHERE orig_id = :id')->execute([':id' => $this->id]);
     }
 
     protected function afterSave()
@@ -193,7 +193,7 @@ class Orig extends CActiveRecord
             Yii::app()->db->createCommand('
 				UPDATE chapters SET n_verses = n_verses + 1, last_tr = now() WHERE id = :chap_id;
 				UPDATE books    SET n_verses = n_verses + 1, last_tr = now() WHERE id = :book_id;
-			')->execute(array(':chap_id' => $this->chap_id, ':book_id' => $this->chap->book_id));
+			')->execute([':chap_id' => $this->chap_id, ':book_id' => $this->chap->book_id]);
         }
     }
 
@@ -208,7 +208,7 @@ class Orig extends CActiveRecord
     {
         // Увеличиваем счётчик комментариев поста
         $this->n_comments++;
-        Yii::app()->db->createCommand('UPDATE orig SET n_comments = n_comments + 1 WHERE id = :id')->execute(array('id' => $this->id));
+        Yii::app()->db->createCommand('UPDATE orig SET n_comments = n_comments + 1 WHERE id = :id')->execute(['id' => $this->id]);
 
         // Отправляем почту
         $this->comment_mail($comment, $parent);
@@ -222,7 +222,7 @@ class Orig extends CActiveRecord
      */
     public function afterCommentRm($comment)
     {
-        Yii::app()->db->createCommand('UPDATE orig SET n_comments = n_comments - 1 WHERE id = :id')->execute(array(':id' => $this->id));
+        Yii::app()->db->createCommand('UPDATE orig SET n_comments = n_comments - 1 WHERE id = :id')->execute([':id' => $this->id]);
     }
 
     /**
@@ -242,12 +242,12 @@ class Orig extends CActiveRecord
         ) {
             $msg = new YiiMailMessage("Новый комментарий в переводе \"{$this->chap->book->fullTitle}\"");
             $msg->view = 'orig_comment';
-            $msg->setFrom(array(Yii::app()->params['commentEmail'] => Yii::app()->user->login.' - комментарий к переводу'));
+            $msg->setFrom([Yii::app()->params['commentEmail'] => Yii::app()->user->login.' - комментарий к переводу']);
             $msg->addTo($this->chap->book->owner->email);
-            $msg->setBody(array(
+            $msg->setBody([
                 'comment' => $comment,
                 'orig' => $this,
-            ), 'text/html');
+            ], 'text/html');
             Yii::app()->mail->send($msg);
         }
 
@@ -263,13 +263,13 @@ class Orig extends CActiveRecord
         ) {
             $msg = new YiiMailMessage("Ответ на ваш комментарий в переводе \"{$this->chap->book->fullTitle}\"");
             $msg->view = 'orig_reply';
-            $msg->setFrom(array(Yii::app()->params['commentEmail'] => Yii::app()->user->login.' - комментарий'));
+            $msg->setFrom([Yii::app()->params['commentEmail'] => Yii::app()->user->login.' - комментарий']);
             $msg->addTo($parent->author->email);
-            $msg->setBody(array(
+            $msg->setBody([
                 'comment' => $comment,
                 'parent' => $parent,
                 'orig' => $this,
-            ), 'text/html');
+            ], 'text/html');
             Yii::app()->mail->send($msg);
         }
 
@@ -285,7 +285,7 @@ class Orig extends CActiveRecord
     {
         if (!Yii::app()->user->isGuest) {
             Yii::app()->db->createCommand('SELECT track_orig(:user_id, :orig_id, :inc)')
-                ->execute(array(':user_id' => Yii::app()->user->id, ':orig_id' => $this->id, ':inc' => $nc_inc));
+                ->execute([':user_id' => Yii::app()->user->id, ':orig_id' => $this->id, ':inc' => $nc_inc]);
         }
 
         return true;
@@ -301,7 +301,7 @@ class Orig extends CActiveRecord
         }
 
         Yii::app()->db->createCommand('SELECT seen_orig(:user_id, :orig_id, :n_comments)')
-            ->execute(array(':user_id' => Yii::app()->user->id, ':orig_id' => $this->id, 'n_comments' => $this->n_comments));
+            ->execute([':user_id' => Yii::app()->user->id, ':orig_id' => $this->id, 'n_comments' => $this->n_comments]);
     }
 
     public function getUrl($area = '')
@@ -366,7 +366,7 @@ class Orig extends CActiveRecord
 
         // Сортируем переводы по дате
         $trs = $this->trs;
-        usort($trs, array('Translation', 'trcmp'));
+        usort($trs, ['Translation', 'trcmp']);
 
         // Находим best
         if ($user->ini['t.hlr'] != 0 && count($trs) > 1) {
@@ -383,18 +383,18 @@ class Orig extends CActiveRecord
         $ret = '';
 
         // Опции Translate::render() для автора версии перевода
-        $tr_opts_owner = array(
+        $tr_opts_owner = [
             'edit' => true,
             'rm' => true,
             'rate' => false,
-        );
+        ];
         // Опции Translate::render() для всех остальных версий
-        $tr_opts = array(
+        $tr_opts = [
             'edit' => $this->chap->book->membership->status == GroupMember::MODERATOR,
             'rm' => $this->chap->book->membership->status == GroupMember::MODERATOR,
             'rate' => $this->chap->can('rate'),
             'rate-' => $this->chap->book->membership->status == GroupMember::MODERATOR,
-        );
+        ];
 
         foreach ($trs as $tr) {
             if (!$this->chap->can('trread') && $tr->user_id != $user->id) {
@@ -466,7 +466,7 @@ class Orig extends CActiveRecord
     private function renderTranslationsOld()
     {
         $trs = $this->trs;
-        usort($trs, array('Translation', 'trcmp'));
+        usort($trs, ['Translation', 'trcmp']);
 
         $user = Yii::app()->user;
 
@@ -479,17 +479,17 @@ class Orig extends CActiveRecord
                 $max_rating = $tr->rating;
             }
         }
-        $tr_opts = array(
+        $tr_opts = [
             'edit' => $this->chap->book->membership->status == GroupMember::MODERATOR,
             'rm' => $this->chap->book->membership->status == GroupMember::MODERATOR,
             'rate' => $this->chap->can('rate'),
             'rate-' => $this->chap->book->membership->status == GroupMember::MODERATOR,
-        );
-        $tr_opts_owner = array(
+        ];
+        $tr_opts_owner = [
             'edit' => true,
             'rm' => true,
             'rate' => false,
-        );
+        ];
         $html = '';
         foreach ($trs as $tr) {
             if (!$this->chap->can('trread') && $tr->user_id != $user->id) {

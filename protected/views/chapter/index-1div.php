@@ -55,7 +55,7 @@
 <h1><?=$chap->book->ahref; ?>: <?=$chap->title; ?></h1>
 
 <div id="tb-main"><div>
-	<div class='group'><a href="<?=$chap->getUrl('go?'.getQS(array('nach' => 'prev', 'ord' => $chap->ord), array('Orig_page'))); ?>" title="Предыдущая глава"><i class="i icon-arrow-left"></i></a></div>
+	<div class='group'><a href="<?=$chap->getUrl('go?'.getQS(['nach' => 'prev', 'ord' => $chap->ord], ['Orig_page'])); ?>" title="Предыдущая глава"><i class="i icon-arrow-left"></i></a></div>
 
 	<div class="tb-index btn-group">
 		<a href="<?=$chap->book->url; ?>" class="btn btn-small"><i class="icon-list"></i> Оглавление</a>
@@ -66,7 +66,7 @@
 		</ul>
 	</div>
 
-	<div class='group'><a href="<?=$chap->getUrl('go?'.getQS(array('nach' => 'next', 'ord' => $chap->ord), array('Orig_page'))); ?>" title="Следующая глава"><i class="i icon-arrow-right"></i></a></div>
+	<div class='group'><a href="<?=$chap->getUrl('go?'.getQS(['nach' => 'next', 'ord' => $chap->ord], ['Orig_page'])); ?>" title="Следующая глава"><i class="i icon-arrow-right"></i></a></div>
 
 	<div class="btn-group">
 		<a href="#" class="btn btn-small tb-dict" accesskey="V"><i class="icon-book"></i> Словарь</a>
@@ -99,7 +99,7 @@
                 ?>
                 </ul>
                 <button type="submit" class="btn btn-mini btn-primary">Показать</button>
-                <a href="<?=$chap->getUrl(getQS(null, array('Orig_page', 'show', 'to', 'tt', 'show_user'))); ?>" class="btn btn-mini">Сбросить всё</a>
+                <a href="<?=$chap->getUrl(getQS(null, ['Orig_page', 'show', 'to', 'tt', 'show_user'])); ?>" class="btn btn-mini">Сбросить всё</a>
             </form>
         </div>
 
@@ -176,7 +176,7 @@
 </div></div>
 
 <?php
-    $tableClasses = array('translator');
+    $tableClasses = ['translator'];
 
     $tableEmpty = false;
     if ($orig_dp->totalItemCount == 0):

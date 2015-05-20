@@ -19,7 +19,7 @@
             }
             echo "<div class='thread'>";
 
-            $this->renderPartial($view, array('comment' => $comment));
+            $this->renderPartial($view, ['comment' => $comment]);
 
             $prev_indent = $indent;
         }

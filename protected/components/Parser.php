@@ -115,7 +115,7 @@
             $html = iconv($encoding, 'UTF-8//TRANSLIT', $html);
             $html = preg_replace('/<(script|style|noscript)\b[^>]*>.*?<\/\1\b[^>]*>/is', '', $html);
             $tidy = new tidy();
-            $config = array(
+            $config = [
                 'drop-font-tags' => true,
                 'drop-proprietary-attributes' => true,
                 'hide-comments' => true,
@@ -124,7 +124,7 @@
                 'numeric-entities' => true,
                 'output-xhtml' => true,
                 'wrap' => 0,
-            );
+            ];
             $tidy->parseString($html, $config, 'utf8');
             $tidy->cleanRepair();
             $html = $tidy->value;

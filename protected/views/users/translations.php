@@ -9,7 +9,7 @@
 
     $this->pageTitle = $user->login.': переводы';
 
-    $this->renderPartial('profile_head', array('user' => $user, 'h1' => 'переводы'));
+    $this->renderPartial('profile_head', ['user' => $user, 'h1' => 'переводы']);
 ?>
 
 <style type="text/css">
@@ -63,7 +63,7 @@ $(function() {
 
     $data = $translations->data;
 
-    $this->widget('bootstrap.widgets.TbPager', array('pages' => $translations->pagination, 'header' => "<div class='pagination' style='margin-bottom:0'>"));
+    $this->widget('bootstrap.widgets.TbPager', ['pages' => $translations->pagination, 'header' => "<div class='pagination' style='margin-bottom:0'>"]);
 
     foreach ($translations->data as $tr) {
         echo "<div class='verse'>";
@@ -86,7 +86,7 @@ $(function() {
         echo '</div>';
     }
 
-    $this->widget('bootstrap.widgets.TbPager', array('pages' => $translations->pagination));
+    $this->widget('bootstrap.widgets.TbPager', ['pages' => $translations->pagination]);
 ?>
 
 <?php endif ?>

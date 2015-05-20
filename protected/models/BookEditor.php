@@ -14,19 +14,19 @@ class BookEditor extends Book
 
     public function rules()
     {
-        return array_merge(parent::rules(), array(
-            array('typ', 'in', 'range' => array_keys(Yii::app()->params['book_types']), 'message' => 'Неверный тип перевода.'),
-            array('s_lang, t_lang', 'numerical', 'integerOnly' => 'true'),
-            array('s_title, t_title', 'required'),
-            array('s_title, t_title', 'clean'),
-            array('descr', 'safehtml'),
-            array('rm_img', 'boolean'),
-            array('new_img', 'file', 'allowEmpty' => true, 'types' => 'jpg, gif, png, jpeg', 'wrongType' => 'Неверный формат файла. Пожалуйста, загружайте JPG, PNG или GIF'),
+        return array_merge(parent::rules(), [
+            ['typ', 'in', 'range' => array_keys(Yii::app()->params['book_types']), 'message' => 'Неверный тип перевода.'],
+            ['s_lang, t_lang', 'numerical', 'integerOnly' => 'true'],
+            ['s_title, t_title', 'required'],
+            ['s_title, t_title', 'clean'],
+            ['descr', 'safehtml'],
+            ['rm_img', 'boolean'],
+            ['new_img', 'file', 'allowEmpty' => true, 'types' => 'jpg, gif, png, jpeg', 'wrongType' => 'Неверный формат файла. Пожалуйста, загружайте JPG, PNG или GIF'],
 
-            array('ac_read, ac_trread, ac_rate, ac_comment, ac_gen, ac_tr, ac_blog_r, ac_blog_c, ac_blog_w', 'in', 'range' => array('a', 'g', 'm', 'o')),
-            array('ac_announce', 'in', 'range' => array('g', 'm', 'o')),
-            array('ac_chap_edit, ac_book_edit, ac_membership', 'in', 'range' => array('m', 'o')),
-        ));
+            ['ac_read, ac_trread, ac_rate, ac_comment, ac_gen, ac_tr, ac_blog_r, ac_blog_c, ac_blog_w', 'in', 'range' => ['a', 'g', 'm', 'o']],
+            ['ac_announce', 'in', 'range' => ['g', 'm', 'o']],
+            ['ac_chap_edit, ac_book_edit, ac_membership', 'in', 'range' => ['m', 'o']],
+        ]);
     }
 
     public function not_in_new($attr, $params)
@@ -53,7 +53,7 @@ class BookEditor extends Book
 
     public function attributeLabels()
     {
-        return array(
+        return [
             'typ' => 'Формат',
             's_title' => 'Название на языке оригинала',
             't_title' => 'Название на языке перевода',
@@ -78,7 +78,7 @@ class BookEditor extends Book
             'ac_chap_edit' => 'Редактировать оригинал',
             'ac_book_edit' => 'Редактировать описание перевода',
             'facecontrol' => 'Участие в группе',
-        );
+        ];
     }
 
     private function imgUnlink()
@@ -87,7 +87,7 @@ class BookEditor extends Book
             return false;
         }
         @unlink($this->imgPath);
-        $this->img = array(0, 0, 0);
+        $this->img = [0, 0, 0];
     }
 
     private function imgCheckDir()

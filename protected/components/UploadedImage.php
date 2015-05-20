@@ -113,7 +113,7 @@ class UploadedImage extends CComponent
     public function __toString()
     {
         $r = '{';
-        foreach (array('slot', 'subslot', 'seed', 'w', 'h') as $k) {
+        foreach (['slot', 'subslot', 'seed', 'w', 'h'] as $k) {
             if ($r != '{') {
                 $r .= ',';
             }

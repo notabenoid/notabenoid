@@ -26,7 +26,7 @@
         ?></dd>
 
 	<?php
-        $A = array();
+        $A = [];
         if ($user->n_trs > 0) {
             $A[] =
                 "<a href='".$user->getUrl('books')."'>".

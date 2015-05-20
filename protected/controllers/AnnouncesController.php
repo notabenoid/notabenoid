@@ -7,28 +7,28 @@ class AnnouncesController extends BookBaseController
 
     public function filters()
     {
-        return array('accessControl');
+        return ['accessControl'];
     }
 
     public function accessRules()
     {
-        return array(
-            array('allow', 'users' => array('*'),
-                'actions' => array('index', 'rss', 'book', 'post'),
-            ),
-            array('allow', 'users' => array('@'),
-                'actions' => array('comment_reply', 'comment_remove', 'edit', 'remove'),
-            ),
-            array('deny', 'users' => array('*')),
-        );
+        return [
+            ['allow', 'users' => ['*'],
+                'actions' => ['index', 'rss', 'book', 'post'],
+            ],
+            ['allow', 'users' => ['@'],
+                'actions' => ['comment_reply', 'comment_remove', 'edit', 'remove'],
+            ],
+            ['deny', 'users' => ['*']],
+        ];
     }
 
     public function actionIndex()
     {
-        $C = new CDbCriteria(array(
+        $C = new CDbCriteria([
             'condition' => "t.topics BETWEEN 80 AND 89 AND book.ac_read = 'a'",
             'order' => 't.cdate desc',
-        ));
+        ]);
 
         $filter = new SearchFilter('announces');
         $filter->setAttributes($_GET, true);
@@ -65,40 +65,40 @@ class AnnouncesController extends BookBaseController
             }
         }
 
-        $dp = new CActiveDataProvider(Announce::model()->with('book.cat', 'book.owner', 'seen'), array(
+        $dp = new CActiveDataProvider(Announce::model()->with('book.cat', 'book.owner', 'seen'), [
             'criteria' => $C,
-            'pagination' => array('pageSize' => 20),
-        ));
+            'pagination' => ['pageSize' => 20],
+        ]);
 
-        $this->side_view = array('index_side' => array('filter' => $filter));
-        $this->render('index', array('dp' => $dp));
+        $this->side_view = ['index_side' => ['filter' => $filter]];
+        $this->render('index', ['dp' => $dp]);
     }
 
     public function actionRss()
     {
         $topic = (int) $_GET['topic'];
 
-        $announces = Announce::model()->with('book')->findAll(array(
+        $announces = Announce::model()->with('book')->findAll([
             'condition' => isset(Yii::app()->params['blog_topics']['announce'][$topic]) ? "t.topics = '{$topic}'" : "t.topics BETWEEN 80 AND 89 AND book.ac_read = 'a'",
             'order' => 't.cdate desc',
             'limit' => 20,
-        ));
+        ]);
 
-        $this->renderPartial('rss', array('announces' => $announces));
+        $this->renderPartial('rss', ['announces' => $announces]);
     }
 
     public function actionBook($book_id)
     {
         $book = $this->loadBook($book_id);
 
-        $lenta = new CActiveDataProvider(BlogPost::model()->with('author', 'seen')->book($book->id), array(
-            'criteria' => array('condition' => 't.topics BETWEEN 80 AND 89', 'order' => 't.cdate desc'),
-            'pagination' => array('pageSize' => 20),
-        ));
+        $lenta = new CActiveDataProvider(BlogPost::model()->with('author', 'seen')->book($book->id), [
+            'criteria' => ['condition' => 't.topics BETWEEN 80 AND 89', 'order' => 't.cdate desc'],
+            'pagination' => ['pageSize' => 20],
+        ]);
 
-        $this->side_view = array('book_side' => array('book' => $book), '//book/index_side' => array('book' => $book));
+        $this->side_view = ['book_side' => ['book' => $book], '//book/index_side' => ['book' => $book]];
 
-        $this->render('book', array('book' => $book, 'lenta' => $lenta));
+        $this->render('book', ['book' => $book, 'lenta' => $lenta]);
     }
 
     public function actionPost($book_id, $post_id)
@@ -106,7 +106,7 @@ class AnnouncesController extends BookBaseController
         $post_id = (int) $post_id;
         $book = $this->loadBook($book_id);
 
-        $post = BlogPost::model()->with('author', 'seen')->findByPk($post_id, 't.topics BETWEEN 80 AND 89 AND book_id = :book_id', array(':book_id' => $book->id));
+        $post = BlogPost::model()->with('author', 'seen')->findByPk($post_id, 't.topics BETWEEN 80 AND 89 AND book_id = :book_id', [':book_id' => $book->id]);
         $post->book = $this->book;
 
         if (!$post || !$post->isAnnounce) {
@@ -117,9 +117,9 @@ class AnnouncesController extends BookBaseController
 
         $post->setSeen();
 
-        $this->side_view = array('book_side' => array('book' => $book), '//book/index_side' => array('book' => $book));
+        $this->side_view = ['book_side' => ['book' => $book], '//book/index_side' => ['book' => $book]];
 
-        $this->render('post', array('book' => $this->book, 'post' => $post, 'comments' => $comments));
+        $this->render('post', ['book' => $this->book, 'post' => $post, 'comments' => $comments]);
     }
 
     public function actionComment_reply($book_id, $post_id, $comment_id = 0)
@@ -135,7 +135,7 @@ class AnnouncesController extends BookBaseController
 //		if(!$this->book->can("blog_c")) throw new CHttpException(403, "Вы не можете оставлять комментарии в блоге этого перевода. " . $this->book->getWhoCanDoIt("blog_c"));
 
         if ($comment_id) {
-            $parent = Comment::model()->with('post', 'author')->findByPk($comment_id, 'post_id = :post_id', array(':post_id' => $post_id));
+            $parent = Comment::model()->with('post', 'author')->findByPk($comment_id, 'post_id = :post_id', [':post_id' => $post_id]);
             if (!$parent) {
                 throw new CHttpException(404, 'Вы пытаетесь ответить на несуществующий комментарий.');
             }
@@ -160,13 +160,13 @@ class AnnouncesController extends BookBaseController
 
         if ($_POST['ajax']) {
             if (Yii::app()->user->hasFlash('error')) {
-                echo json_encode(array('error' => Yii::app()->user->getFlash('error')));
+                echo json_encode(['error' => Yii::app()->user->getFlash('error')]);
             } else {
                 $comment->is_new = true;
-                echo json_encode(array(
+                echo json_encode([
                     'id' => $comment->id, 'pid' => $comment->pid,
-                    'html' => $this->renderPartial('//blog/_comment', array('comment' => $comment), true),
-                ));
+                    'html' => $this->renderPartial('//blog/_comment', ['comment' => $comment], true),
+                ]);
             }
         } else {
             $this->redirect($parent->post->url.'#cmt_'.$comment->id);
@@ -183,7 +183,7 @@ class AnnouncesController extends BookBaseController
             $this->redirect("/blog/{$post_id}");
         }
 
-        $json = array('id' => $comment_id);
+        $json = ['id' => $comment_id];
 
         // Загружаем удаляемый комментарий вместе с постом
         $comment = Comment::model()->with('post')->findByPk($comment_id);
@@ -218,7 +218,7 @@ class AnnouncesController extends BookBaseController
         }
 
         if ($post_id != 0) {
-            $post = Announce::model()->findByPk($post_id, 't.topics BETWEEN 80 AND 89 AND book_id = :book_id', array(':book_id' => $book->id));
+            $post = Announce::model()->findByPk($post_id, 't.topics BETWEEN 80 AND 89 AND book_id = :book_id', [':book_id' => $book->id]);
             if (!$post) {
                 throw new CHttpException(404, 'Анонса не существует. Возможно, его удалили.');
             }
@@ -244,8 +244,8 @@ class AnnouncesController extends BookBaseController
             }
         }
 
-        $this->side_view = array('edit_side' => array('book' => $book));
-        $this->render('edit', array('book' => $book, 'post' => $post));
+        $this->side_view = ['edit_side' => ['book' => $book]];
+        $this->render('edit', ['book' => $book, 'post' => $post]);
     }
 
     public function actionRemove($book_id, $post_id)
@@ -261,7 +261,7 @@ class AnnouncesController extends BookBaseController
             $this->redirect($this->book->getUrl('announces'));
         }
 
-        $post = BlogPost::model()->findByPk($post_id, 't.topics BETWEEN 80 AND 89 AND t.book_id = :book_id', array(':book_id' => $this->book->id));
+        $post = BlogPost::model()->findByPk($post_id, 't.topics BETWEEN 80 AND 89 AND t.book_id = :book_id', [':book_id' => $this->book->id]);
         if (!$post) {
             throw new CHttpException(404, 'Анонса не существует. Возможно, его уже удалили.');
         }

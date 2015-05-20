@@ -15,7 +15,7 @@
             echo '&mdash;';
         } else {
             $procent = floor($chap->d_vars / $chap->n_verses * 10000) / 100;
-            $classes = array(100 => 'progress-danger', 80 => 'progress-warning', 60 => 'progress-success', 40 => '', 20 => 'progress-info');
+            $classes = [100 => 'progress-danger', 80 => 'progress-warning', 60 => 'progress-success', 40 => '', 20 => 'progress-info'];
             foreach ($classes as $p => $class) {
                 if ($procent >= $p) {
                     break;

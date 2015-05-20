@@ -30,7 +30,7 @@ if ($mail_dp->getTotalItemCount() == 0):
 endif
 ?>
 
-<?php $this->widget('bootstrap.widgets.TbPager', array('pages' => $mail_dp->pagination, 'header' => "<div class='pagination pagination-centered' style='margin-bottom:0'>")); ?>
+<?php $this->widget('bootstrap.widgets.TbPager', ['pages' => $mail_dp->pagination, 'header' => "<div class='pagination pagination-centered' style='margin-bottom:0'>"]); ?>
 
 <form method="post" id="form-mass" class="form-inline">
 <table id="Mail" class="table table-stripped table-condensed">
@@ -67,4 +67,4 @@ endif
 	<button type="submit" class="btn"><i class="icon-fire"></i> Ok</button>
 </div>
 </form>
-<?php $this->widget('bootstrap.widgets.TbPager', array('pages' => $mail_dp->pagination, 'header' => "<div class='pagination pagination-centered' style='margin-bottom:0'>")); ?>
+<?php $this->widget('bootstrap.widgets.TbPager', ['pages' => $mail_dp->pagination, 'header' => "<div class='pagination pagination-centered' style='margin-bottom:0'>"]); ?>

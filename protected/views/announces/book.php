@@ -42,10 +42,10 @@
         echo "<div id='Lenta'>";
         foreach ($posts as $post) {
             $post->book = $book;
-            $this->renderPartial('//blog/_post', array('post' => $post, 'placement' => 'index', 'has' => array('bookLink' => false)));
+            $this->renderPartial('//blog/_post', ['post' => $post, 'placement' => 'index', 'has' => ['bookLink' => false]]);
         }
         echo '</div>';
     }
 
-    $this->widget('CLinkPager', array('pages' => $lenta->pagination));
+    $this->widget('CLinkPager', ['pages' => $lenta->pagination]);
 ?>

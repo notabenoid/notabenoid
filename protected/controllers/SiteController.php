@@ -21,7 +21,7 @@ class SiteController extends Controller
         }
         $max_n = 0;
         $min_n = 100000;
-        $R = array();
+        $R = [];
         foreach ($rows as $row) {
             $row['request'] = strip_tags($row['request']);
 
@@ -72,10 +72,10 @@ class SiteController extends Controller
         $this->layout = 'column1';
         $hot_key = sprintf('hot.%d.%d.%d', Yii::app()->user->ini['hot.s_lang'], Yii::app()->user->ini['hot.t_lang'], Yii::app()->user->ini['hot.img']);
         if (!($hot = Yii::app()->cache->get($hot_key))) {
-            $C = new CDbCriteria(array(
+            $C = new CDbCriteria([
                 'condition' => "t.ac_read = 'a'",
                 'order' => 't.last_tr DESC NULLS LAST',
-            ));
+            ]);
             $C->limit = Yii::app()->user->ini['hot.img'] ? 12 : 36;
             if (Yii::app()->user->ini['hot.s_lang']) {
                 $C->addCondition('t.s_lang = '.Yii::app()->user->ini['hot.s_lang']);
@@ -89,11 +89,11 @@ class SiteController extends Controller
         }
 
         if (!($announces = Yii::app()->cache->get('announces'))) {
-            $announces = Announce::model()->with('book.cat', 'book.owner', 'seen')->findAll(array(
+            $announces = Announce::model()->with('book.cat', 'book.owner', 'seen')->findAll([
                 'condition' => "t.topics BETWEEN 80 AND 89 AND book.ac_read = 'a'",
                 'order' => 't.cdate desc',
                 'limit' => 5,
-            ));
+            ]);
             Yii::app()->cache->set('announces', $announces, 90);
         }
 
@@ -102,7 +102,7 @@ class SiteController extends Controller
             Yii::app()->cache->set('blog', $blog, 105);
         }
 
-        $this->render('index', array('hot' => $hot, 'searchTop' => $this->getSearchTop(), 'announces' => $announces, 'blog' => $blog));
+        $this->render('index', ['hot' => $hot, 'searchTop' => $this->getSearchTop(), 'announces' => $announces, 'blog' => $blog]);
     }
 
     public function actionPoll()
@@ -166,7 +166,7 @@ class SiteController extends Controller
         $area = $_POST['area'];
         unset($_POST['area']);
 
-        if (in_array($area, array('hot'))) {
+        if (in_array($area, ['hot'])) {
             foreach ($_POST as $k => $v) {
                 Yii::app()->user->ini->set($area.'.'.$k, $v);
             }
@@ -204,7 +204,7 @@ class SiteController extends Controller
     {
         if ($error = Yii::app()->errorHandler->error) {
             if (Yii::app()->request->isAjaxRequest) {
-                echo json_encode(array('error' => $error['message']));
+                echo json_encode(['error' => $error['message']]);
             } else {
                 $this->render('error', $error);
             }
@@ -226,17 +226,17 @@ class SiteController extends Controller
 
             $ip = $_SERVER['HTTP_X_REAL_IP'] ?: $_SERVER['REMOTE_ADDR'];
 
-            if (Yii::app()->db->createCommand("SELECT 1 FROM moving WHERE ip = :ip AND cdate + INTERVAL '1 minute' > now()")->queryScalar(array(':ip' => $ip))) {
+            if (Yii::app()->db->createCommand("SELECT 1 FROM moving WHERE ip = :ip AND cdate + INTERVAL '1 minute' > now()")->queryScalar([':ip' => $ip])) {
                 $this->redirect('/');
             }
 
-            $p = array(
+            $p = [
                 ':ip' => $ip,
                 ':x' => (int) $_POST['x'],
                 ':y' => (int) $_POST['y'],
-                ':color' => '{'.implode(',', array(rand(0, 128), rand(0, 128), rand(0, 128))).'}',
+                ':color' => '{'.implode(',', [rand(0, 128), rand(0, 128), rand(0, 128)]).'}',
                 ':t' => $t,
-            );
+            ];
 
             Yii::app()->db->createCommand('INSERT INTO moving (ip, x, y, color, t) VALUES (:ip, :x, :y, :color, :t)')->execute($p);
 

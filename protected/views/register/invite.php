@@ -10,11 +10,11 @@
 
 <?php
     /** @var TbActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
         'id' => 'form-invite',
         'type' => 'vertical',
-        'focus' => array($model, 'login'),
-    ));
+        'focus' => [$model, 'login'],
+    ]);
 
     echo $form->errorSummary($model);
     echo $form->textFieldRow($model, 'email');
@@ -22,7 +22,7 @@
 ?>
 
 <div class="form-summary">
-	<?php echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Пригласить", array('type' => 'submit', 'class' => 'btn btn-primary')).' '; ?>
+	<?php echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Пригласить", ['type' => 'submit', 'class' => 'btn btn-primary']).' '; ?>
 </div>
 
 <?php $this->endWidget(); ?>

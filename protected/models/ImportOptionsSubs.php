@@ -6,14 +6,14 @@ class ImportOptionsSubs extends CFormModel
 
     public function rules()
     {
-        return array(
+        return [
             // login and pass are required
-            array('src', 'file', 'message' => 'Пожалуйста, выберите файл.', 'maxSize' => 1024 * 1024, 'minSize' => 1,
+            ['src', 'file', 'message' => 'Пожалуйста, выберите файл.', 'maxSize' => 1024 * 1024, 'minSize' => 1,
                 'tooLarge' => 'Файл слишком большой', 'tooSmall' => 'Файл подозрительно малелький',
-            ),
-            array('format', 'required'),
-            array('encoding', 'required'),
-        );
+            ],
+            ['format', 'required'],
+            ['encoding', 'required'],
+        ];
     }
 
     /**
@@ -21,10 +21,10 @@ class ImportOptionsSubs extends CFormModel
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'src' => 'Файл с субтитрами',
             'format' => 'Формат',
             'encoding' => 'Кодировка',
-        );
+        ];
     }
 }

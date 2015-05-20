@@ -19,7 +19,7 @@ abstract class ReadyGenerator_base
     /** @var Orig[] */
     public $orig;
 
-    protected $translators = array();
+    protected $translators = [];
     protected $eol;
 
     public function __construct($options, $chap, $orig)
@@ -59,7 +59,7 @@ abstract class ReadyGenerator_base
 
         if ($cnt == 0) {
             $o = new Orig();
-            $o->setAttributes(array('t1' => '00:00:00.000', 't2' => '00:00:00.000', 'ord' => 0), false);
+            $o->setAttributes(['t1' => '00:00:00.000', 't2' => '00:00:00.000', 'ord' => 0], false);
         }
 
         if ($this->chap->status != Chapter::STATUS_NONE && $this->chap->status != Chapter::STATUS_READY) {

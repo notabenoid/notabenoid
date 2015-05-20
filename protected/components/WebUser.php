@@ -6,7 +6,7 @@ class WebUserIni implements ArrayAccess, Serializable
     private $_modified = false;
 
     /* Добавляя новые свойства, обязательно добавить их в global.js CUser() */
-    private $ini = array(
+    private $ini = [
         'hot.img' => 1,
         'hot.s_lang' => 0,
         'hot.t_lang' => 0,
@@ -32,15 +32,15 @@ class WebUserIni implements ArrayAccess, Serializable
         'poll.done' => 0,
 
         'blog.topics' => '',
-    );
+    ];
 
-    public static $newCommentsSchemes = array(
-        0 => array('_title' => 'Тэд Мосби',          'backGround' => '#AAD7EE', 'metaColor' => '#656B6A'),
-        1 => array('_title' => 'Магистр Йода',       'backGround' => '#C7C77A', 'metaColor' => '#6B664C'),
-        4 => array('_title' => 'Мистер Бин',         'backGround' => '#cccccc', 'metaColor' => '#777777'),
-        3 => array('_title' => 'Дейнерис Таргариен', 'backGround' => '#FFFFBF', 'metaColor' => '#B5AB77'),
-        2 => array('_title' => 'Константин Кинчев',     'backGround' => '#38100A', 'textColor' => '#f00', 'metaColor' => '#920000'),
-    );
+    public static $newCommentsSchemes = [
+        0 => ['_title' => 'Тэд Мосби',          'backGround' => '#AAD7EE', 'metaColor' => '#656B6A'],
+        1 => ['_title' => 'Магистр Йода',       'backGround' => '#C7C77A', 'metaColor' => '#6B664C'],
+        4 => ['_title' => 'Мистер Бин',         'backGround' => '#cccccc', 'metaColor' => '#777777'],
+        3 => ['_title' => 'Дейнерис Таргариен', 'backGround' => '#FFFFBF', 'metaColor' => '#B5AB77'],
+        2 => ['_title' => 'Константин Кинчев',     'backGround' => '#38100A', 'textColor' => '#f00', 'metaColor' => '#920000'],
+    ];
 
     public function getCss()
     {
@@ -324,7 +324,7 @@ class WebUser extends CWebUser
     public function accessFilterUsers($role)
     {
         if (!isset(self::$roles[$role])) {
-            return array();
+            return [];
         }
 
         return array_keys(self::$roles[$role]);
@@ -354,7 +354,7 @@ class WebUser extends CWebUser
 					LEFT JOIN orig as o ON seen.orig_id = o.id
 				WHERE
 					seen.user_id = :user_id AND seen.track = true
-			')->queryScalar(array(':user_id' => $this->id));
+			')->queryScalar([':user_id' => $this->id]);
         }
 
         return $this->newComments;
@@ -367,7 +367,7 @@ class WebUser extends CWebUser
         }
 
         if ($this->newNotices === null) {
-            $this->newNotices = Yii::app()->db->createCommand('SELECT COUNT(*) FROM notices WHERE user_id = :user_id AND not seen')->queryScalar(array(':user_id' => $this->id));
+            $this->newNotices = Yii::app()->db->createCommand('SELECT COUNT(*) FROM notices WHERE user_id = :user_id AND not seen')->queryScalar([':user_id' => $this->id]);
         }
 
         return $this->newNotices;
@@ -381,7 +381,7 @@ class WebUser extends CWebUser
 
         if ($this->newMail === null) {
             $this->newMail = Yii::app()->db->createCommand('SELECT COUNT(*) FROM mail WHERE user_id = :user_id AND folder = :folder AND not seen')
-                ->queryScalar(array(':user_id' => $this->id, 'folder' => Mail::INBOX));
+                ->queryScalar([':user_id' => $this->id, 'folder' => Mail::INBOX]);
         }
 
         return $this->newMail;

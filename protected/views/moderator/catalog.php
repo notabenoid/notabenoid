@@ -134,15 +134,15 @@
     ?>
 		<?php
             /** @var TbActiveForm $form */
-            $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+            $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
                 'id' => 'edit',
                 'type' => 'vertical',
                 'inlineErrors' => false,
                 'action' => "/moderator/catedit/id/{$edit_node->id}",
-            ));
+            ]);
 
     echo '<h3>Свойства раздела</h3>';
-    echo $form->textFieldRow($edit_node, 'title', array('placeholder' => 'Название', 'class' => 'span3'));
+    echo $form->textFieldRow($edit_node, 'title', ['placeholder' => 'Название', 'class' => 'span3']);
     echo $form->checkBoxRow($edit_node, 'available');
     ?>
 		<div style='margin-bottom:5px'>
@@ -189,14 +189,14 @@
 		<?php
             /** @var TbActiveForm $form */
             $kitten = new Category();
-            $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+            $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
                 'id' => 'kitten',
                 'type' => 'vertical',
                 'inlineErrors' => false,
                 'action' => "/moderator/kitten/pid/{$edit_node->id}",
-            ));
+            ]);
 
-            echo $form->textFieldRow($kitten, 'title', array('placeholder' => 'Название', 'class' => 'span3'));
+            echo $form->textFieldRow($kitten, 'title', ['placeholder' => 'Название', 'class' => 'span3']);
             echo $form->checkBoxRow($kitten, 'available');
         ?>
 		<div>

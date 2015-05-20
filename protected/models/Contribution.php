@@ -15,22 +15,22 @@ class Contribution extends CActiveRecord
 
     public function primaryKey()
     {
-        return array('user_id', 'book_id');
+        return ['user_id', 'book_id'];
     }
 
     public function relations()
     {
-        return array(
-            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
-            'book' => array(self::BELONGS_TO, 'Book', 'book_id'),
-        );
+        return [
+            'user' => [self::BELONGS_TO, 'User', 'user_id'],
+            'book' => [self::BELONGS_TO, 'Book', 'book_id'],
+        ];
     }
 
     public function user($user_id)
     {
-        $this->getDbCriteria()->mergeWith(array(
+        $this->getDbCriteria()->mergeWith([
             'condition' => 't.user_id = '.intval($user_id),
-        ));
+        ]);
 
         return $this;
     }

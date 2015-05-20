@@ -10,7 +10,7 @@ class SearchController extends Controller
 
         // Критерий с условиями поиска
         $C = new CDbCriteria();
-        $C->with = array('owner', 'cat');
+        $C->with = ['owner', 'cat'];
 
         $filter->setAttributes($_GET, true);
         if ($filter->validate()) {
@@ -65,10 +65,10 @@ class SearchController extends Controller
 
         $C->order = SearchFilter::$sortSQL[$filter->sort];
 
-        $dp = new CActiveDataProvider(Book::model()->with('owner'), array(
+        $dp = new CActiveDataProvider(Book::model()->with('owner'), [
             'criteria' => $C,
-            'pagination' => array('pageSize' => 50),
-        ));
+            'pagination' => ['pageSize' => 50],
+        ]);
 
         if ($filter->doSearch) {
             $dp->totalItemCount = Yii::app()->db
@@ -78,11 +78,11 @@ class SearchController extends Controller
             // Пишем в логи
             if ($dp->totalItemCount > 0 && $_GET['from'] != 'stop' && $filter->t != '') {
                 Yii::app()->db->createCommand('INSERT INTO search_history (ip, request) VALUES (:ip, :request)')
-                    ->execute(array(':ip' => $_SERVER['HTTP_X_REAL_IP'] ? $_SERVER['HTTP_X_REAL_IP'] : $_SERVER['REMOTE_ADDR'], ':request' => $filter->t));
+                    ->execute([':ip' => $_SERVER['HTTP_X_REAL_IP'] ? $_SERVER['HTTP_X_REAL_IP'] : $_SERVER['REMOTE_ADDR'], ':request' => $filter->t]);
             }
         }
 
-        $this->side_view = array('index_side' => array('filter' => $filter));
-        $this->render('index', array('filter' => $filter, 'dp' => $dp));
+        $this->side_view = ['index_side' => ['filter' => $filter]];
+        $this->render('index', ['filter' => $filter, 'dp' => $dp]);
     }
 }

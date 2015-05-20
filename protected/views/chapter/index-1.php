@@ -58,7 +58,7 @@
 <h1><?=$chap->book->ahref; ?>: <?=$chap->title; ?></h1>
 
 <div id="tb-main"><div>
-	<div class='group'><a href="<?=$chap->getUrl('go?'.getQS(array('nach' => 'prev', 'ord' => $chap->ord), array('Orig_page'))); ?>" title="Предыдущая глава"><i class="i icon-arrow-left"></i></a></div>
+	<div class='group'><a href="<?=$chap->getUrl('go?'.getQS(['nach' => 'prev', 'ord' => $chap->ord], ['Orig_page'])); ?>" title="Предыдущая глава"><i class="i icon-arrow-left"></i></a></div>
 
 	<div class="tb-index btn-group">
 		<a href="<?=$chap->book->url; ?>" class="btn btn-small"><i class="icon-list"></i> Оглавление</a>
@@ -69,7 +69,7 @@
 		</ul>
 	</div>
 
-	<div class='group'><a href="<?=$chap->getUrl('go?'.getQS(array('nach' => 'next', 'ord' => $chap->ord), array('Orig_page'))); ?>" title="Следующая глава"><i class="i icon-arrow-right"></i></a></div>
+	<div class='group'><a href="<?=$chap->getUrl('go?'.getQS(['nach' => 'next', 'ord' => $chap->ord], ['Orig_page'])); ?>" title="Следующая глава"><i class="i icon-arrow-right"></i></a></div>
 
 	<div class="btn-group">
 		<?php if (!$user->isGuest): ?>
@@ -106,7 +106,7 @@
                 ?>
                 </ul>
                 <button type="submit" class="btn btn-mini btn-primary">Показать</button>
-                <a href="<?=$chap->getUrl(getQS(null, array('Orig_page', 'show', 'to', 'tt', 'show_user'))); ?>" class="btn btn-mini">Сбросить всё</a>
+                <a href="<?=$chap->getUrl(getQS(null, ['Orig_page', 'show', 'to', 'tt', 'show_user'])); ?>" class="btn btn-mini">Сбросить всё</a>
             </form>
         </div>
 
@@ -181,7 +181,7 @@
 <div class="clear"></div>
 
 <?php
-    $tableClasses = array('translator');
+    $tableClasses = ['translator'];
 
     $tableEmpty = false;
     if ($orig_dp->totalItemCount == 0):
@@ -326,10 +326,10 @@
 <?php
     $p = $orig_dp->pagination;
     if ($p->currentPage > 0) {
-        echo "<p class='p'><a href='?".getQS(array('Orig_page' => $p->currentPage))."'>&larr; Предыдущая страница</a></p>";
+        echo "<p class='p'><a href='?".getQS(['Orig_page' => $p->currentPage])."'>&larr; Предыдущая страница</a></p>";
     }
     if ($p->currentPage < $p->pageCount - 1) {
-        echo "<p class='n'><a href='?".getQS(array('Orig_page' => $p->currentPage + 2))."'>Следующая страница &rarr;</a></p>";
+        echo "<p class='n'><a href='?".getQS(['Orig_page' => $p->currentPage + 2])."'>Следующая страница &rarr;</a></p>";
     }
 ?>
 </div>

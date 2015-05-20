@@ -160,7 +160,7 @@
 		</h2>
 		<?php
             foreach ($announces as $announce) {
-                $this->renderPartial('/announces/_announce', array('announce' => $announce));
+                $this->renderPartial('/announces/_announce', ['announce' => $announce]);
             }
         ?>
 		<p class="links">

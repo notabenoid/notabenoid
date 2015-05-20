@@ -16,16 +16,16 @@
 
 <?php
     /** @var TbActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
         'id' => 'form-edit',
         'type' => 'horizontal',
         'enableClientValidation' => false,
-        'focus' => array($model, 'name'),
-    ));
+        'focus' => [$model, 'name'],
+    ]);
 ?>
 
 <?php
-    foreach (array('name' => 'b', 'icq' => 'a', 'skype' => 'a', 'lj' => 'a', 'url' => 'b') as $attr => $cssClass) {
+    foreach (['name' => 'b', 'icq' => 'a', 'skype' => 'a', 'lj' => 'a', 'url' => 'b'] as $attr => $cssClass) {
         echo $form->textFieldRow($model, $attr);
     }
 
@@ -33,7 +33,7 @@
     echo $form->textFieldRow($model, 'city');
 ?>
 <div class="control-group">
-	<?php echo $form->labelEx($model, 'bdate', array('class' => 'control-label')); ?>
+	<?php echo $form->labelEx($model, 'bdate', ['class' => 'control-label']); ?>
 	<div class="controls">
 	<?php
         echo $form->textField($model, 'bdate_d');
@@ -49,9 +49,9 @@
 
 <div class="form-actions">
 	<?php
-        echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Сохранить", array('type' => 'submit', 'class' => 'btn btn-primary')).' ';
-        echo CHtml::htmlButton("<i class='icon-remove icon-white'></i> Отмена", array('onclick' => "location.href='".Yii::app()->user->url."'", 'class' => 'btn btn-success')).' ';
-        echo CHtml::htmlButton("<i class='icon-ban-circle icon-white'></i> Удалить аккаунт", array('onclick' => "location.href='".Yii::app()->user->getUrl('delete')."'", 'class' => 'btn btn-danger'));
+        echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Сохранить", ['type' => 'submit', 'class' => 'btn btn-primary']).' ';
+        echo CHtml::htmlButton("<i class='icon-remove icon-white'></i> Отмена", ['onclick' => "location.href='".Yii::app()->user->url."'", 'class' => 'btn btn-success']).' ';
+        echo CHtml::htmlButton("<i class='icon-ban-circle icon-white'></i> Удалить аккаунт", ['onclick' => "location.href='".Yii::app()->user->getUrl('delete')."'", 'class' => 'btn btn-danger']);
     ?>
 </div>
 

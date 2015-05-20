@@ -3,7 +3,7 @@
 class OrigWriter
 {
     private $sql = '';
-    private $sql_params = array();
+    private $sql_params = [];
     private $cnt = 0;
     public $pagesize = 400;
 
@@ -44,7 +44,7 @@ class OrigWriter
         Yii::app()->db->createCommand($this->sql)->execute($this->sql_params);
 
         $this->sql = '';
-        $this->sql_params = array();
+        $this->sql_params = [];
         $this->cnt = 0;
 
         return true;

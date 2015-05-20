@@ -31,10 +31,10 @@ class Translation extends CActiveRecord
 
     public function rules()
     {
-        return array(
-            array('body', 'required', 'message' => 'Пожалуйста, введите вашу версию перевода этого фрагмента.'),
-            array('body', 'validateBody'),
-        );
+        return [
+            ['body', 'required', 'message' => 'Пожалуйста, введите вашу версию перевода этого фрагмента.'],
+            ['body', 'validateBody'],
+        ];
     }
 
     public function validateBody($param, $options)
@@ -46,39 +46,39 @@ class Translation extends CActiveRecord
 
     public function relations()
     {
-        return array(
-            'user' => array(self::BELONGS_TO, 'User',     'user_id'),
-            'book' => array(self::BELONGS_TO, 'Book',     'book_id'),    // убрать бы нахуй, посмотреть, где используется (в модели доступ везде через $this->chap->book)
-            'chap' => array(self::BELONGS_TO, 'Chapter',  'chap_id'),
-            'orig' => array(self::BELONGS_TO, 'Orig',     'orig_id'),
-            'mark' => array(self::HAS_ONE,    'Mark',     'tr_id', 'on' => 'mark.user_id = '.intval(Yii::app()->user->id)),
-            'marks' => array(self::HAS_MANY,   'Mark',     'tr_id', 'order' => 'marks.cdate desc'),
-        );
+        return [
+            'user' => [self::BELONGS_TO, 'User',     'user_id'],
+            'book' => [self::BELONGS_TO, 'Book',     'book_id'],    // убрать бы нахуй, посмотреть, где используется (в модели доступ везде через $this->chap->book)
+            'chap' => [self::BELONGS_TO, 'Chapter',  'chap_id'],
+            'orig' => [self::BELONGS_TO, 'Orig',     'orig_id'],
+            'mark' => [self::HAS_ONE,    'Mark',     'tr_id', 'on' => 'mark.user_id = '.intval(Yii::app()->user->id)],
+            'marks' => [self::HAS_MANY,   'Mark',     'tr_id', 'order' => 'marks.cdate desc'],
+        ];
     }
 
     public function chapter($id)
     {
-        $this->getDbCriteria()->mergeWith(array(
+        $this->getDbCriteria()->mergeWith([
             'condition' => 'chap_id = '.intval($id),
-        ));
+        ]);
 
         return $this;
     }
 
     public function orig($id)
     {
-        $this->getDbCriteria()->mergeWith(array(
+        $this->getDbCriteria()->mergeWith([
             'condition' => 'orig_id = '.intval($id),
-        ));
+        ]);
 
         return $this;
     }
 
     public function userbook($user_id, $book_id)
     {
-        $this->getDbCriteria()->mergeWith(array(
+        $this->getDbCriteria()->mergeWith([
             'condition' => 't.user_id = '.intval($user_id).' AND t.book_id = '.intval($book_id),
-        ));
+        ]);
 
         return $this;
     }
@@ -87,12 +87,12 @@ class Translation extends CActiveRecord
     {
         parent::afterSave();
 
-        $sql = array();
-        $params = array();
-        $chap_update = array();
-        $book_update = array();
+        $sql = [];
+        $params = [];
+        $chap_update = [];
+        $book_update = [];
         if ($this->isNewRecord) {
-            $is_first = count(Yii::app()->db->createCommand('SELECT 1 FROM translate WHERE orig_id = :orig_id LIMIT 2')->queryAll(true, array(':orig_id' => $this->orig_id))) == 1;
+            $is_first = count(Yii::app()->db->createCommand('SELECT 1 FROM translate WHERE orig_id = :orig_id LIMIT 2')->queryAll(true, [':orig_id' => $this->orig_id])) == 1;
 
             $sql[] = 'UPDATE users SET n_trs = n_trs + 1 WHERE id = :user_id;';
             $params[':user_id'] = $this->user_id;
@@ -148,8 +148,8 @@ class Translation extends CActiveRecord
     {
         parent::afterDelete();
 
-        $sql = array();
-        $params = array();
+        $sql = [];
+        $params = [];
 
         if ($this->user_id != 0) {
             // Понижаем рейтинг автора
@@ -163,7 +163,7 @@ class Translation extends CActiveRecord
         }
 
         // Статистика chap и book
-        $was_last = count(Yii::app()->db->createCommand('SELECT 1 FROM translate WHERE orig_id = :orig_id LIMIT 1')->queryAll(true, array(':orig_id' => $this->orig_id))) == 0;
+        $was_last = count(Yii::app()->db->createCommand('SELECT 1 FROM translate WHERE orig_id = :orig_id LIMIT 1')->queryAll(true, [':orig_id' => $this->orig_id])) == 0;
         $t = 'n_vars = n_vars - 1'.($was_last ? ', d_vars = d_vars - 1' : '');
 
         $sql[] = "UPDATE chapters SET {$t}, last_tr = now() WHERE id = :chap_id;";
@@ -198,7 +198,7 @@ class Translation extends CActiveRecord
 
     public function removeMarks()
     {
-        Yii::app()->db->createCommand('DELETE FROM marks WHERE tr_id = :id')->execute(array(':id' => $this->id));
+        Yii::app()->db->createCommand('DELETE FROM marks WHERE tr_id = :id')->execute([':id' => $this->id]);
     }
 
     public function render($opts, $filter = null)

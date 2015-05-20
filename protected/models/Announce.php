@@ -9,13 +9,13 @@ class Announce extends BlogPost
 
     public function rules()
     {
-        return array(
-            array('body', 'required', 'message' => 'Пожалуйста, введите текст анонса.'),
-            array('body', 'length', 'max' => 4096, 'tooLong' => 'Текст анонса не может быть длиннее 4 килобайт.'),
-            array('body', 'safehtml'),
-            array('topics', 'required', 'message' => 'Пожалуйста, выберите рубрику.'),
-            array('topics', 'in', 'range' => array_keys(Yii::app()->params['blog_topics']['announce'])),
-        );
+        return [
+            ['body', 'required', 'message' => 'Пожалуйста, введите текст анонса.'],
+            ['body', 'length', 'max' => 4096, 'tooLong' => 'Текст анонса не может быть длиннее 4 килобайт.'],
+            ['body', 'safehtml'],
+            ['topics', 'required', 'message' => 'Пожалуйста, выберите рубрику.'],
+            ['topics', 'in', 'range' => array_keys(Yii::app()->params['blog_topics']['announce'])],
+        ];
     }
 
     public function safehtml($attr, $params)
@@ -28,16 +28,16 @@ class Announce extends BlogPost
 
     public function attributeLabels()
     {
-        return array(
+        return [
             'body' => 'Текст анонса',
             'topics' => 'Рубрика',
-        );
+        ];
     }
 
     public function getWasToday()
     {
         return Yii::app()->db->createCommand('SELECT 1 FROM blog_posts WHERE book_id = :book_id AND (topics BETWEEN 80 AND 89) AND cdate::date = current_date LIMIT 1')
-            ->queryScalar(array(':book_id' => $this->book_id));
+            ->queryScalar([':book_id' => $this->book_id]);
     }
 
     public function afterValidate()

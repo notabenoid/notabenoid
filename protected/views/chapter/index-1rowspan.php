@@ -7,7 +7,7 @@
      * @var string
      * @var string
      */
-    $filters = array(
+    $filters = [
         0 => 'Всё',
         1 => 'Непереведённое',
         7 => 'С 2 и более версиями перевода',
@@ -16,7 +16,7 @@
         2 => 'От переводчика',
         5 => 'Оригинал содержит',
         6 => 'Перевод содержит',
-    );
+    ];
 
     Yii::app()->clientScript
         ->registerCssFile('/css/translate-1rowspan.css?11')
@@ -90,7 +90,7 @@
 	</div>
 </div>
 
-<?php $this->widget('bootstrap.widgets.TbPager', array('pages' => $orig_dp->pagination, 'header' => "<div class='pagination pagination-centered'>")); ?>
+<?php $this->widget('bootstrap.widgets.TbPager', ['pages' => $orig_dp->pagination, 'header' => "<div class='pagination pagination-centered'>"]); ?>
 
 <?php
 if ($orig_dp->totalItemCount == 0):
@@ -280,7 +280,7 @@ if ($orig_dp->totalItemCount == 0):
 <?php
     $fixer->fix();
 
-    $this->widget('bootstrap.widgets.TbPager', array('pages' => $orig_dp->pagination, 'header' => "<div class='pagination pagination-centered'>"));
+    $this->widget('bootstrap.widgets.TbPager', ['pages' => $orig_dp->pagination, 'header' => "<div class='pagination pagination-centered'>"]);
     ?>
 
 <div id="rating-descr" class="modal hide"></div>

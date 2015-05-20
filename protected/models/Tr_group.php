@@ -13,10 +13,10 @@ class Tr_group extends CActiveRecord
 
     public function relations()
     {
-        return array(
-            'uid' => array(self::BELONGS_TO, 'User', 'id'),
-            'book_id' => array(self::BELONGS_TO, 'Book', 'id'),
-        );
+        return [
+            'uid' => [self::BELONGS_TO, 'User', 'id'],
+            'book_id' => [self::BELONGS_TO, 'Book', 'id'],
+        ];
     }
 
     public $uid, $book_id, $flags;

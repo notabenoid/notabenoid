@@ -15,9 +15,9 @@ class TalkMember extends CActiveRecord
 
     public function relations()
     {
-        return array(
-            'talk' => array(self::BELONGS_TO, 'Talk', 'talk_id'),
-            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
-        );
+        return [
+            'talk' => [self::BELONGS_TO, 'Talk', 'talk_id'],
+            'user' => [self::BELONGS_TO, 'User', 'user_id'],
+        ];
     }
 }

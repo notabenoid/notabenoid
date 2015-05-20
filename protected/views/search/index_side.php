@@ -3,13 +3,13 @@
 
 	<?php
     /** @var TbActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
         'method' => 'get',
         'action' => '/search',
         'id' => 'form-search',
         'type' => 'vertical',
         'inlineErrors' => false,
-    ));
+    ]);
     ?>
 	<input type="hidden" name="t" value="<?=CHtml::encode($filter->t); ?>" />
 	<div class="control-group">
@@ -19,7 +19,7 @@
 				<option value="0">Не важно</option>
 				<?php
                     $tree = CHtml::listData(Category::model()->indented_list()->findAll(), 'id', 'title');
-                    $o = array();
+                    $o = [];
                     echo CHtml::listOptions($filter->cat, $tree, $o);
                 ?>
 			</select>

@@ -24,7 +24,7 @@ $(T.init);
 
 <?php
     echo "<div class='row' id='Utils'><div class='span8'>";
-    $this->widget('bootstrap.widgets.TbPager', array('pages' => $books_dp->pagination, 'maxButtonCount' => 15));
+    $this->widget('bootstrap.widgets.TbPager', ['pages' => $books_dp->pagination, 'maxButtonCount' => 15]);
 
     echo "</div><div class='span4'>";
 

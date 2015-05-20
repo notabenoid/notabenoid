@@ -4,28 +4,28 @@ class TextSource extends CFormModel
 {
     public $src_type = 1, $text, $file, $encoding, $url, $chopper;
 
-    public $choppers = array(1 => 'по переносу строки', 2 => 'по двум переносам строки', 0 => 'не разбивать вообще, я сделаю это вручную');
-    public $choppers_delim = array(1 => "\n", 2 => "\n\n");
+    public $choppers = [1 => 'по переносу строки', 2 => 'по двум переносам строки', 0 => 'не разбивать вообще, я сделаю это вручную'];
+    public $choppers_delim = [1 => "\n", 2 => "\n\n"];
 
     public function rules()
     {
-        return array(
-            array('src_type', 'in', 'range' => array(1, 2)),
-            array('text', 'safe'),
-            array('file', 'safe'),
-            array('encoding', 'in', 'range' => array_keys(Yii::app()->params['encodings'])),
-            array('url', 'safe'),
-            array('chopper', 'in', 'range' => array_keys($this->choppers)),
-        );
+        return [
+            ['src_type', 'in', 'range' => [1, 2]],
+            ['text', 'safe'],
+            ['file', 'safe'],
+            ['encoding', 'in', 'range' => array_keys(Yii::app()->params['encodings'])],
+            ['url', 'safe'],
+            ['chopper', 'in', 'range' => array_keys($this->choppers)],
+        ];
     }
 
     public function attributeLabels()
     {
-        return array(
+        return [
             'file' => 'Файл',
             'chopper' => 'Разбить на фрагменты',
             'encoding' => 'Кодировка',
-        );
+        ];
     }
 
     protected function afterValidate()
@@ -153,7 +153,7 @@ class TextSource extends CFormModel
 
             $n_verses = count($text);
         } else {
-            $text = array($this->text);
+            $text = [$this->text];
             $n_verses = 1;
             if (mb_strlen($this->text) > 1024) {
                 $n_long = 1;
@@ -162,7 +162,7 @@ class TextSource extends CFormModel
             }
         }
 
-        $warnings = array();
+        $warnings = [];
         if ($n_long > 0) {
             $warnings[] = 'В тексте есть <strong>'.Yii::t('app', '{n} слишком длинный абзац.|{n} слишком длинных абзаца|{n} слишком длинных абзецев', $n_long).'</strong>, они выделены красной полосой слева. Их будет неудобно переводить, разбейте их на менее крупные.';
         }

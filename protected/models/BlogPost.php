@@ -21,14 +21,14 @@ class BlogPost extends CActiveRecord
             unset($topics[64]);
         }
 
-        return array(
-            array('title', 'required', 'message' => 'Пожалуйста, введите заголовок.'),
-            array('body', 'required', 'message' => 'Пожалуйста, введите текст поста.'),
-            array('title', 'filter', 'filter' => 'strip_tags'),
-            array('body', 'safehtml'),
-            array('topics', 'required', 'message' => 'Пожалуйста, выберите рубрику.'),
-            array('topics', 'in', 'range' => array_keys($topics)),
-        );
+        return [
+            ['title', 'required', 'message' => 'Пожалуйста, введите заголовок.'],
+            ['body', 'required', 'message' => 'Пожалуйста, введите текст поста.'],
+            ['title', 'filter', 'filter' => 'strip_tags'],
+            ['body', 'safehtml'],
+            ['topics', 'required', 'message' => 'Пожалуйста, выберите рубрику.'],
+            ['topics', 'in', 'range' => array_keys($topics)],
+        ];
     }
 
     public function safehtml($attr, $params)
@@ -40,18 +40,18 @@ class BlogPost extends CActiveRecord
 
     public function attributeLabels()
     {
-        return array(
+        return [
             'title' => 'Заголовок',
             'body' => 'Текст поста',
             'topics' => 'Рубрика',
-        );
+        ];
     }
 
     public function relations()
     {
         $rel = [
-            'author' => array(self::BELONGS_TO, 'User', 'user_id', 'select' => array('id', 'login', 'sex', 'upic', 'email', 'ini', 'can')),
-            'book' => array(self::BELONGS_TO, 'Book', 'book_id'/* "select" => array("id", "s_title", "t_title", ac_*) */),
+            'author' => [self::BELONGS_TO, 'User', 'user_id', 'select' => ['id', 'login', 'sex', 'upic', 'email', 'ini', 'can']],
+            'book' => [self::BELONGS_TO, 'Book', 'book_id'/* "select" => array("id", "s_title", "t_title", ac_*) */],
         ];
         if (!Yii::app()->user->isGuest) {
             $rel['seen'] = [self::HAS_ONE, 'Seen', 'post_id', 'on' => 'seen.user_id = '.intval(Yii::app()->user->id), 'select' => ['seen', 'n_comments', 'track']];
@@ -75,11 +75,11 @@ class BlogPost extends CActiveRecord
             $topics = [(int) $topics];
         }
 
-        $this->dbCriteria->mergeWith(array(
+        $this->dbCriteria->mergeWith([
             'condition' => 't.book_id IS NULL',
             'order' => 't.lastcomment desc',
-            'with' => array('author', 'seen'),
-        ));
+            'with' => ['author', 'seen'],
+        ]);
 
         if (count($topics) == 0) {
             $this->dbCriteria->addInCondition('topics', array_keys(Yii::app()->params['blog_topics']['common']));
@@ -95,10 +95,10 @@ class BlogPost extends CActiveRecord
     {
         $book_id = (int) $book_id;
 
-        $this->getDbCriteria()->mergeWith(array(
+        $this->getDbCriteria()->mergeWith([
             'condition' => 't.book_id '.($book_id == 0 ? 'IS NULL' : "= '{$book_id}'"),
             'order' => 't.lastcomment desc',
-        ));
+        ]);
 
         return $this;
     }
@@ -108,10 +108,10 @@ class BlogPost extends CActiveRecord
     {
         $user_id = (int) $user_id;
 
-        $this->getDbCriteria()->mergeWith(array(
+        $this->getDbCriteria()->mergeWith([
             'condition' => "t.user_id = '{$user_id}'",
             'order' => 't.lastcomment desc',
-        ));
+        ]);
 
         return $this;
     }
@@ -182,7 +182,7 @@ class BlogPost extends CActiveRecord
         $this->n_comments++;
         $this->lastcomment = new CDbExpression('now()');
         Yii::app()->db->createCommand('UPDATE blog_posts SET n_comments = n_comments + 1, lastcomment = now() WHERE id = :post_id')
-            ->execute(array('post_id' => $this->id));
+            ->execute(['post_id' => $this->id]);
 
         // Отправляем почту
         $this->comment_mail($comment, $parent);
@@ -197,7 +197,7 @@ class BlogPost extends CActiveRecord
     public function afterCommentRm($comment)
     {
         Yii::app()->db->createCommand('UPDATE blog_posts SET n_comments = n_comments - 1 WHERE id = :post_id')
-            ->execute(array(':post_id' => $this->id));
+            ->execute([':post_id' => $this->id]);
     }
 
     /**
@@ -221,12 +221,12 @@ class BlogPost extends CActiveRecord
         ) {
             $msg = new YiiMailMessage($subj);
             $msg->view = 'comment_post';
-            $msg->setFrom(array(Yii::app()->params['commentEmail'] => Yii::app()->user->login.' - комментарий'));
+            $msg->setFrom([Yii::app()->params['commentEmail'] => Yii::app()->user->login.' - комментарий']);
             $msg->addTo($this->author->email);
-            $msg->setBody(array(
+            $msg->setBody([
                 'comment' => $comment,
                 'post' => $this,
-            ), 'text/html');
+            ], 'text/html');
             Yii::app()->mail->send($msg);
 
             if ($debug) {
@@ -243,13 +243,13 @@ class BlogPost extends CActiveRecord
         ) {
             $msg = new YiiMailMessage($subj);
             $msg->view = 'comment_reply';
-            $msg->setFrom(array(Yii::app()->params['commentEmail'] => Yii::app()->user->login.' - комментарий'));
+            $msg->setFrom([Yii::app()->params['commentEmail'] => Yii::app()->user->login.' - комментарий']);
             $msg->addTo($parent->author->email);
-            $msg->setBody(array(
+            $msg->setBody([
                 'comment' => $comment,
                 'parent' => $parent,
                 'post' => $this,
-            ), 'text/html');
+            ], 'text/html');
             Yii::app()->mail->send($msg);
 
             if ($debug) {
@@ -272,7 +272,7 @@ class BlogPost extends CActiveRecord
     {
         if (!Yii::app()->user->isGuest) {
             Yii::app()->db->createCommand('SELECT track_post(:user_id, :post_id, :inc)')
-                ->execute(array(':user_id' => Yii::app()->user->id, ':post_id' => $this->id, ':inc' => $nc_inc));
+                ->execute([':user_id' => Yii::app()->user->id, ':post_id' => $this->id, ':inc' => $nc_inc]);
         }
 
         return true;
@@ -288,7 +288,7 @@ class BlogPost extends CActiveRecord
         }
 
         Yii::app()->db->createCommand('SELECT seen_post(:user_id, :post_id, :n_comments)')
-            ->execute(array(':user_id' => Yii::app()->user->id, ':post_id' => $this->id, 'n_comments' => $this->n_comments));
+            ->execute([':user_id' => Yii::app()->user->id, ':post_id' => $this->id, 'n_comments' => $this->n_comments]);
     }
 
     public function can($what)
@@ -332,7 +332,7 @@ class BlogPost extends CActiveRecord
 
     public function getTopicHtml()
     {
-        $class = array(81 => 'label-info', '82' => 'label-success', 89 => 'label-inverse');
+        $class = [81 => 'label-info', '82' => 'label-success', 89 => 'label-inverse'];
 
         return "<span class='label {$class[$this->topics]}'>".Yii::app()->params['blog_topics']['announce'][$this->topics].'</span>';
     }

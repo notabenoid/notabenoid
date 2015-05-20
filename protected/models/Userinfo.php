@@ -13,33 +13,33 @@ class Userinfo extends CActiveRecord
 
     public function primaryKey()
     {
-        return array('user_id', 'prop_id');
+        return ['user_id', 'prop_id'];
     }
 
     public $user_id, $prop_id, $value;
 
     public function user($id)
     {
-        $this->dbCriteria->mergeWith(array(
+        $this->dbCriteria->mergeWith([
             'condition' => 'user_id = '.intval($id),
             'select' => 'prop_id, value',
             'order' => 'prop_id',
-        ));
+        ]);
 
         return $this;
     }
 
-    public static $Properties = array(
-        1 => array('Имя',                    'line', 60, 60),
-        2 => array('ICQ',                    'int', 16, 16),
-        3 => array('ЖЖ',                    'line', 16, 16),
-        4 => array('Домашняя страница',    'line', 255, 60),
-        5 => array('skype',                'line', 32, 16),
-        6 => array('День рождения',        'date', 10, 16),
-        7 => array('Страна',                'select', 'не скажу'),
-        8 => array('Город',                'line', 60, 60),
-        9 => array('Несколько слов о себе', 'text', 3, 60, true),
-    );
+    public static $Properties = [
+        1 => ['Имя',                    'line', 60, 60],
+        2 => ['ICQ',                    'int', 16, 16],
+        3 => ['ЖЖ',                    'line', 16, 16],
+        4 => ['Домашняя страница',    'line', 255, 60],
+        5 => ['skype',                'line', 32, 16],
+        6 => ['День рождения',        'date', 10, 16],
+        7 => ['Страна',                'select', 'не скажу'],
+        8 => ['Город',                'line', 60, 60],
+        9 => ['Несколько слов о себе', 'text', 3, 60, true],
+    ];
 
     public function getLabel()
     {

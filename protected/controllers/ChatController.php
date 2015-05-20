@@ -4,26 +4,26 @@ class ChatController extends Controller
 {
     public function filters()
     {
-        return array(
+        return [
             'accessControl',
-        );
+        ];
     }
 
     public function accessRules()
     {
-        return array(
-            array('allow',  // allow all users
-                'actions' => array('index', 'room'),
-                'users' => array('*'),
-            ),
-            array('allow', // allow authenticated user
-                'actions' => array('clear'),
-                'users' => array('@'),
-            ),
-            array('deny',  // deny all users
-                'users' => array('*'),
-            ),
-        );
+        return [
+            ['allow',  // allow all users
+                'actions' => ['index', 'room'],
+                'users' => ['*'],
+            ],
+            ['allow', // allow authenticated user
+                'actions' => ['clear'],
+                'users' => ['@'],
+            ],
+            ['deny',  // deny all users
+                'users' => ['*'],
+            ],
+        ];
     }
 
     public function actionRoom($room_id)

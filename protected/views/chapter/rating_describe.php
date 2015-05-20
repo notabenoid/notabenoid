@@ -1,6 +1,6 @@
 <?php
-    $html = array(-1 => '', 1 => '');
-    $cnt = array(-1 => 0, 1 => 0);
+    $html = [-1 => '', 1 => ''];
+    $cnt = [-1 => 0, 1 => 0];
     $my_mark = 0;
 
     foreach ($tr->marks as $mark) {
@@ -21,7 +21,7 @@
 </div>
 <div class="modal-body">
 <?php
-    foreach (array(1 => 'Плюсы', -1 => 'Минусы') as $sign => $title) {
+    foreach ([1 => 'Плюсы', -1 => 'Минусы'] as $sign => $title) {
         echo "<h3>{$title}".($cnt[$sign] > 0 ? " ({$cnt[$sign]})" : '').':</h3>';
         if ($cnt[$sign] == 0) {
             echo '<p>Нет.</p>';

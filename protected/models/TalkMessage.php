@@ -15,18 +15,18 @@ class TalkMessage extends CActiveRecord
 
     public function rules()
     {
-        return array(
-            array('message', 'required'),
-        );
+        return [
+            ['message', 'required'],
+        ];
     }
 
     public function relations()
     {
-        return array(
-            'talk' => array(self::BELONGS_TO, 'Talk', 'talk_id'),
-            'user' => array(self::BELONGS_TO, 'User', 'user_id', 'select' => array('id', 'login', 'sex', 'upic')),
-            'owner' => array(self::BELONGS_TO, 'User', 'user_id', 'select' => array('id', 'login', 'sex', 'email', 'upic', 'ini')),
-        );
+        return [
+            'talk' => [self::BELONGS_TO, 'Talk', 'talk_id'],
+            'user' => [self::BELONGS_TO, 'User', 'user_id', 'select' => ['id', 'login', 'sex', 'upic']],
+            'owner' => [self::BELONGS_TO, 'User', 'user_id', 'select' => ['id', 'login', 'sex', 'email', 'upic', 'ini']],
+        ];
     }
 
     public function talk($talk_id)

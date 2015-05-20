@@ -4,7 +4,7 @@
 
     $this->pageTitle = $user->login.': карма';
 
-    $this->renderPartial('profile_head', array('user' => $user, 'h1' => "карма = <span title='оценок: {$user->n_karma}'".($user->rate_u < 0 ? " class='negative'" : '').">{$user->rate_uFormatted}"));
+    $this->renderPartial('profile_head', ['user' => $user, 'h1' => "карма = <span title='оценок: {$user->n_karma}'".($user->rate_u < 0 ? " class='negative'" : '').">{$user->rate_uFormatted}"]);
 ?>
 <script type="text/javascript">
 var KarmaSet = {
@@ -30,21 +30,21 @@ $(KarmaSet.init);
 <?php elseif (Yii::app()->user->id != $user->id): ?>
 	<?php
         /** @var TbActiveForm $form */
-        $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+        $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
             'id' => 'form-karma',
             'type' => 'horizontal',
             'inlineErrors' => false,
-        ));
+        ]);
     ?>
 	<div class="row">
 		<div class="span3">
 			<h3>Ваша оценка</h3>
-			<?php echo $form->radioButtonList($my_mark, 'mark', array(1 => 'Положительно', 0 => 'Никак', -1 => 'Отрицательно'), array('uncheckValue' => null)); ?>
+			<?php echo $form->radioButtonList($my_mark, 'mark', [1 => 'Положительно', 0 => 'Никак', -1 => 'Отрицательно'], ['uncheckValue' => null]); ?>
 			<button type="submit" class="btn btn-success"><i class="icon-ok icon-white"></i> Поставить оценку</button>
 		</div>
 		<div class="span5">
 			<h3>Комментарий</h3>
-			<?php echo $form->textArea($my_mark, 'note', array('class' => 'span5', 'style' => 'height:85px;')); ?>
+			<?php echo $form->textArea($my_mark, 'note', ['class' => 'span5', 'style' => 'height:85px;']); ?>
 		</div>
 	</div>
 	<?php
@@ -56,15 +56,15 @@ $(KarmaSet.init);
 
 <?php if ($marks->totalItemCount): ?>
 <?php
-    $html = array(-1 => '', 1 => '');
-    $stat = array(-1 => 0, 1 => 0);
+    $html = [-1 => '', 1 => ''];
+    $stat = [-1 => 0, 1 => 0];
     foreach ($marks->data as $mark) {
         $u = $dir == 'out' ? $mark->to : $mark->from;
         $html[$mark->mark] .= "<li><a href='{$u->url}' title='".Yii::app()->dateFormatter->formatDateTime($mark->dat, 'medium', 'short')."'>{$u->login}</a>".($mark->note != '' ? ": &laquo;{$mark->note}&raquo;" : '').'</li>';
         $stat[$mark->mark]++;
     }
-    $header = array(-1 => 'Минусы', 1 => 'Плюсы');
-    foreach (array(-1, 1) as $z) {
+    $header = [-1 => 'Минусы', 1 => 'Плюсы'];
+    foreach ([-1, 1] as $z) {
         if ($stat[$z] != 0) {
             $header[$z] .= " ({$stat[$z]})";
         }
@@ -73,7 +73,7 @@ $(KarmaSet.init);
 
 <div class="row marks-table">
 <?php
-    foreach (array(-1, 1) as $z) {
+    foreach ([-1, 1] as $z) {
         echo "<div class='span4 ".($z == -1 ? 'minus' : 'plus')."'>";
         echo "<h3>{$header[$z]}</h3>";
         if ($html[$z] != '') {
@@ -88,6 +88,6 @@ $(KarmaSet.init);
 ?>
 </div>
 <?php
-    $this->widget('CLinkPager', array('pages' => $marks->pagination));
+    $this->widget('CLinkPager', ['pages' => $marks->pagination]);
 ?>
 <?php endif; ?>

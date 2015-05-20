@@ -4,18 +4,18 @@ class DungeonController extends Controller
 {
     public function filters()
     {
-        return array(
+        return [
             'accessControl',
-        );
+        ];
     }
 
     public function accessRules()
     {
-        return array(
-            array('allow',  // allow all users
-                'actions' => array('index', 'higgsInfo'),
-                'users' => array('@'),
-            ),
+        return [
+            ['allow',  // allow all users
+                'actions' => ['index', 'higgsInfo'],
+                'users' => ['@'],
+            ],
             [
                 'allow', 'users' => ['*'], 'actions' => ['pollResults'],
             ],
@@ -23,7 +23,7 @@ class DungeonController extends Controller
                 'allow', 'users' => ['notabenoid'], 'actions' => ['pollRawResults'],
             ],
             ['deny', 'users' => ['*']],
-        );
+        ];
     }
 
     public function actionHiggsInfo()

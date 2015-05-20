@@ -7,7 +7,7 @@
 
     $this->pageTitle = $post->title;
 
-    $this->renderPartial('//blog/_post', array('post' => $post, 'placement' => 'post'));
+    $this->renderPartial('//blog/_post', ['post' => $post, 'placement' => 'post']);
 ?>
 
 <script type='text/javascript'>
@@ -32,7 +32,7 @@
             }
             echo "<div class='thread'>";
 
-            $this->renderPartial($view, array('comment' => $comment));
+            $this->renderPartial($view, ['comment' => $comment]);
 
             $prev_indent = $indent;
         }

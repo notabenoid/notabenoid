@@ -31,16 +31,16 @@ var I = {
 <!-- form method='post' id='form-prepare-text' class="form-inline" action="<?=$chap->getUrl('import'); ?>" enctype="multipart/form-data" -->
 <?php
     /** @var TbActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
         'id' => 'form-prepare-text',
         'action' => $chap->getUrl('import'),
         'type' => 'horizontal',
         'inlineErrors' => false,
-        'htmlOptions' => array(
+        'htmlOptions' => [
             'class' => 'form-hide-errors',
             'enctype' => 'multipart/form-data',
-        ),
-    ));
+        ],
+    ]);
 ?>
 	<input type='hidden' name='TextSource[src_type]' value='1' />
 
@@ -60,12 +60,12 @@ var I = {
 				</div>
 			</div>
 			<div id="2" class="tab-pane <?=$options->src_type == 2 ? 'active' : ''; ?>">
-				<?php echo $form->fileFieldRow($options, 'file', array('hint' => 'Пожалуйста, только файлы .TXT не тяжелее 500 килобайт. Тексты большего размера разбейте на отдельные главы.')); ?>
+				<?php echo $form->fileFieldRow($options, 'file', ['hint' => 'Пожалуйста, только файлы .TXT не тяжелее 500 килобайт. Тексты большего размера разбейте на отдельные главы.']); ?>
 				<?php echo $form->dropDownListRow($options, 'encoding', Yii::app()->params['encodings']); ?>
 			</div>
 <?php if (0) : // NOT IMPLEMENTED, TODO Импорт оригинала из HTML ?>
 			<div id="3" class="tab-pane <?=$options->src_type == 3 ? 'active' : ''; ?>">
-				<?php echo $form->textFieldRow($options, 'url', array('placeholder' => 'http://', 'class' => 'span7', 'hint' => 'Из страницы будет загружено не более 500 КБ. Если вы хотите перевести более длинную страницу, сохраните её себе на диск, откройте в браузере и скопируйте содержимое частями через буфер обмена.')); ?>
+				<?php echo $form->textFieldRow($options, 'url', ['placeholder' => 'http://', 'class' => 'span7', 'hint' => 'Из страницы будет загружено не более 500 КБ. Если вы хотите перевести более длинную страницу, сохраните её себе на диск, откройте в браузере и скопируйте содержимое частями через буфер обмена.']); ?>
 			</div>
 			<?php endif; ?>
 		</div>

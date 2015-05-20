@@ -9,24 +9,24 @@ class OrigController extends Controller
 
     public function filters()
     {
-        return array('accessControl');
+        return ['accessControl'];
     }
 
     public function accessRules()
     {
-        return array(
-            array('allow',
-                'actions' => array('index', 'comments'),
-                'users' => array('*'),
-            ),
-            array('allow',
-                'actions' => array('edit', 'remove', 'translate', 'tr_rm', 'comment_reply', 'comment_remove', 'comment_edit', 'comment_rate'),
-                'users' => array('@'),
-            ),
-            array('deny',  // deny all users
-                'users' => array('*'),
-            ),
-        );
+        return [
+            ['allow',
+                'actions' => ['index', 'comments'],
+                'users' => ['*'],
+            ],
+            ['allow',
+                'actions' => ['edit', 'remove', 'translate', 'tr_rm', 'comment_reply', 'comment_remove', 'comment_edit', 'comment_rate'],
+                'users' => ['@'],
+            ],
+            ['deny',  // deny all users
+                'users' => ['*'],
+            ],
+        ];
     }
 
     /**
@@ -83,17 +83,17 @@ class OrigController extends Controller
         $orig_id = (int) $orig_id;
 
         if ($with === null) {
-            $with = array('chap.book.membership', 'seen');
+            $with = ['chap.book.membership', 'seen'];
         }
 
         $orig = Orig::model()
             ->with($with)
             ->findByPk(
                 (int) $orig_id,
-                array(
+                [
                     'condition' => 't.chap_id = :chap_id AND chap.book_id = :book_id',
-                    'params' => array(':chap_id' => $chap_id, ':book_id' => $book_id),
-                )
+                    'params' => [':chap_id' => $chap_id, ':book_id' => $book_id],
+                ]
         );
         if (!$orig) {
             throw new CHttpException(404, "Фрагмент оригинала, увы, удалён. Вернуться к <a href='/book/{$book_id}/{$chap_id}'>переводу главы</a> или <a href='/book/{$book_id}'>оглавлению перевода</a>.");
@@ -122,7 +122,7 @@ class OrigController extends Controller
 
         $orig = $this->loadOrig($book_id, $chap_id, $orig_id);
 
-        $OrdFields = array('A' => 'ord', 'S' => 't1');
+        $OrdFields = ['A' => 'ord', 'S' => 't1'];
         if ($orig->chap->book->typ == 'S') {
             $ord_val = $orig->t1;
         } else {
@@ -130,7 +130,7 @@ class OrigController extends Controller
         }
 
         $pos = Yii::app()->db->createCommand("SELECT COUNT(*) FROM orig WHERE chap_id = :chap_id AND {$OrdFields[$orig->chap->book->typ]} < :ordval")
-            ->queryScalar(array(':chap_id' => $orig->chap->id, ':ordval' => $ord_val));
+            ->queryScalar([':chap_id' => $orig->chap->id, ':ordval' => $ord_val]);
 
         $page = floor($pos / 50) + 1;
 
@@ -154,13 +154,13 @@ class OrigController extends Controller
         }
         if ($n_comments != $orig->n_comments) {
             $orig->n_comments = $n_comments;
-            $orig->save(false, array('n_comments'));
+            $orig->save(false, ['n_comments']);
         }
 
         $orig->setSeen();
 
         if ($ajax) {
-            $this->renderPartial('comments', array('orig' => $orig, 'comments' => $comments));
+            $this->renderPartial('comments', ['orig' => $orig, 'comments' => $comments]);
         } else {
             echo 'NOT IMPLEMENTED';
         }
@@ -200,14 +200,14 @@ class OrigController extends Controller
 
         if ($_POST['ajax']) {
             if (Yii::app()->user->hasFlash('error')) {
-                echo json_encode(array('error' => Yii::app()->user->getFlash('error')));
+                echo json_encode(['error' => Yii::app()->user->getFlash('error')]);
             } else {
                 $view = Yii::app()->user->ini['t.iface'] == 1 ? '//blog/_comment-1' : '//blog/_comment';
                 $comment->is_new = true;
-                echo json_encode(array(
+                echo json_encode([
                     'id' => $comment->id, 'pid' => $comment->pid,
-                    'html' => $this->renderPartial($view, array('comment' => $comment), true),
-                ));
+                    'html' => $this->renderPartial($view, ['comment' => $comment], true),
+                ]);
             }
         } else {
             $this->redirect($orig->chap->url);
@@ -223,7 +223,7 @@ class OrigController extends Controller
             $this->redirect($orig->chap->url);
         }
 
-        $json = array('id' => $comment_id);
+        $json = ['id' => $comment_id];
 
         // Загружаем удаляемый комментарий вместе с постом
         $comment = Comment::model()->with('orig.chap.book.membership')->findByPk($comment_id);
@@ -320,7 +320,7 @@ class OrigController extends Controller
                 $orig->initNew((int) $_GET['after']);
             }
         } else {
-            $orig = Orig::model()->findByPk((int) $orig_id, array('condition' => 'chap_id = :chap_id', 'params' => array(':chap_id' => $chap->id)));
+            $orig = Orig::model()->findByPk((int) $orig_id, ['condition' => 'chap_id = :chap_id', 'params' => [':chap_id' => $chap->id]]);
             if (!$orig) {
                 throw new CHttpException(404, 'Фрагмента оригинала не существует. Вероятно, его кто-то удалил.');
             }
@@ -336,7 +336,7 @@ class OrigController extends Controller
 
                 // Проверяем, нет ли фрагмента с таким же ord, и если есть, то смещаем все вниз
                 if ($orig->ord != '') {
-                    $p = array(':chap_id' => $orig->chap_id, ':ord' => intval($orig->ord), ':id' => $orig->id);
+                    $p = [':chap_id' => $orig->chap_id, ':ord' => intval($orig->ord), ':id' => $orig->id];
                     if (count(Yii::app()->db->createCommand('SELECT 1 FROM orig WHERE chap_id = :chap_id AND ord = :ord AND id != :id LIMIT 1')->queryAll(false, $p))) {
                         Yii::app()->db->createCommand('UPDATE orig SET ord = ord + 1 WHERE chap_id = :chap_id AND ord >= :ord AND id != :id')->execute($p);
                     }
@@ -354,7 +354,7 @@ class OrigController extends Controller
                 }
             } else {
                 if ($ajax) {
-                    echo json_encode(array('error' => $orig->errorsString));
+                    echo json_encode(['error' => $orig->errorsString]);
                     Yii::app()->end();
                 } else {
                     Yii::app()->user->setFlash('error', $orig->errorsString);
@@ -362,7 +362,7 @@ class OrigController extends Controller
             }
         }
 
-        $p = array('orig' => $orig, 'ajax' => $ajax);
+        $p = ['orig' => $orig, 'ajax' => $ajax];
         $view = "edit_{$chap->book->typ}-".intval(Yii::app()->user->ini['t.iface']);
         if ($ajax) {
             $this->renderPartial($view, $p);
@@ -381,14 +381,14 @@ class OrigController extends Controller
         }
 
         /** @var Orig $orig */
-        $orig = Orig::model()->findByPk((int) $orig_id, array('condition' => 'chap_id = :chap_id', 'params' => array(':chap_id' => $chap->id)));
+        $orig = Orig::model()->findByPk((int) $orig_id, ['condition' => 'chap_id = :chap_id', 'params' => [':chap_id' => $chap->id]]);
         if (!$orig) {
             throw new CHttpException(404, 'Фрагмента оригинала не существует. Вероятно, его кто-то уже удалил.');
         }
         $orig->chap = $chap;
 
         /** @var Translation[] $trs все переводы, которые сейчас будут удалены */
-        $trs = Translation::model()->chapter($chap->id)->findAllByAttributes(array('orig_id' => $orig->id));
+        $trs = Translation::model()->chapter($chap->id)->findAllByAttributes(['orig_id' => $orig->id]);
         $n_trs = count($trs);
 
         if (!$orig->delete()) {
@@ -410,8 +410,8 @@ class OrigController extends Controller
         $chap->book->last_tr = new CDbExpression('now()');
 
         // users.(n_trs, rate_t), groups.(n_trs, rating)
-        $sql = array();
-        $params = array(':book_id' => $chap->book_id);
+        $sql = [];
+        $params = [':book_id' => $chap->book_id];
         foreach ($trs as $i => $tr) {
             if ($tr->user_id == 0) {
                 continue;
@@ -422,14 +422,14 @@ class OrigController extends Controller
             $params[":rating{$i}"] = $tr->rating;
         }
 
-        $chap->save(false, array('n_verses', 'n_vars', 'd_vars', 'last_tr'));
-        $chap->book->save(false, array('n_verses', 'n_vars', 'd_vars', 'last_tr'));
+        $chap->save(false, ['n_verses', 'n_vars', 'd_vars', 'last_tr']);
+        $chap->book->save(false, ['n_verses', 'n_vars', 'd_vars', 'last_tr']);
         if (count($sql) > 0) {
             $sql = "BEGIN;\n".implode("\n", $sql)."\nCOMMIT;";
             Yii::app()->db->createCommand($sql)->execute($params);
         }
 
-        echo json_encode(array('status' => 'ok', 'n_vars' => $chap->n_vars, 'd_vars' => $chap->d_vars, 'n_verses' => $chap->n_verses));
+        echo json_encode(['status' => 'ok', 'n_vars' => $chap->n_vars, 'd_vars' => $chap->d_vars, 'n_verses' => $chap->n_verses]);
     }
 
     public function actionTranslate($book_id, $chap_id, $orig_id)
@@ -441,7 +441,7 @@ class OrigController extends Controller
             $ajax = 1;
         }
 
-        $orig = $this->loadOrig($book_id, $chap_id, $orig_id, array('chap.book.membership'));
+        $orig = $this->loadOrig($book_id, $chap_id, $orig_id, ['chap.book.membership']);
         if (!$orig->chap->can('tr')) {
             throw new CHttpException(403, 'Вы не можете добавлять свои версии в этом переводе. '.$orig->chap->getWhoCanDoIt('tr'));
         }
@@ -458,10 +458,10 @@ class OrigController extends Controller
             $tr->user_id = Yii::app()->user->id;
         } else {
             /** @var Translation $tr */
-            $tr = Translation::model()->with('user')->findByPk($tr_id, array(
+            $tr = Translation::model()->with('user')->findByPk($tr_id, [
                 'condition' => 'chap_id = :chap_id AND book_id = :book_id AND orig_id = :orig_id',
-                'params' => array(':chap_id' => $orig->chap->id, ':book_id' => $orig->chap->book->id, ':orig_id' => $orig->id,
-            ), ));
+                'params' => [':chap_id' => $orig->chap->id, ':book_id' => $orig->chap->book->id, ':orig_id' => $orig->id,
+            ], ]);
             if (!$tr) {
                 throw new CHttpException(404, 'Версия перевода, которую вы пытаетесь отредактировать, кем-то уже удалена.');
             }
@@ -505,12 +505,12 @@ class OrigController extends Controller
 
                 if ($ajax) {
                     $orig->trs = Translation::model()->with('user')->orig($orig->id)->findAll();
-                    $json = array(
+                    $json = [
                         'n_vars' => $orig->chap->n_vars,
                         'd_vars' => $orig->chap->d_vars,
                         'n_verses' => $orig->chap->n_verses,
                         'text' => $orig->renderTranslations(),
-                    );
+                    ];
 
                     if ($DEBUG) {
                         echo '<pre>'.htmlspecialchars(print_r($json, true)).'</pre>';
@@ -523,7 +523,7 @@ class OrigController extends Controller
             } else {
                 // Сохранить не получилось
                 if ($ajax) {
-                    echo json_encode(array('error' => $tr->errorsString));
+                    echo json_encode(['error' => $tr->errorsString]);
                 } else {
                     Yii::app()->user->setFlash('error', $tr->errorsString);
                     $this->redirect($orig->url);
@@ -539,7 +539,7 @@ class OrigController extends Controller
         $user = Yii::app()->user;
 
         /** @var Translation $tr  */
-        $tr = Translation::model()->findByPk((int) $_POST['tr_id'], array('condition' => 'chap_id = :chap_id AND book_id = :book_id', 'params' => array(':chap_id' => $chap->id, ':book_id' => $chap->book_id)));
+        $tr = Translation::model()->findByPk((int) $_POST['tr_id'], ['condition' => 'chap_id = :chap_id AND book_id = :book_id', 'params' => [':chap_id' => $chap->id, ':book_id' => $chap->book_id]]);
         if (!$tr) {
             throw new CHttpException(404, 'Этот вариант перевода уже удалили.');
         }
@@ -553,6 +553,6 @@ class OrigController extends Controller
             $chap->setModified();
         }
 
-        echo json_encode(array('status' => 'ok', 'tr_id' => $tr->id, 'n_vars' => $chap->n_vars, 'd_vars' => $chap->d_vars, 'n_verses' => $chap->n_verses));
+        echo json_encode(['status' => 'ok', 'tr_id' => $tr->id, 'n_vars' => $chap->n_vars, 'd_vars' => $chap->d_vars, 'n_verses' => $chap->n_verses]);
     }
 }

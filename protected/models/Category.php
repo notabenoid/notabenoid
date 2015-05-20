@@ -12,31 +12,31 @@ class Category extends CActiveRecord
         return 'catalog';
     }
 
-    public $id, $pid, $mp = array(), $title, $available = true;
+    public $id, $pid, $mp = [], $title, $available = true;
 
     public function rules()
     {
-        return array(
-            array('title', 'required', 'message' => 'Введите название раздела'),
-            array('title', 'filter', 'filter' => 'htmlspecialchars'),
-            array('available', 'boolean'),
-        );
+        return [
+            ['title', 'required', 'message' => 'Введите название раздела'],
+            ['title', 'filter', 'filter' => 'htmlspecialchars'],
+            ['available', 'boolean'],
+        ];
     }
 
     public function relations()
     {
-        return array(
-            'booksCount' => array(self::STAT, 'Book', 'cat_id'),
+        return [
+            'booksCount' => [self::STAT, 'Book', 'cat_id'],
 //			"books" => array(self::HAS_MANY, "Book", "cat_id"),
-        );
+        ];
     }
 
     public function attributeLabels()
     {
-        return array(
+        return [
             'title' => '',
             'available' => 'Можно добавлять переводы',
-        );
+        ];
     }
 
     /**
@@ -47,9 +47,9 @@ class Category extends CActiveRecord
     public function tree($branch = null)
     {
         $c = $this->getDbCriteria();
-        $c->mergeWith(array(
+        $c->mergeWith([
             'order' => 't.mp',
-        ));
+        ]);
         if (is_array($branch)) {
             $n = count($branch);
             $c->addCondition("t.mp[1:{$n}] = '{".implode(',', $branch)."}'");
@@ -60,10 +60,10 @@ class Category extends CActiveRecord
 
     public function indented_list()
     {
-        $this->getDbCriteria()->mergeWith(array(
-            'select' => array('t.*', new CDbExpression("repeat('...', array_upper(mp, 1) - 1) || title as title")),
+        $this->getDbCriteria()->mergeWith([
+            'select' => ['t.*', new CDbExpression("repeat('...', array_upper(mp, 1) - 1) || title as title")],
             'order' => 't.mp',
-        ));
+        ]);
 
         return $this;
     }
@@ -135,14 +135,14 @@ class Category extends CActiveRecord
 
     public function beforeDelete()
     {
-        $has_kids = Yii::app()->db->createCommand('SELECT 1 FROM catalog WHERE pid = :id LIMIT 1')->query(array(':id' => $this->id))->count();
+        $has_kids = Yii::app()->db->createCommand('SELECT 1 FROM catalog WHERE pid = :id LIMIT 1')->query([':id' => $this->id])->count();
         if ($has_kids) {
             $this->addError('id', 'У этого раздела есть подразделы, сначала удалите их.');
 
             return false;
         }
 
-        $has_books = Yii::app()->db->createCommand('SELECT 1 FROM books WHERE cat_id = :id LIMIT 1')->query(array(':id' => $this->id))->count();
+        $has_books = Yii::app()->db->createCommand('SELECT 1 FROM books WHERE cat_id = :id LIMIT 1')->query([':id' => $this->id])->count();
         if ($has_books) {
             $this->addError('id', 'В этом разделе есть переводы, перенесите их в другой раздел.');
 
@@ -175,18 +175,18 @@ class Category extends CActiveRecord
 
     public function calcPath()
     {
-        $path_mp = array();
+        $path_mp = [];
         for ($i = 1; $i < count($this->mp); $i++) {
             $path_mp[] = '{'.implode(',', array_slice($this->mp, 0, $i)).'}';
         }
-        $path = self::model()->findAllByAttributes(array('mp' => $path_mp), array('order' => 'mp'));
+        $path = self::model()->findAllByAttributes(['mp' => $path_mp], ['order' => 'mp']);
         $this->path = '';
         foreach ($path as $c) {
             $this->path .= "{$c->id}\t{$c->title}\n";
         }
         $this->path .= "{$this->id}'\t{$this->title}";
 
-        $this->save(false, array('path'));
+        $this->save(false, ['path']);
     }
 
     public function getUrl()
@@ -200,11 +200,11 @@ class Category extends CActiveRecord
 
     public function getPathHtml()
     {
-        $path_mp = array();
+        $path_mp = [];
         for ($i = 1; $i < count($this->mp); $i++) {
             $path_mp[] = '{'.implode(',', array_slice($this->mp, 0, $i)).'}';
         }
-        $path = self::model()->findAllByAttributes(array('mp' => $path_mp), array('order' => 'mp'));
+        $path = self::model()->findAllByAttributes(['mp' => $path_mp], ['order' => 'mp']);
 
         $html = '';
         foreach ($path as $c) {

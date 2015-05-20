@@ -144,7 +144,7 @@ class RegInvite extends CActiveRecord
         $msg->view = $this->to_id ? 'reg_invite_user' : 'reg_invite_new';
         $msg->from = Yii::app()->params['adminEmail'];
         $msg->addTo($this->to_email);
-        $msg->setBody(array('invite' => $this), 'text/html');
+        $msg->setBody(['invite' => $this], 'text/html');
 
         return Yii::app()->mail->send($msg);
     }

@@ -13,49 +13,49 @@ class GenOptions extends CFormModel
     /** @var Chapter */
     public $chap;
 
-    public static $format_options = array(
-        'S' => array(
+    public static $format_options = [
+        'S' => [
             's' => 'SubRipper (*.srt)',
             'm' => 'SAMI (*.smi)',
             'b' => 'SubViewer (*.sub)',
-        ),
-        'A' => array(
+        ],
+        'A' => [
             'h' => 'HTML',
             't' => 'Текстовый файл',
-        ),
-    );
-    public static $extensions = array(
+        ],
+    ];
+    public static $extensions = [
         's' => 'srt', 'm' => 'smi', 'b' => 'sub',
         'h' => 'html', 't' => 'txt',
-    );
-    public static $algorithm_options = array(
+    ];
+    public static $algorithm_options = [
         0 => 'Версии с максимальным рейтингом',
         1 => 'Самые свежие версии',
-    );
-    public static $untr_options = array(
+    ];
+    public static $untr_options = [
         'o' => 'Подставить фрагмент оригинала',
         's' => 'Пропустить',
-    );
-    public static $crlf_options = array(
+    ];
+    public static $crlf_options = [
         0 => 'Windows (0D 0A)',
         1 => 'Unix (0A)',
         2 => 'Mac (0D)',
-    );
+    ];
 
     const COOKIE_NAME = 'genopts';
 
     public function rules()
     {
-        return array(
-            array('format', 'required'),
-            array('format', 'in', 'range' => array_keys(self::$format_options[$this->chap->book->typ])),
-            array('algorithm', 'in', 'range' => array_keys(self::$algorithm_options)),
-            array('skip_neg', 'boolean'),
-            array('untr', 'in', 'range' => array_keys(self::$untr_options)),
-            array('enc', 'in', 'range' => array_keys(Yii::app()->params['encodings'])),
-            array('crlf', 'in', 'range' => array_keys(self::$crlf_options)),
-            array('author_id', 'numerical', 'integerOnly' => true),
-        );
+        return [
+            ['format', 'required'],
+            ['format', 'in', 'range' => array_keys(self::$format_options[$this->chap->book->typ])],
+            ['algorithm', 'in', 'range' => array_keys(self::$algorithm_options)],
+            ['skip_neg', 'boolean'],
+            ['untr', 'in', 'range' => array_keys(self::$untr_options)],
+            ['enc', 'in', 'range' => array_keys(Yii::app()->params['encodings'])],
+            ['crlf', 'in', 'range' => array_keys(self::$crlf_options)],
+            ['author_id', 'numerical', 'integerOnly' => true],
+        ];
     }
 
     protected function afterValidate()
@@ -67,7 +67,7 @@ class GenOptions extends CFormModel
 
     public function getEol()
     {
-        $eols = array(0 => "\r\n", 1 => "\n", 2 => "\r");
+        $eols = [0 => "\r\n", 1 => "\n", 2 => "\r"];
 
         return $eols[$this->crlf];
     }

@@ -59,7 +59,7 @@
         $books = $books_dp->data;
 
         echo '<h3>'.Yii::t('app', '{n} перевод|{n} перевода|{n} переводов', $books_dp->totalItemCount).'</h3>';
-        $this->widget('bootstrap.widgets.TbPager', array('pages' => $books_dp->pagination));
+        $this->widget('bootstrap.widgets.TbPager', ['pages' => $books_dp->pagination]);
         echo "<ul class='booklist has-icons'>";
         foreach ($books as $book) {
             echo '<li>';
@@ -70,7 +70,7 @@
             echo '</li>';
         }
         echo '</ul>';
-        $this->widget('bootstrap.widgets.TbPager', array('pages' => $books_dp->pagination));
+        $this->widget('bootstrap.widgets.TbPager', ['pages' => $books_dp->pagination]);
     } else {
         echo "<div class='alert alert-block'>В этом разделе пока ещё нет ни одного перевода.</div>";
     }

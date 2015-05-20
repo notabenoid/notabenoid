@@ -20,9 +20,9 @@ class Controller extends CController
      */
     public $layout = '//layouts/column2';
     public $layout_layout = 'v3';
-    public $layoutOptions = array(
+    public $layoutOptions = [
         'fluid' => false,
-    );
+    ];
 
     public $side_view = '';
     public $side_params = null;
@@ -30,13 +30,13 @@ class Controller extends CController
     /**
      * Меню и области сайта.
      */
-    public $siteAreas = array(
-        'films' => array('url' => '/search/?SearchFilter[typ]=S', 'label' => 'ПЕРЕВОДИМ ФИЛЬМЫ'),
-        'books' => array('url' => '/search/?SearchFilter[typ]=A', 'label' => 'ПЕРЕВОДИМ КНИГИ'),
-        'phrases' => array('url' => '/search/?SearchFilter[typ]=P', 'label' => 'ПЕРЕВОДИМ ФРАЗЫ'),
-        'blog' => array('url' => '/blog/',                    'label' => 'БЛОГ'),
-        'users' => array('url' => '/users/',                   'label' => 'ПЕРЕВОДЧИКИ'),
-    );
+    public $siteAreas = [
+        'films' => ['url' => '/search/?SearchFilter[typ]=S', 'label' => 'ПЕРЕВОДИМ ФИЛЬМЫ'],
+        'books' => ['url' => '/search/?SearchFilter[typ]=A', 'label' => 'ПЕРЕВОДИМ КНИГИ'],
+        'phrases' => ['url' => '/search/?SearchFilter[typ]=P', 'label' => 'ПЕРЕВОДИМ ФРАЗЫ'],
+        'blog' => ['url' => '/blog/',                    'label' => 'БЛОГ'],
+        'users' => ['url' => '/users/',                   'label' => 'ПЕРЕВОДЧИКИ'],
+    ];
 
     public $siteArea = '';
 
@@ -46,26 +46,26 @@ class Controller extends CController
     const AD_PLACE_BOTTOM = 1;
     const AD_PLACE_SIDE = 2;
     const AD_PLACE_FACE1 = 3;
-    public $ad_deny = array(
+    public $ad_deny = [
         self::AD_PLACE_BOTTOM => false,
         self::AD_PLACE_SIDE => false,
         self::AD_PLACE_FACE1 => false,
-    );
-    private $ad_html = array(
+    ];
+    private $ad_html = [
         self::AD_PLACE_SIDE => <<<TTT
 TTT
 ,
         self::AD_PLACE_BOTTOM => <<<TTT
 TTT
 ,
-    );
+    ];
     public function ad($place_id)
     {
         return "<!-- A: {$place_id} -->".$this->ad_html[$place_id];
     }
 
-    public $breadcrumbs = array();
-    public $menu = array();
+    public $breadcrumbs = [];
+    public $menu = [];
 
     public function init()
     {
@@ -132,7 +132,7 @@ TTT
 
                 $banned_until = Yii::app()->db
                     ->createCommand('SELECT until FROM ban WHERE user_id = :user_id AND until >= current_date')
-                    ->queryScalar(array(':user_id' => Yii::app()->user->id));
+                    ->queryScalar([':user_id' => Yii::app()->user->id]);
 
                 if ($banned_until) {
                     $user->setFlash('warning', 'Вы забанены на сайте до '.Yii::app()->dateFormatter->formatDateTime($banned_until, 'medium', '').' г. включительно.');

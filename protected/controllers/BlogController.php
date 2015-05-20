@@ -6,26 +6,26 @@ class BlogController extends Controller
 
     public function filters()
     {
-        return array(
+        return [
             'accessControl',
-        );
+        ];
     }
 
     public function accessRules()
     {
-        return array(
-            array('allow',  // allow all users
-                'actions' => array('index', 'post'),
-                'users' => array('*'),
-            ),
-            array('allow', // allow authenticated user
-                'actions' => array('talks', 'talks_ini', 'comment_reply', 'comment_remove', 'comment_rate', 'edit', 'remove'),
-                'users' => array('@'),
-            ),
-            array('deny',  // deny all users
-                'users' => array('*'),
-            ),
-        );
+        return [
+            ['allow',  // allow all users
+                'actions' => ['index', 'post'],
+                'users' => ['*'],
+            ],
+            ['allow', // allow authenticated user
+                'actions' => ['talks', 'talks_ini', 'comment_reply', 'comment_remove', 'comment_rate', 'edit', 'remove'],
+                'users' => ['@'],
+            ],
+            ['deny',  // deny all users
+                'users' => ['*'],
+            ],
+        ];
     }
 
     public function actionIndex()
@@ -65,11 +65,11 @@ class BlogController extends Controller
         Yii::app()->user->ini['blog.topics'] = implode('.', $topics);
         Yii::app()->user->ini->save();
 
-        $lenta = new CActiveDataProvider(BlogPost::model()->common($topics), array(
-            'pagination' => array('pageSize' => 20),
-        ));
+        $lenta = new CActiveDataProvider(BlogPost::model()->common($topics), [
+            'pagination' => ['pageSize' => 20],
+        ]);
 
-        $where = array('book_id IS NULL');
+        $where = ['book_id IS NULL'];
         if ($topics) {
             $where[] = 'topics IN('.(implode(',', $topics)).')';
         } else {
@@ -77,7 +77,7 @@ class BlogController extends Controller
         }
         $lenta->totalItemCount = Yii::app()->db->cache(60 * 60)->createCommand('SELECT COUNT(*) FROM blog_posts WHERE '.implode(' AND ', $where))->queryScalar();
 
-        $this->side_view = array('index_side' => array('topics' => $topics));
+        $this->side_view = ['index_side' => ['topics' => $topics]];
         if (in_array(70, $topics)) {
             $this->side_view['betatest_side'] = [];
         }
@@ -103,8 +103,8 @@ class BlogController extends Controller
 
         $post->setSeen();
 
-        $this->side_view = array('index_side' => array('topic' => $post->topics));
-        $this->render('post', array('post' => $post, 'comments' => $comments));
+        $this->side_view = ['index_side' => ['topic' => $post->topics]];
+        $this->render('post', ['post' => $post, 'comments' => $comments]);
     }
 
     public function actionComment_reply($post_id, $comment_id = 0)
@@ -139,14 +139,14 @@ class BlogController extends Controller
 
         if ($_POST['ajax']) {
             if (Yii::app()->user->hasFlash('error')) {
-                echo json_encode(array('error' => Yii::app()->user->getFlash('error')));
+                echo json_encode(['error' => Yii::app()->user->getFlash('error')]);
             } else {
                 $view = Yii::app()->user->ini['t.iface'] == 1 ? '//blog/_comment-1' : '//blog/_comment';
                 $comment->is_new = true;
-                echo json_encode(array(
+                echo json_encode([
                     'id' => $comment->id, 'pid' => $comment->pid,
-                    'html' => $this->renderPartial($view, array('comment' => $comment), true),
-                ));
+                    'html' => $this->renderPartial($view, ['comment' => $comment], true),
+                ]);
             }
         } else {
             $this->redirect($parent->post->url.'#cmt_'.$comment->id);
@@ -161,7 +161,7 @@ class BlogController extends Controller
             $this->redirect("/blog/{$post_id}");
         }
 
-        $json = array('id' => $comment_id);
+        $json = ['id' => $comment_id];
         $user = Yii::app()->user;
 
         // Загружаем удаляемый комментарий вместе с постом
@@ -246,7 +246,7 @@ class BlogController extends Controller
             }
         }
 
-        $this->render('edit', array('post' => $post));
+        $this->render('edit', ['post' => $post]);
     }
 
     public function actionRemove($post_id)

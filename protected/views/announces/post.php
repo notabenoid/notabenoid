@@ -23,7 +23,7 @@
 
 <?php
     $post->title = 'Анонс';
-    $this->renderPartial('//blog/_post', array('post' => $post, 'placement' => 'post', 'has' => array('bookLink' => true)));
+    $this->renderPartial('//blog/_post', ['post' => $post, 'placement' => 'post', 'has' => ['bookLink' => true]]);
 ?>
 
 <a name="Comments"></a><h2>Комментарии</h2>
@@ -41,7 +41,7 @@
             }
             echo "<div class='thread'>";
 
-            $this->renderPartial('//blog/_comment', array('comment' => $comment));
+            $this->renderPartial('//blog/_comment', ['comment' => $comment]);
 
             $prev_indent = $indent;
         }

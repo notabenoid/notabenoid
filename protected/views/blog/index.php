@@ -12,9 +12,9 @@
 
 <div id="Lenta">
 <?php
-    $has = array(
+    $has = [
         'mytalks' => true,
-    );
+    ];
     $user = Yii::app()->user;
     if ($user->can('blog_topic_moderate')) {
         $has['extra'] = "<i class='moder-topic icon-chevron-down i'></i></a>";
@@ -22,13 +22,13 @@
 
     foreach ($lenta->getData() as $post) {
         $has['edit'] = $post->user_id == $user->id || $user->can('blog_moderate');
-        $this->renderPartial('_post', array('post' => $post, 'placement' => 'index', 'has' => $has));
+        $this->renderPartial('_post', ['post' => $post, 'placement' => 'index', 'has' => $has]);
     }
 ?>
 </div>
 
 <?php
-    $this->widget('bootstrap.widgets.TbPager', array('pages' => $lenta->pagination));
+    $this->widget('bootstrap.widgets.TbPager', ['pages' => $lenta->pagination]);
 
     if ($user->can('blog_topic_moderate')):
 ?>

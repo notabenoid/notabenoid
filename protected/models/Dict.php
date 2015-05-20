@@ -24,18 +24,18 @@ class Dict extends CActiveRecord
 
     public function relations()
     {
-        return array(
-            'book' => array(self::BELONGS_TO, 'Book', 'book_id'),
-            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
-        );
+        return [
+            'book' => [self::BELONGS_TO, 'Book', 'book_id'],
+            'user' => [self::BELONGS_TO, 'User', 'user_id'],
+        ];
     }
 
     public function rules()
     {
-        return array(
-            array('term, descr', 'required'),
-            array('term, descr', 'clean'),
-        );
+        return [
+            ['term, descr', 'required'],
+            ['term, descr', 'clean'],
+        ];
     }
 
     public function clean($attr, $params)
@@ -45,19 +45,19 @@ class Dict extends CActiveRecord
 
     public function attributeLabels()
     {
-        return array(
+        return [
             'term' => 'Слово',
             'descr' => 'Перевод',
-        );
+        ];
     }
 
     public function book($book_id)
     {
         $book_id = (int) $book_id;
 
-        $this->getDbCriteria()->mergeWith(array(
+        $this->getDbCriteria()->mergeWith([
             'condition' => "t.book_id = '{$book_id}'",
-        ));
+        ]);
 
         return $this;
     }

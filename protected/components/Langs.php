@@ -1,9 +1,9 @@
 <?php
     class Langs extends CApplicationComponent
     {
-        public $Langs = array();
+        public $Langs = [];
 
-        public $Types = array(
+        public $Types = [
             10 => 'Основные',
             20 => 'Народы СССР',
             30 => 'Европа',
@@ -12,7 +12,7 @@
             60 => 'Африка',
             70 => 'Австралия и Океания',
             200 => 'Прочие',
-        );
+        ];
 
         const FORM_INF = 0; // Инфинитив, "русский"
         const FORM_GEN = 1;    // Родительный падеж, "русского"
@@ -21,11 +21,11 @@
         {
             $r = Yii::app()->db->createCommand('SELECT id, typ, title, title_r FROM languages ORDER BY typ, title')->query();
             foreach ($r as $row) {
-                $this->Langs[$row['id']] = array(
+                $this->Langs[$row['id']] = [
                     self::FORM_INF => $row['title'],
                     self::FORM_GEN => $row['title_r'],
                     't' => $row['typ'],
-                );
+                ];
             }
         }
 
@@ -50,10 +50,10 @@
 
         public function select($form = self::FORM_INF)
         {
-            $A = array();
+            $A = [];
 
             foreach ($this->Types as $type => $type_title) {
-                $A[$type_title] = array();
+                $A[$type_title] = [];
                 foreach ($this->Langs as $id => $L) {
                     if ($L['t'] == $type) {
                         $A[$type_title][$id] = $L[$form];

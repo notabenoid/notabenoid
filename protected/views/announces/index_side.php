@@ -8,13 +8,13 @@
 
 	<?php
     /** @var TbActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
         'method' => 'get',
         'action' => '/announces',
         'id' => 'form-filter',
         'type' => 'vertical',
         'inlineErrors' => false,
-    ));
+    ]);
     ?>
 	<div class="control-group">
 		<label class="control-label">Из раздела каталога:</label>
@@ -23,7 +23,7 @@
 				<option value="0">Не важно</option>
 				<?php
                     $tree = CHtml::listData(Category::model()->indented_list()->findAll(), 'id', 'title');
-                    $o = array();
+                    $o = [];
                     echo CHtml::listOptions($filter->cat, $tree, $o);
                 ?>
 			</select>

@@ -46,7 +46,7 @@ var E = {
                         'topics',
                         '',
                         Yii::app()->params['book_topics'][$typ],
-                        array('separator' => ' ', 'template' => '<p>{input} {label}</p>')
+                        ['separator' => ' ', 'template' => '<p>{input} {label}</p>']
                     ),
                     "\"'"
                 );
@@ -151,24 +151,24 @@ $(E.init);
 
 <?php
     /** @var TbActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
         'id' => 'form-edit',
         'type' => 'horizontal',
         'inlineErrors' => false,
-        'htmlOptions' => array(
+        'htmlOptions' => [
             'enctype' => 'multipart/form-data',
-        ),
-    ));
+        ],
+    ]);
 
     echo $form->errorSummary($model);
 ?>
 
 <div class="control-group <?=$model->hasErrors('typ') ? ' error' : ''; ?>">
-	<?php echo $form->labelEx($model, 'typ', array('class' => 'control-label required')); ?>
+	<?php echo $form->labelEx($model, 'typ', ['class' => 'control-label required']); ?>
 	<div class="controls">
 	<?php
         if ($model->isNewRecord) {
-            echo $form->dropDownList($model, 'typ', Yii::app()->params['book_types'], array('onchange' => 'E.typ_switch()'));
+            echo $form->dropDownList($model, 'typ', Yii::app()->params['book_types'], ['onchange' => 'E.typ_switch()']);
             echo "<p class='help-block'><b>Внимание!</b> после создания перевода изменить его тип не получится!</p>";
         } else {
             echo "<input type='text' value='".Yii::app()->params['book_types'][$model->typ]."' disabled='disabled' />";
@@ -179,19 +179,19 @@ $(E.init);
 </div>
 <?php
     echo $form->dropDownListRow($model, 's_lang', Yii::app()->langs->select());
-    echo $form->textFieldRow($model, 's_title', array('class' => 'span6'));
+    echo $form->textFieldRow($model, 's_title', ['class' => 'span6']);
     echo $form->dropDownListRow($model, 't_lang', Yii::app()->langs->select());
-    echo $form->textFieldRow($model, 't_title', array('class' => 'span6'));
-    echo $form->textAreaRow($model, 'descr', array('class' => 'span6', 'hint' => 'Здесь можно использовать HTML-теги'));
+    echo $form->textFieldRow($model, 't_title', ['class' => 'span6']);
+    echo $form->textAreaRow($model, 'descr', ['class' => 'span6', 'hint' => 'Здесь можно использовать HTML-теги']);
 
     $topics = Yii::app()->params['book_topics'][$model->typ];
     if (!is_array($topics)) {
-        $topics = array();
+        $topics = [];
     }
     // echo $form->checkBoxListInlineRow($model, "topics", $topics); // <-- этому ряду нужен какой-нибудь ID
 ?>
 <div class="control-group <?=$model->hasErrors('new_img') ? ' error' : ''; ?>">
-	<?php echo $form->labelEx($model, 'new_img', array('class' => 'control-label')); ?>
+	<?php echo $form->labelEx($model, 'new_img', ['class' => 'control-label']); ?>
 	<div class="controls">
 	<?php
         if ($model->img[0]) {
@@ -216,25 +216,25 @@ $(E.init);
 
 
 <?php
-    $ac = array(
-        'ac_read' => array('читать<sup>*</sup>', 'кто может в принципе зайти на любую страницу перевода; можно указать для каждой главы индивидуально'),
-        'ac_gen' => array('скачивать результат<sup>*</sup>', 'можно указать для каждой главы индивидуально'),
-        'ac_rate' => array('оценивать перевод<sup>*</sup>', 'можно указать для каждой главы индивидуально'),
-        'ac_comment' => array('комментировать перевод<sup>*</sup>', 'можно указать для каждой главы индивидуально'),
-        'ac_tr' => array('переводить<sup>*</sup>', 'добавлять новые версии перевода; можно указать для каждой главы индивидуально'),
+    $ac = [
+        'ac_read' => ['читать<sup>*</sup>', 'кто может в принципе зайти на любую страницу перевода; можно указать для каждой главы индивидуально'],
+        'ac_gen' => ['скачивать результат<sup>*</sup>', 'можно указать для каждой главы индивидуально'],
+        'ac_rate' => ['оценивать перевод<sup>*</sup>', 'можно указать для каждой главы индивидуально'],
+        'ac_comment' => ['комментировать перевод<sup>*</sup>', 'можно указать для каждой главы индивидуально'],
+        'ac_tr' => ['переводить<sup>*</sup>', 'добавлять новые версии перевода; можно указать для каждой главы индивидуально'],
 
-        'ac_blog_r' => array('читать блог', 'если выбрать &laquo;никто&raquo; то ссылка на блог вообще исчезнет из меню перевода'),
-        'ac_blog_c' => array('комментировать блог', 'оставлять комментарии в блоге перевода'),
-        'ac_blog_w' => array('писать в блог', 'писать посты в блоге перевода'),
+        'ac_blog_r' => ['читать блог', 'если выбрать &laquo;никто&raquo; то ссылка на блог вообще исчезнет из меню перевода'],
+        'ac_blog_c' => ['комментировать блог', 'оставлять комментарии в блоге перевода'],
+        'ac_blog_w' => ['писать в блог', 'писать посты в блоге перевода'],
 
-        'ac_announce' => array('анонсировать', "размещать анонсы перевода в <a href='/announce/'>соответствующем разделе</a>."),
-        'ac_chap_edit' => array('редактировать оригинал', 'добавлять/изменять главы, импортировать и редактировать оригинал'),
-        'ac_book_edit' => array('редактировать описание перевод', 'изменять название, описание, языки перевода, загружать новую картинку'),
-        'ac_membership' => array('управлять группой', 'рассматривать заявки на вступление в группу перевода, удалять из группы, приглашать в группу'),
-    );
-    $who = array('a' => 'все', 'g' => 'группа', 'm' => 'модераторы', 'o' => 'никто');
-    $who3 = array('g' => 'группа', 'm' => 'модераторы', 'o' => 'никто');
-    $who2 = array('m' => 'модераторы', 'o' => 'никто');
+        'ac_announce' => ['анонсировать', "размещать анонсы перевода в <a href='/announce/'>соответствующем разделе</a>."],
+        'ac_chap_edit' => ['редактировать оригинал', 'добавлять/изменять главы, импортировать и редактировать оригинал'],
+        'ac_book_edit' => ['редактировать описание перевод', 'изменять название, описание, языки перевода, загружать новую картинку'],
+        'ac_membership' => ['управлять группой', 'рассматривать заявки на вступление в группу перевода, удалять из группы, приглашать в группу'],
+    ];
+    $who = ['a' => 'все', 'g' => 'группа', 'm' => 'модераторы', 'o' => 'никто'];
+    $who3 = ['g' => 'группа', 'm' => 'модераторы', 'o' => 'никто'];
+    $who2 = ['m' => 'модераторы', 'o' => 'никто'];
 ?>
 <h2>Права доступа</h2>
 
@@ -277,8 +277,8 @@ $(E.init);
 <?php
     echo $form->dropDownListRow(
         $model, 'facecontrol',
-        array(Book::FC_OPEN => 'нет группы', Book::FC_CONFIRM => 'после подтверждения модераторами', Book::FC_INVITE => 'только по приглашению модераторов'),
-        array('onchange' => 'E.facecontrol_ch()')
+        [Book::FC_OPEN => 'нет группы', Book::FC_CONFIRM => 'после подтверждения модераторами', Book::FC_INVITE => 'только по приглашению модераторов'],
+        ['onchange' => 'E.facecontrol_ch()']
     );
 
     if ($model->facecontrol != Book::FC_OPEN):
@@ -329,11 +329,11 @@ $(E.init);
 
 <div class="form-actions">
 	<?php
-        echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Сохранить", array('type' => 'submit', 'class' => 'btn btn-primary')).' ';
+        echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Сохранить", ['type' => 'submit', 'class' => 'btn btn-primary']).' ';
         if (!$model->isNewRecord) {
-            echo CHtml::htmlButton("<i class='icon-ban-circle icon-white'></i> Удалить", array('onclick' => 'E.rm()', 'class' => 'btn btn-danger')).' ';
+            echo CHtml::htmlButton("<i class='icon-ban-circle icon-white'></i> Удалить", ['onclick' => 'E.rm()', 'class' => 'btn btn-danger']).' ';
         }
-        echo CHtml::htmlButton("<i class='icon-remove icon-white'></i> Отмена", array('onclick' => "location.href='".($model->isNewRecord ? Yii::app()->user->url() : $model->url)."'", 'class' => 'btn btn-success'));
+        echo CHtml::htmlButton("<i class='icon-remove icon-white'></i> Отмена", ['onclick' => "location.href='".($model->isNewRecord ? Yii::app()->user->url() : $model->url)."'", 'class' => 'btn btn-success']);
     ?>
 </div>
 <?php $this->endWidget(); ?>

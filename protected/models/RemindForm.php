@@ -11,11 +11,11 @@ class RemindForm extends CFormModel
      */
     public function rules()
     {
-        return array(
+        return [
             // login and pass are required
-            array('clue', 'required', 'message' => 'Сюда нужно что-нибудь написать.'),
-            array('clue', 'filter', 'filter' => 'trim'),
-        );
+            ['clue', 'required', 'message' => 'Сюда нужно что-нибудь написать.'],
+            ['clue', 'filter', 'filter' => 'trim'],
+        ];
     }
 
     /**
@@ -23,20 +23,20 @@ class RemindForm extends CFormModel
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'clue' => 'Введите Ваш логин или e-mail, который указывали при регистрации, и пароль будет отправлен вам по электронной почте:',
-        );
+        ];
     }
 
     public function findUser()
     {
         if (strpos($this->clue, '@') !== false) {
-            $user = User::model()->find('LOWER(email) = :email', array(':email' => mb_strtolower($this->clue)));
+            $user = User::model()->find('LOWER(email) = :email', [':email' => mb_strtolower($this->clue)]);
             if (!$user) {
                 $this->addError('clue', 'Пользователей с таким адресом электронной почты не зарегистрировано.');
             }
         } else {
-            $user = User::model()->find('LOWER(login) = :login', array(':login' => mb_strtolower($this->clue)));
+            $user = User::model()->find('LOWER(login) = :login', [':login' => mb_strtolower($this->clue)]);
             if (!$user) {
                 $this->addError('clue', 'Пользователей с таким логином не зарегистрировано.');
             }

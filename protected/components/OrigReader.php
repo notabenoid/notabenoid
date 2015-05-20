@@ -52,9 +52,9 @@ class OrigReaderSRT implements IOrigReader
     public function init()
     {
         $this->purifier = new CHtmlPurifier();
-        $this->purifier->options = array(
+        $this->purifier->options = [
             'HTML.Allowed' => 'b,strong,i,em,u',
-        );
+        ];
 
         if ($this->options->src instanceof CUploadedFile) {
             $this->fh = fopen($this->options->src->tempName, 'r');

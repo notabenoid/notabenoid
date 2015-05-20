@@ -11,7 +11,7 @@ Yii::app()->clientScript
 
 $this->pageTitle = $user->login.': редактирование';
 
-$this->renderPartial('profile_head', array('user' => $user, 'h1' => 'редактирование'));
+$this->renderPartial('profile_head', ['user' => $user, 'h1' => 'редактирование']);
 
 echo CHtml::errorSummary($user, "<div class='alert alert-box alert-danger'>", '</div>');
 ?>

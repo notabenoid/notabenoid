@@ -11,13 +11,13 @@ class InviteForm extends CFormModel
      */
     public function rules()
     {
-        return array(
+        return [
             // login and pass are required
-            array('email', 'required', 'message' => 'Пожалуйста, введите адрес вашего друга.'),
-            array('email', 'email', 'message' => 'Это не похоже на адрес электронной почты, проверьте ещё раз.'),
-            array('who', 'required', 'message' => 'Пожалуйста, подпишитесь.'),
-            array('who', 'filter', 'filter' => 'htmlspecialchars'),
-        );
+            ['email', 'required', 'message' => 'Пожалуйста, введите адрес вашего друга.'],
+            ['email', 'email', 'message' => 'Это не похоже на адрес электронной почты, проверьте ещё раз.'],
+            ['who', 'required', 'message' => 'Пожалуйста, подпишитесь.'],
+            ['who', 'filter', 'filter' => 'htmlspecialchars'],
+        ];
     }
 
     /**
@@ -25,9 +25,9 @@ class InviteForm extends CFormModel
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'email' => 'Введите e-mail Вашего друга, и ему отправится красивое приглашение с Вашими данными:',
             'who' => 'Как Вас представить?',
-        );
+        ];
     }
 }

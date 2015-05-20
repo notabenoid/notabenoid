@@ -51,11 +51,11 @@ $(function() {
 
 <?php
     /** @var TbActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
         'id' => 'form-settings',
         'type' => 'horizontal',
         'inlineErrors' => false,
-    ));
+    ]);
 
     echo $form->errorSummary($model);
 
@@ -123,7 +123,7 @@ $(function() {
 		<div class="controls">
 			<select name="ini[t][iface]">
 				<?php
-                    $A = array(0 => 'им. Поля Дирака', 1 => 'им. Питера Хиггса (тестируется)');
+                    $A = [0 => 'им. Поля Дирака', 1 => 'им. Питера Хиггса (тестируется)'];
                     foreach ($A as $k => $v) {
                         echo "<option value='{$k}'".($user->ini['t.iface'] == $k ? ' selected' : '').">{$v}</option>";
                     }
@@ -149,13 +149,13 @@ $(function() {
 
 		<div id="nc-demo" class="comments <?php echo "demo-{$user->ini['c.sc']}"; ?>">
 		<?php
-            $comments = array(
-                array('text' => "Люк!\nЯ &mdash; твой отец!", 'login' => 'darth_vader'),
-                array('text' => 'Без булдырабыз!', 'login' => 'mintimer'),
-                array('text' => 'Viva la revolucion!', 'login' => '4e'),
-                array('text' => 'Я этого никогда не говорил.', 'login' => '1stein'),
-                array('text' => 'Мои лучшие друзья &mdash; девушки!.', 'login' => 'aLmAzIk1997'),
-            );
+            $comments = [
+                ['text' => "Люк!\nЯ &mdash; твой отец!", 'login' => 'darth_vader'],
+                ['text' => 'Без булдырабыз!', 'login' => 'mintimer'],
+                ['text' => 'Viva la revolucion!', 'login' => '4e'],
+                ['text' => 'Я этого никогда не говорил.', 'login' => '1stein'],
+                ['text' => 'Мои лучшие друзья &mdash; девушки!.', 'login' => 'aLmAzIk1997'],
+            ];
 
             $comment = new Comment();
             $c = $comments[rand(0, count($comments) - 1)];
@@ -164,7 +164,7 @@ $(function() {
             $comment->author->login = $c['login'];
             $comment->body = $c['text'];
             $comment->is_new = true;
-            $this->renderPartial('//blog/_comment-1', array('comment' => $comment, 'disable_rating' => true));
+            $this->renderPartial('//blog/_comment-1', ['comment' => $comment, 'disable_rating' => true]);
         ?>
 		</div>
 
@@ -199,7 +199,7 @@ $(function() {
 <h3>Изменить пол:</h3>
 <fieldset>
 <?php
-    echo $form->radioButtonListInlineRow($model, 'sex', array('m' => 'мужчина', 'f' => 'женщина', 'x' => 'не скажу'));
+    echo $form->radioButtonListInlineRow($model, 'sex', ['m' => 'мужчина', 'f' => 'женщина', 'x' => 'не скажу']);
 ?>
 </fieldset>
 
@@ -211,12 +211,12 @@ $(function() {
 <div class="control-group">
 <div class="controls">
 <?php
-    $set_ini = array(
+    $set_ini = [
         User::INI_MAIL_PMAIL => 'личные сообщения',
         User::INI_MAIL_NOTICES => 'оповещения',
         User::INI_MAIL_COMMENTS => 'комментарии в ваших постах и ответы на ваши комментарии',
         User::INI_MAIL_NEWS => 'важные новости сайта',
-    );
+    ];
     foreach ($set_ini as $k => $label) {
         echo "<label class='checkbox'>";
         echo $form->checkBox($model, "set_ini[{$k}]").' '.$label;
@@ -235,7 +235,7 @@ $(function() {
 
 <div class="form-actions">
 <?php
-    echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Сохранить", array('type' => 'submit', 'class' => 'btn btn-primary')).' ';
+    echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Сохранить", ['type' => 'submit', 'class' => 'btn btn-primary']).' ';
 ?>
 
 </div>

@@ -102,34 +102,34 @@ $(E.init);
 
 <?php
     /** @var TbActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
         'id' => 'form-edit',
         'type' => 'horizontal',
         'inlineErrors' => false,
-    ));
+    ]);
 
     echo $form->errorSummary($book);
 
-    $ac = array(
-        'ac_read' => array('войти<sup>*</sup>', 'кто может в принципе зайти на любую страницу перевода; можно указать для каждой главы индивидуально'),
-        'ac_trread' => array('видеть чужие версии<sup>*</sup>', 'кому видны все предложенные версии перевода'),
-        'ac_gen' => array('скачивать результат<sup>*</sup>', 'можно указать для каждой главы индивидуально'),
-        'ac_rate' => array('оценивать перевод<sup>*</sup>', 'можно указать для каждой главы индивидуально'),
-        'ac_comment' => array('комментировать перевод<sup>*</sup>', 'можно указать для каждой главы индивидуально'),
-        'ac_tr' => array('переводить<sup>*</sup>', 'добавлять новые версии перевода; можно указать для каждой главы индивидуально'),
+    $ac = [
+        'ac_read' => ['войти<sup>*</sup>', 'кто может в принципе зайти на любую страницу перевода; можно указать для каждой главы индивидуально'],
+        'ac_trread' => ['видеть чужие версии<sup>*</sup>', 'кому видны все предложенные версии перевода'],
+        'ac_gen' => ['скачивать результат<sup>*</sup>', 'можно указать для каждой главы индивидуально'],
+        'ac_rate' => ['оценивать перевод<sup>*</sup>', 'можно указать для каждой главы индивидуально'],
+        'ac_comment' => ['комментировать перевод<sup>*</sup>', 'можно указать для каждой главы индивидуально'],
+        'ac_tr' => ['переводить<sup>*</sup>', 'добавлять новые версии перевода; можно указать для каждой главы индивидуально'],
 
-        'ac_blog_r' => array('читать блог', 'если выбрать &laquo;никто&raquo; то ссылка на блог вообще исчезнет из меню перевода'),
-        'ac_blog_c' => array('комментировать блог', 'оставлять комментарии в блоге перевода'),
-        'ac_blog_w' => array('писать в блог', 'писать посты в блоге перевода'),
+        'ac_blog_r' => ['читать блог', 'если выбрать &laquo;никто&raquo; то ссылка на блог вообще исчезнет из меню перевода'],
+        'ac_blog_c' => ['комментировать блог', 'оставлять комментарии в блоге перевода'],
+        'ac_blog_w' => ['писать в блог', 'писать посты в блоге перевода'],
 
-        'ac_announce' => array('анонсировать', "размещать анонсы перевода в <a href='/announce/'>соответствующем разделе</a>."),
-        'ac_chap_edit' => array('редактировать оригинал', 'добавлять/изменять главы, импортировать и редактировать оригинал'),
-        'ac_book_edit' => array('редактировать описание перевода', 'изменять название, описание, языки перевода, загружать новую картинку'),
-        'ac_membership' => array('управлять группой', 'рассматривать заявки на вступление в группу перевода, удалять из группы, приглашать в группу'),
-    );
-    $who = array('a' => 'все', 'g' => 'группа', 'm' => 'модераторы', 'o' => 'никто');
-    $who3 = array('g' => 'группа', 'm' => 'модераторы', 'o' => 'никто');
-    $who2 = array('m' => 'модераторы', 'o' => 'никто');
+        'ac_announce' => ['анонсировать', "размещать анонсы перевода в <a href='/announce/'>соответствующем разделе</a>."],
+        'ac_chap_edit' => ['редактировать оригинал', 'добавлять/изменять главы, импортировать и редактировать оригинал'],
+        'ac_book_edit' => ['редактировать описание перевода', 'изменять название, описание, языки перевода, загружать новую картинку'],
+        'ac_membership' => ['управлять группой', 'рассматривать заявки на вступление в группу перевода, удалять из группы, приглашать в группу'],
+    ];
+    $who = ['a' => 'все', 'g' => 'группа', 'm' => 'модераторы', 'o' => 'никто'];
+    $who3 = ['g' => 'группа', 'm' => 'модераторы', 'o' => 'никто'];
+    $who2 = ['m' => 'модераторы', 'o' => 'никто'];
 
     if ($book->opts_get(Book::OPTS_BAN_COPYRIGHT)):
 ?>
@@ -178,8 +178,8 @@ $(E.init);
 
     echo $form->dropDownListRow(
         $book, 'facecontrol',
-        array(Book::FC_OPEN => 'нет группы', Book::FC_CONFIRM => 'после подтверждения модераторами', Book::FC_INVITE => 'только по приглашению модераторов'),
-        array('onchange' => 'E.facecontrol_ch()')
+        [Book::FC_OPEN => 'нет группы', Book::FC_CONFIRM => 'после подтверждения модераторами', Book::FC_INVITE => 'только по приглашению модераторов'],
+        ['onchange' => 'E.facecontrol_ch()']
     );
 
     if (!$book->isNewRecord && $book->facecontrol != Book::FC_OPEN):
@@ -232,10 +232,10 @@ $(E.init);
 <?php
     if ($book->isNewRecord) {
         echo "<a class='btn btn-primary' href='".$book->getUrl('edit/info')."'><i class='icon-arrow-left icon-white'></i> Назад</a> ";
-        echo CHtml::htmlButton('Сохранить', array('type' => 'submit', 'class' => 'btn btn-primary pull-right')).' ';
+        echo CHtml::htmlButton('Сохранить', ['type' => 'submit', 'class' => 'btn btn-primary pull-right']).' ';
     } else {
-        echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Сохранить", array('type' => 'submit', 'class' => 'btn btn-primary')).' ';
-        echo CHtml::htmlButton("<i class='icon-remove icon-white'></i> Отмена", array('onclick' => "location.href='".($book->isNewRecord ? Yii::app()->user->url : $book->url)."'", 'class' => 'btn btn-success'));
+        echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Сохранить", ['type' => 'submit', 'class' => 'btn btn-primary']).' ';
+        echo CHtml::htmlButton("<i class='icon-remove icon-white'></i> Отмена", ['onclick' => "location.href='".($book->isNewRecord ? Yii::app()->user->url : $book->url)."'", 'class' => 'btn btn-success']);
     }
 ?>
 </div>

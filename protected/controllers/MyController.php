@@ -4,20 +4,20 @@ class MyController extends Controller
 {
     public function filters()
     {
-        return array('accessControl');
+        return ['accessControl'];
     }
 
     public function accessRules()
     {
-        return array(
-            array('allow', 'users' => array('@'),
-                'actions' => array(
+        return [
+            ['allow', 'users' => ['@'],
+                'actions' => [
                     'info',
                     'notices', 'notices_rmseen',
-                ),
-            ),
-            array('deny', 'users' => array('*')),
-        );
+                ],
+            ],
+            ['deny', 'users' => ['*']],
+        ];
     }
 
     public function actionIndex()
@@ -33,11 +33,11 @@ class MyController extends Controller
             return;
         }
 
-        echo json_encode(array(
+        echo json_encode([
             'c' => Yii::app()->user->newComments,
             'n' => Yii::app()->user->newNotices,
             'm' => Yii::app()->user->newMail,
-        ));
+        ]);
     }
 
     public function actionNotices()
@@ -47,7 +47,7 @@ class MyController extends Controller
         if (isset($_POST['rm'])) {
             $id = (int) $_POST['rm'];
 
-            $n = Yii::app()->db->createCommand('DELETE FROM notices WHERE user_id = :user_id AND id = :id')->execute(array(':user_id' => Yii::app()->user->id, ':id' => $id));
+            $n = Yii::app()->db->createCommand('DELETE FROM notices WHERE user_id = :user_id AND id = :id')->execute([':user_id' => Yii::app()->user->id, ':id' => $id]);
             $ajax = true;
         }
 
@@ -55,20 +55,20 @@ class MyController extends Controller
         if ($_GET['new'] == 1) {
             $crit->addCondition('not seen');
         }
-        $notices_dp = new CActiveDataProvider(Notice::model()->user(Yii::app()->user->id, false), array(
+        $notices_dp = new CActiveDataProvider(Notice::model()->user(Yii::app()->user->id, false), [
             'criteria' => $crit,
-            'pagination' => array('pageSize' => 20),
-        ));
+            'pagination' => ['pageSize' => 20],
+        ]);
 
-        $new_ids = array();
+        $new_ids = [];
         foreach ($notices_dp->data as $notice) {
             if (!$notice->seen) {
                 $new_ids[] = $notice->id;
             }
         }
 
-        $this->side_view = array('notices_side' => array('new_ids' => $new_ids));
-        $p = array('notices_dp' => $notices_dp);
+        $this->side_view = ['notices_side' => ['new_ids' => $new_ids]];
+        $p = ['notices_dp' => $notices_dp];
         if ($ajax) {
             $p['ajax'] = true;
             $this->renderPartial('notices', $p);
@@ -78,20 +78,20 @@ class MyController extends Controller
 
         // Отмечаем показанные, как прочитанные
         if (count($new_ids) > 0) {
-            Yii::app()->db->createCommand("UPDATE notices SET seen = true WHERE user_id = :user_id AND id IN('".implode("','", $new_ids)."')")->execute(array(':user_id' => Yii::app()->user->id));
+            Yii::app()->db->createCommand("UPDATE notices SET seen = true WHERE user_id = :user_id AND id IN('".implode("','", $new_ids)."')")->execute([':user_id' => Yii::app()->user->id]);
         }
     }
 
     public function actionNotices_rmseen()
     {
-        $exclude = array();
+        $exclude = [];
         if (is_array($_POST['x'])) {
             foreach ($_POST['x'] as $id) {
                 $exclude[] = (int) $id;
             }
         }
         $n = Yii::app()->db->createCommand('DELETE FROM notices WHERE user_id = :user_id AND seen'.(count($exclude) > 0 ? " AND id NOT IN('".implode("','", $exclude)."')" : ''))
-            ->execute(array(':user_id' => Yii::app()->user->id));
+            ->execute([':user_id' => Yii::app()->user->id]);
 
         $this->redirect('/my/notices');
     }
@@ -106,11 +106,11 @@ class MyController extends Controller
 
         $bookmarks = Bookmark::model()->user(Yii::app()->user->id)->typ($typ)->findAll();
 
-        $this->side_view = array(
-            'bookmarks_side' => array(),
-        );
+        $this->side_view = [
+            'bookmarks_side' => [],
+        ];
 
-        $this->render('bookmarks', array('bookmarks' => $bookmarks, 'typ' => $typ));
+        $this->render('bookmarks', ['bookmarks' => $bookmarks, 'typ' => $typ]);
     }
 
     public function actionBookmarks_edit()
@@ -140,7 +140,7 @@ class MyController extends Controller
         }
 
         Yii::app()->db->createCommand('DELETE FROM bookmarks WHERE user_id = :user_id AND id = :id')
-            ->execute(array(':user_id' => Yii::app()->user->id, ':id' => (int) $_POST['id']));
+            ->execute([':user_id' => Yii::app()->user->id, ':id' => (int) $_POST['id']]);
 
         $this->redirect('/my/bookmarks');
     }
@@ -171,11 +171,11 @@ class MyController extends Controller
         }
 
         // Есть ли уже такая закладка?
-        $bookmark = Bookmark::model()->findByAttributes(array(
+        $bookmark = Bookmark::model()->findByAttributes([
             'user_id' => Yii::app()->user->id,
             'typ' => substr($_POST['B']['typ'], 0, 1),
             'obj_id' => (int) $_POST['B']['obj_id'],
-        ));
+        ]);
         if (!$bookmark) {
             $bookmark = new Bookmark();
             $bookmark->user_id = Yii::app()->user->id;
@@ -205,14 +205,14 @@ class MyController extends Controller
         }
         if ($bookmark->isNewRecord) {
             $bookmark->ord = Yii::app()->db->createCommand('SELECT MAX(ord) FROM bookmarks WHERE typ = :typ AND user_id = :user_id')
-                ->queryScalar(array(':typ' => $bookmark->typ, ':user_id' => Yii::app()->user->id)) + 1;
+                ->queryScalar([':typ' => $bookmark->typ, ':user_id' => Yii::app()->user->id]) + 1;
         }
 
         if (!$bookmark->save()) {
             throw new CHttpException(500, $bookmark->getErrorsString());
         }
 
-        $json = array('id' => $bookmark->id, 'title' => $bookmark->title);
+        $json = ['id' => $bookmark->id, 'title' => $bookmark->title];
         echo json_encode($json);
     }
 
@@ -224,10 +224,10 @@ class MyController extends Controller
 
         $ajax = isset($_GET['ajax']) ? intval($_GET['ajax']) : intval($_POST['ajax']);
 
-        $c = new CDbCriteria(array(
+        $c = new CDbCriteria([
             'condition' => 'user_id = :user_id',
-            'params' => array(':user_id' => Yii::app()->user->id),
-        ));
+            'params' => [':user_id' => Yii::app()->user->id],
+        ]);
         if (is_array($_POST['id'])) {
             $c->addInCondition('id', $_POST['id']);
         } else {
@@ -239,7 +239,7 @@ class MyController extends Controller
             ->execute($c->params);
 
         if ($ajax) {
-            echo json_encode(array('bm_id' => $_POST['id']));
+            echo json_encode(['bm_id' => $_POST['id']]);
         } else {
             $this->redirect('/my/bookmarks');
         }

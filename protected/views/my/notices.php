@@ -79,7 +79,7 @@ $(N.init);
     $notices = $notices_dp->getData();
 
     if (!$ajax) {
-        $this->widget('bootstrap.widgets.TbPager', array('pages' => $notices_dp->pagination, 'header' => "<div class='pagination' style='margin-bottom:0'>"));
+        $this->widget('bootstrap.widgets.TbPager', ['pages' => $notices_dp->pagination, 'header' => "<div class='pagination' style='margin-bottom:0'>"]);
     }
 
     echo "<ul id='Notices'>";
@@ -93,7 +93,7 @@ $(N.init);
     echo '</ul>';
 
     if (!$ajax) {
-        $this->widget('bootstrap.widgets.TbPager', array('pages' => $notices_dp->pagination, 'header' => "<div class='pagination' style='margin-bottom:0'>"));
+        $this->widget('bootstrap.widgets.TbPager', ['pages' => $notices_dp->pagination, 'header' => "<div class='pagination' style='margin-bottom:0'>"]);
     }
 ?>
 

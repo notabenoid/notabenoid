@@ -4,26 +4,26 @@ class UsersController extends Controller
 {
     public $siteArea = 'users';
 
-    public $submenu = array();
+    public $submenu = [];
 
     public function filters()
     {
-        return array(
+        return [
             'usersOnly + edit, upic, delete',
-        );
+        ];
     }
 
     public function init()
     {
         parent::init();
 
-        $this->submenu = array(
+        $this->submenu = [
             'books' => 'Переводы',
             'karma' => 'Карма',
             'comments' => 'Комментарии',
             'posts' => 'Посты',
             'profile' => 'Контакты',
-        );
+        ];
         $user = Yii::app()->user;
         if (p()['registerType'] == 'INVITE' && !$user->isGuest && $user->id == $_GET['id']) {
             $this->submenu['invites'] = 'Приглашения';
@@ -51,7 +51,7 @@ class UsersController extends Controller
 
     public function actionGo($login)
     {
-        $user = User::model()->find('LOWER(login) = :login', array(':login' => mb_strtolower($login)));
+        $user = User::model()->find('LOWER(login) = :login', [':login' => mb_strtolower($login)]);
         if (!$user) {
             throw new CHttpException(404, 'Пользователя с таким именем просто не существует. Впрочем, за существование остальной части Вселенной мы тоже не можем поручиться.');
         }
@@ -61,35 +61,35 @@ class UsersController extends Controller
 
     public function actionIndex()
     {
-        $users_dp = new CActiveDataProvider(User::model()->cache(60 * 15, null, 2), array(
-            'criteria' => array(
-            ),
-            'pagination' => array(
+        $users_dp = new CActiveDataProvider(User::model()->cache(60 * 15, null, 2), [
+            'criteria' => [
+            ],
+            'pagination' => [
                 'pageSize' => 50,
-            ),
-            'sort' => array(
-                'attributes' => array('login', 'rate_u', 'rate_t', 'n_trs'),
-                'defaultOrder' => array(
+            ],
+            'sort' => [
+                'attributes' => ['login', 'rate_u', 'rate_t', 'n_trs'],
+                'defaultOrder' => [
                     'rate_t' => true,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
         $this->side_view = 'list_side';
 
         $global_stats = unserialize(file_get_contents(YiiBase::getPathOfAlias('application.runtime').'/global_stat.ser'));
         $this->side_params = $global_stats;
 
-        $this->render('list', array('users_dp' => $users_dp));
+        $this->render('list', ['users_dp' => $users_dp]);
     }
 
     public function actionProfile($id)
     {
         $user = $this->loadUser($id);
 
-        $this->side_view = array(
-            'profile_side' => array('user' => $user, 'userinfo' => $user->userinfo),
-        );
+        $this->side_view = [
+            'profile_side' => ['user' => $user, 'userinfo' => $user->userinfo],
+        ];
 
         $invited = User::model()->findAll([
             'condition' => 'invited_by = :user_id',
@@ -138,35 +138,35 @@ class UsersController extends Controller
         } else {
             $f->to_user($user->id)->with('from');
         }
-        $marks = new CActiveDataProvider($f, array(
-            'criteria' => array('order' => 't.dat desc'),
-            'pagination' => array('pageSize' => 500),
-        ));
-        $marks->totalItemCount = Yii::app()->db->createCommand('SELECT COUNT(*) FROM karma_rates WHERE to_uid = :user_id')->queryScalar(array(':user_id' => $user->id));
+        $marks = new CActiveDataProvider($f, [
+            'criteria' => ['order' => 't.dat desc'],
+            'pagination' => ['pageSize' => 500],
+        ]);
+        $marks->totalItemCount = Yii::app()->db->createCommand('SELECT COUNT(*) FROM karma_rates WHERE to_uid = :user_id')->queryScalar([':user_id' => $user->id]);
 
-        $this->side_view = array(
-            'profile_side' => array('user' => $user, 'userinfo' => $user->userinfo),
-            'karma_side' => array('user' => $user, 'dir' => $dir),
-        );
+        $this->side_view = [
+            'profile_side' => ['user' => $user, 'userinfo' => $user->userinfo],
+            'karma_side' => ['user' => $user, 'dir' => $dir],
+        ];
 
-        $this->render('karma', array('user' => $user, 'dir' => $dir, 'marks' => $marks, 'my_mark' => $my_mark));
+        $this->render('karma', ['user' => $user, 'dir' => $dir, 'marks' => $marks, 'my_mark' => $my_mark]);
     }
 
     public function actionBooks($id)
     {
         $user = $this->loadUser($id);
 
-        $orderOptions = array(
-            1 => array('t.last_tr desc NULLS LAST', "По дате последнего перевода от {$user->login}"),
-            2 => array('t.n_trs desc NULLS LAST', "По количеству версий от {$user->login}"),
-            3 => array('CASE WHEN book.n_verses <> 0 THEN book.d_vars::float / book.n_verses::float ELSE null END DESC NULLS LAST', 'По готовности перевода'),
-            4 => array('t.since DESC', 'По дате вступления в перевод'),
-        );
-        $statusOptions = array(
-            0 => array('', 'все', 'не участвует ни в одном переводе'),
-            1 => array('t.status = 2', "там, где {$user->login} &ndash; модератор", 'не модерирует ни один перевод'),
-            2 => array("book.owner_id = {$user->id}", "там, где {$user->login} &ndash; создатель", 'не создал'.$user->sexy().' ни одного проекта перевода'),
-        );
+        $orderOptions = [
+            1 => ['t.last_tr desc NULLS LAST', "По дате последнего перевода от {$user->login}"],
+            2 => ['t.n_trs desc NULLS LAST', "По количеству версий от {$user->login}"],
+            3 => ['CASE WHEN book.n_verses <> 0 THEN book.d_vars::float / book.n_verses::float ELSE null END DESC NULLS LAST', 'По готовности перевода'],
+            4 => ['t.since DESC', 'По дате вступления в перевод'],
+        ];
+        $statusOptions = [
+            0 => ['', 'все', 'не участвует ни в одном переводе'],
+            1 => ['t.status = 2', "там, где {$user->login} &ndash; модератор", 'не модерирует ни один перевод'],
+            2 => ["book.owner_id = {$user->id}", "там, где {$user->login} &ndash; создатель", 'не создал'.$user->sexy().' ни одного проекта перевода'],
+        ];
 
         $order = (int) $_GET['order'];
         if (!isset($orderOptions[$order])) {
@@ -186,23 +186,23 @@ class UsersController extends Controller
         if ($status) {
             $c->addCondition($statusOptions[$status][0]);
         }
-        $groups_dp = new CActiveDataProvider($f, array(
+        $groups_dp = new CActiveDataProvider($f, [
             'criteria' => $c,
-            'pagination' => array('pageSize' => 30),
-        ));
+            'pagination' => ['pageSize' => 30],
+        ]);
         // $groups_dp->totalItemCount = Yii::app()->db->createCommand("SELECT COUNT(*) FROM groups WHERE user_id = :user_id")->queryScalar(array(":user_id" => $user->id));
 
-        $this->side_view = array(
-            'profile_side' => array('user' => $user, 'userinfo' => $user->userinfo),
-            'books_side' => array('orderOptions' => $orderOptions, 'order' => $order, 'statusOptions' => $statusOptions, 'status' => $status),
-        );
+        $this->side_view = [
+            'profile_side' => ['user' => $user, 'userinfo' => $user->userinfo],
+            'books_side' => ['orderOptions' => $orderOptions, 'order' => $order, 'statusOptions' => $statusOptions, 'status' => $status],
+        ];
 
-        $this->render('books', array(
+        $this->render('books', [
             'user' => $user,
             'groups_dp' => $groups_dp,
             'order' => $order,
             'statusOptions' => $statusOptions, 'status' => $status,
-        ));
+        ]);
     }
 
     public function actionTranslations($id, $book_id)
@@ -222,19 +222,19 @@ class UsersController extends Controller
 
         $translations = new CActiveDataProvider(
             Translation::model()->userbook($user->id, $book->id)->with('orig.chap'),
-            array(
-                'criteria' => array(
+            [
+                'criteria' => [
                     'order' => 't.cdate desc',
-                ),
-                'pagination' => array('pageSize' => 20),
-            )
+                ],
+                'pagination' => ['pageSize' => 20],
+            ]
         );
 
-        $this->side_view = array(
-            'profile_side' => array('user' => $user, 'userinfo' => $user->userinfo),
-        );
+        $this->side_view = [
+            'profile_side' => ['user' => $user, 'userinfo' => $user->userinfo],
+        ];
 
-        $this->render('translations', array('user' => $user, 'book' => $book, 'translations' => $translations));
+        $this->render('translations', ['user' => $user, 'book' => $book, 'translations' => $translations]);
     }
 
     public function actionComments($id)
@@ -246,7 +246,7 @@ class UsersController extends Controller
             $mode = 'blog';
         }
 
-        $c = new CDbCriteria(array('order' => 't.cdate desc'));
+        $c = new CDbCriteria(['order' => 't.cdate desc']);
         if ($mode == 'blog') {
             $c->addCondition('t.post_id IS NOT NULL AND post.book_id IS NULL');
         }     // с post_id почему-то слегка быстрее :-/
@@ -268,31 +268,31 @@ class UsersController extends Controller
             $f->with('orig.chap.book');
         }
 
-        $comments = new CActiveDataProvider($f, array(
+        $comments = new CActiveDataProvider($f, [
             'criteria' => $c,
-            'pagination' => array('pageSize' => 20),
-        ));
+            'pagination' => ['pageSize' => 20],
+        ]);
 
-        $this->side_view = array(
-            'profile_side' => array('user' => $user, 'userinfo' => $user->userinfo),
-        );
+        $this->side_view = [
+            'profile_side' => ['user' => $user, 'userinfo' => $user->userinfo],
+        ];
 
-        $this->render('comments', array('user' => $user, 'comments' => $comments, 'mode' => $mode));
+        $this->render('comments', ['user' => $user, 'comments' => $comments, 'mode' => $mode]);
     }
 
     public function actionPosts($id)
     {
         $user = $this->loadUser($id);
 
-        $posts = new CActiveDataProvider(BlogPost::model()->user($user->id)->with('book.membership', 'seen'), array(
-            'criteria' => array(
+        $posts = new CActiveDataProvider(BlogPost::model()->user($user->id)->with('book.membership', 'seen'), [
+            'criteria' => [
 //				"condition" => "t.book_id IS NULL OR (book.ac_read = 'a' AND book.ac_blog_r = 'a')",
                 'order' => 't.cdate desc',
-            ),
-            'pagination' => array('pageSize' => 10),
-        ));
+            ],
+            'pagination' => ['pageSize' => 10],
+        ]);
 
-        $this->render('posts', array('user' => $user, 'posts' => $posts));
+        $this->render('posts', ['user' => $user, 'posts' => $posts]);
     }
 
     public function actionInvites($id)
@@ -392,7 +392,7 @@ class UsersController extends Controller
             }
         }
 
-        $this->render('edit', array('model' => $form));
+        $this->render('edit', ['model' => $form]);
     }
 
     public function actionDelete($id)

@@ -123,7 +123,7 @@ $(P.init);
     $members = $members_dp->getData();
 ?>
 
-<?php $this->widget('bootstrap.widgets.TbPager', array('pages' => $members_dp->pagination)); ?>
+<?php $this->widget('bootstrap.widgets.TbPager', ['pages' => $members_dp->pagination]); ?>
 
 <?php if ($this->book->can('membership')): ?>
 	<form method="post" action="<?=$book->url('members_manage'); ?>" id="members_manage">
@@ -147,7 +147,7 @@ $(P.init);
     foreach ($members as $member) {
         $pos++;
         echo '<tr>';
-        $o = array('data-id' => $member->id, 'data-status' => $member->membership->status);
+        $o = ['data-id' => $member->id, 'data-status' => $member->membership->status];
         echo CHtml::tag('td', $o, "{$pos}.");
 
         echo '<td>';
@@ -197,7 +197,7 @@ $(P.init);
 </tbody>
 </table>
 
-<?php $this->widget('bootstrap.widgets.TbPager', array('pages' => $members_dp->pagination)); ?>
+<?php $this->widget('bootstrap.widgets.TbPager', ['pages' => $members_dp->pagination]); ?>
 
 <?php if ($this->book->can('membership')): ?>
 	<div id="inquisition">

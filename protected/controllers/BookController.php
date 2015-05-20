@@ -7,13 +7,13 @@ class BookController extends BookBaseController
 
     public function filters()
     {
-        return array('accessControl');
+        return ['accessControl'];
     }
 
     public function accessRules()
     {
         return [
-            ['allow', 'users' => ['*'], 'actions' => array('index', 'chapters', 'members', 'dict')],
+            ['allow', 'users' => ['*'], 'actions' => ['index', 'chapters', 'members', 'dict']],
             ['allow', 'users' => ['@'], 'actions' => [
                 'reorder', 'members_join', 'members_leave', 'members_manage', 'invite_accept', 'invite_decline',
                 'dict_edit', 'dict_rm', 'dict_copy',
@@ -34,18 +34,18 @@ class BookController extends BookBaseController
         }
 
         $this->side_view = 'index_side';
-        $this->side_params = array('book' => $this->book);
+        $this->side_params = ['book' => $this->book];
 
-        $this->render('index', array('book' => $this->book, 'chapters' => $chapters));
+        $this->render('index', ['book' => $this->book, 'chapters' => $chapters]);
     }
 
     public function actionChapters($book_id)
     {
         $book = $this->loadBook($book_id);
 
-        $json = array();
+        $json = [];
         foreach ($this->book->chapters as $chap) {
-            $json[] = array('id' => $chap->id, 'title' => $chap->title);
+            $json[] = ['id' => $chap->id, 'title' => $chap->title];
         }
 
         echo json_encode($json);
@@ -85,9 +85,9 @@ class BookController extends BookBaseController
         if (!$user->can('geek')) {
             $did = Yii::app()->db
                 ->createCommand("SELECT 1 FROM recalc_log WHERE book_id = :book_id AND dat + INTERVAL '1 HOUR' > now()")
-                ->queryScalar(array(':book_id' => $book->id));
+                ->queryScalar([':book_id' => $book->id]);
             if ($did) {
-                $this->render('recalc_deny', array('book' => $book));
+                $this->render('recalc_deny', ['book' => $book]);
 
                 return;
             }
@@ -150,14 +150,14 @@ COMMIT;
 SQL;
 
         if ($_POST['go'] == 1) {
-            Yii::app()->db->createCommand($sql)->execute(array(':book_id' => $book->id, ':user_id' => $user->id));
+            Yii::app()->db->createCommand($sql)->execute([':book_id' => $book->id, ':user_id' => $user->id]);
 
             $flash = 'Спасибо, все фрагменты оригинала и версии перевода пересчитаны заново'.($user->can('geek') ? (' за '.Yii::app()->db->stats[1].' сек') : '').'.';
             Yii::app()->user->setFlash('success', $flash);
             $this->redirect($book->url);
         }
 
-        $this->render('recalc', array('book' => $book));
+        $this->render('recalc', ['book' => $book]);
     }
 
     public function actionMembers($book_id)
@@ -180,48 +180,48 @@ SQL;
 
         // DataProvider: члены группы
         $f = new User();
-        $members_dp = new CActiveDataProvider($f->members_of($this->book->id), array(
-            'criteria' => array(
+        $members_dp = new CActiveDataProvider($f->members_of($this->book->id), [
+            'criteria' => [
                 'order' => 'membership.n_trs desc, membership.status desc, membership.since desc',
-            ),
-            'pagination' => array('pageSize' => 25),
-        ));
+            ],
+            'pagination' => ['pageSize' => 25],
+        ]);
 
         if ($this->book->can('membership')) {
             // DataProvider: заявки
-            $queue_dp = new CActiveDataProvider(User::model(), array(
-                'criteria' => array(
+            $queue_dp = new CActiveDataProvider(User::model(), [
+                'criteria' => [
                     'select' => 't.*, q.cdate as q_cdate, q.message as q_message',
                     'join' => 'RIGHT JOIN group_queue q ON q.user_id = t.id',
                     'condition' => "q.book_id = '{$this->book->id}'",
-                ),
+                ],
                 'pagination' => false,
-            ));
+            ]);
 
             // DataProvider: отправленные приглашения
-            $invited_dp = new CActiveDataProvider(User::model(), array(
-                'criteria' => array(
+            $invited_dp = new CActiveDataProvider(User::model(), [
+                'criteria' => [
                     'select' => 't.*, i.cdate, i.from_uid, u2.login as from_login',
                     'join' => 'RIGHT JOIN invites i ON i.to_uid = t.id LEFT JOIN users u2 ON i.from_uid = u2.id',
                     'condition' => "i.book_id = '{$this->book->id}'",
                     'order' => 'i.cdate desc',
-                ),
+                ],
                 'pagination' => false,
-            ));
+            ]);
         }
 
         $this->side_view = 'index_side';
-        $this->side_params = array('book' => $this->book);
+        $this->side_params = ['book' => $this->book];
 
-        $this->render('members', array('book' => $this->book, 'members_dp' => $members_dp, 'queue_dp' => $queue_dp, 'invited_dp' => $invited_dp));
+        $this->render('members', ['book' => $this->book, 'members_dp' => $members_dp, 'queue_dp' => $queue_dp, 'invited_dp' => $invited_dp]);
     }
 
     private function members_requests()
     {
-        $Accept = array();
-        $Decline = array();
-        $rAccept = array();
-        $rDecline = array(); // сюда пишем id из результата запроса
+        $Accept = [];
+        $Decline = [];
+        $rAccept = [];
+        $rDecline = []; // сюда пишем id из результата запроса
 
         foreach ($_POST['fate'] as $id => $fate) {
             $id = (int) $id;
@@ -232,7 +232,7 @@ SQL;
             }
         }
 
-        $c = new CDbCriteria(array());
+        $c = new CDbCriteria([]);
         $c->addInCondition('id', array_merge($Accept, $Decline));
         $c->join = 'RIGHT JOIN group_queue ON group_queue.user_id = t.id';
         $c->addCondition("group_queue.book_id = '{$this->book->id}'");
@@ -242,7 +242,7 @@ SQL;
             if (in_array($u->id, $Accept)) {
                 $rAccept[] = $u->id;
                 $u->Notify(Notice::JOIN_ACCEPTED, $this->book);
-                Yii::app()->db->createCommand('SELECT group_join(:user_id, :book_id)')->execute(array(':user_id' => $u->id, ':book_id' => $this->book->id));
+                Yii::app()->db->createCommand('SELECT group_join(:user_id, :book_id)')->execute([':user_id' => $u->id, ':book_id' => $this->book->id]);
             } elseif (in_array($u->id, $Decline)) {
                 $rDecline[] = $u->id;
                 $u->Notify(Notice::JOIN_DENIED, $this->book);
@@ -277,7 +277,7 @@ SQL;
         }
 
         // Список юзеров, у которых ещё нет инвайта
-        $c = new CDbCriteria(array());
+        $c = new CDbCriteria([]);
         $c->addInCondition('LOWER(login)', $U);
         $c->join = "LEFT JOIN invites ON invites.book_id = '{$this->book->id}' AND invites.to_uid = t.id";
         $c->addCondition('invites.to_uid IS NULL');
@@ -313,7 +313,7 @@ SQL;
         if ($cnt) {
             $n = Yii::app()->db->createCommand($sql)->execute();
             $this->book->n_invites -= $n;
-            $this->book->save(array('n_invites'));
+            $this->book->save(['n_invites']);
             $user->setFlash('success', Yii::t('app', 'Отправлено {n} приглашение|Отправлено {n} приглашения|Отправлено {n} приглашений', $n).": {$invited}");
         } else {
             $user->setFlash('error', 'Ни одного приглашения не отправлено. Возможно, вы неправильно написали ники пользователей, или им уже было отправлено приглашение, или они уже участвуют в переводе.');
@@ -352,10 +352,10 @@ SQL;
         if (count($ids) == 0) {
             $this->redirect($back);
         }
-        $members = GroupMember::model()->with('user')->book($this->book->id)->findAllByAttributes(array('user_id' => $ids));
+        $members = GroupMember::model()->with('user')->book($this->book->id)->findAllByAttributes(['user_id' => $ids]);
 
-        $update = array();
-        $delete = array();
+        $update = [];
+        $delete = [];
         foreach ($members as $member) {
             // С создателем перевода никаких действий делать нельзя, а модераторов может мучить только создатель
             if ($member->user_id == $this->book->owner_id) {
@@ -437,19 +437,19 @@ SQL;
         }
 
         if ($this->book->facecontrol == Book::FC_INVITE) {
-            $result = array(
+            $result = [
                 'msg' => 'Участие в этой группе - только по приглашению от '.($this->book->ac_membership == 'm' ? 'модераторов' : 'создателя перевода').'.',
-            );
+            ];
         } elseif ($this->book->facecontrol == Book::FC_OPEN) {
-            $result = array(
+            $result = [
                 'msg' => 'В этом переводе нет группы переводчиков.',
-            );
+            ];
         } elseif ($this->book->facecontrol == Book::FC_CONFIRM) {
             $result = $this->members_enqueue();
         } else {
-            $result = array(
+            $result = [
                 'msg' => "Системная ошибка: bad book.facecontrol ({$this->book->id}:{$this->book->facecontrol})",
-            );
+            ];
         }
 
         if ($_POST['ajax'] == 1) {
@@ -466,7 +466,7 @@ SQL;
 
     private function members_enqueue()
     {
-        $result = array('status' => 'fail', 'msg' => '');
+        $result = ['status' => 'fail', 'msg' => ''];
 
         if ($this->book->membership->status == GroupMember::MEMBER) {
             $result['msg'] = 'Вы уже состоите в этой группе перевода.';
@@ -480,7 +480,7 @@ SQL;
             return $result;
         }
 
-        $p = array('book_id' => $this->book->id, 'user_id' => Yii::app()->user->id);
+        $p = ['book_id' => $this->book->id, 'user_id' => Yii::app()->user->id];
         $r = Yii::app()->db->createCommand('SELECT 1 FROM group_queue WHERE book_id = :book_id AND user_id = :user_id')->queryScalar($p);
         if ($r) {
             $result['msg'] = 'Вы уже подавали заявку на участие в этой группе и она ещё не рассмотрена '.($this->book->ac_membership == 'm' ? 'модераторами' : 'создателем перевода').'.';
@@ -520,7 +520,7 @@ SQL;
             throw new CHttpException(404, 'Такого перевода не существует. Возможно, он удалён.');
         }
 
-        $p = array('book_id' => $this->book->id, 'user_id' => Yii::app()->user->id);
+        $p = ['book_id' => $this->book->id, 'user_id' => Yii::app()->user->id];
         if ($this->book->membership->n_trs != 0) {
             Yii::app()->db->createCommand('UPDATE groups SET status = 0 WHERE book_id = :book_id AND user_id = :user_id')->execute($p);
         } else {
@@ -538,7 +538,7 @@ SQL;
     private function invite_delete()
     {
         Yii::app()->db->createCommand('DELETE FROM invites WHERE book_id = :book_id AND to_uid = :my_uid')
-            ->execute(array(':book_id' => $this->book->id, ':my_uid' => Yii::app()->user->id));
+            ->execute([':book_id' => $this->book->id, ':my_uid' => Yii::app()->user->id]);
     }
 
     public function actionInvite_accept($book_id)
@@ -568,7 +568,7 @@ SQL;
         // вступаем в группу. status до этого - NULL, BANNED или либо CONTRIBUTOR
         // NULL - insert
         // CONTRIBUTOR: update
-        Yii::app()->db->createCommand('SELECT group_join(:user_id, :book_id)')->execute(array(':user_id' => Yii::app()->user->id, ':book_id' => $this->book->id));
+        Yii::app()->db->createCommand('SELECT group_join(:user_id, :book_id)')->execute([':user_id' => Yii::app()->user->id, ':book_id' => $this->book->id]);
 
         // Добавляем в закладки
         Bookmark::set($this->book->id);
@@ -596,9 +596,9 @@ SQL;
         $book = $this->loadBook($book_id);
         $ajax = $_GET['ajax'] || $_POST['ajax'];
 
-        $dict = Dict::model()->book($book->id)->findAll(array('order' => 't.term'));
+        $dict = Dict::model()->book($book->id)->findAll(['order' => 't.term']);
 
-        $p = array('book' => $book, 'dict' => $dict, 'ajax' => $ajax);
+        $p = ['book' => $book, 'dict' => $dict, 'ajax' => $ajax];
         $view = Yii::app()->user->ini['t.iface'] == 1 ? 'dict-1' : 'dict';
         if ($ajax) {
             $this->renderPartial($view, $p);
@@ -636,13 +636,13 @@ SQL;
 
         if ($dict->save()) {
             if ($ajax) {
-                echo json_encode(array('id' => $dict->id, 'term' => $dict->term, 'descr' => $dict->descr));
+                echo json_encode(['id' => $dict->id, 'term' => $dict->term, 'descr' => $dict->descr]);
             } else {
                 $this->redirect($book->getUrl('dict'));
             }
         } else {
             if ($ajax) {
-                echo json_encode(array('error' => $dict->getErrorsString()));
+                echo json_encode(['error' => $dict->getErrorsString()]);
             } else {
                 Yii::app()->user->setFlash('error', $dict->getErrorsString());
                 $this->redirect($book->getUrl('dict'));
@@ -673,7 +673,7 @@ SQL;
 
         $dict->delete();
 
-        echo json_encode(array('id' => $dict->id));
+        echo json_encode(['id' => $dict->id]);
     }
 
     public function actionDict_copy($book_id)
@@ -694,7 +694,7 @@ SQL;
             $dstDict = Dict::model()->book($book->id)->findAll();
 
             $sql = '';
-            $params = array(':book_id' => $book->id, ':user_id' => Yii::app()->user->id);
+            $params = [':book_id' => $book->id, ':user_id' => Yii::app()->user->id];
             $cntAdded = 0;
             foreach ($srcDict as $i => $term) {
                 $found = false;
@@ -727,7 +727,7 @@ SQL;
 
             $this->redirect($book->url);
         } else {
-            $sources = Book::model()->moderated_by(Yii::app()->user->id)->findAll('t.id != :id', array(':id' => $book->id));
+            $sources = Book::model()->moderated_by(Yii::app()->user->id)->findAll('t.id != :id', [':id' => $book->id]);
 
             foreach ($sources as $k => $v) {
                 if ($v->dict_cnt == 0) {
@@ -735,7 +735,7 @@ SQL;
                 }
             }
 
-            $this->render('dict_copy', array('book' => $book, 'sources' => $sources));
+            $this->render('dict_copy', ['book' => $book, 'sources' => $sources]);
         }
     }
 
@@ -765,6 +765,6 @@ SQL;
             }
         }
 
-        $this->render('ban_copyright', array('book' => $book, 'reason' => $reason));
+        $this->render('ban_copyright', ['book' => $book, 'reason' => $reason]);
     }
 }

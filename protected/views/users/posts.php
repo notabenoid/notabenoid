@@ -9,7 +9,7 @@ Yii::app()->clientScript
 
 $this->pageTitle = $user->login.': посты';
 
-$this->renderPartial('profile_head', array('user' => $user, 'h1' => 'посты'));
+$this->renderPartial('profile_head', ['user' => $user, 'h1' => 'посты']);
 ?>
 
 <?php if ($posts->totalItemCount == 0): ?>
@@ -28,7 +28,7 @@ $this->renderPartial('profile_head', array('user' => $user, 'h1' => 'посты'
 
     $data = $posts->data;
 
-    $this->widget('bootstrap.widgets.TbPager', array('pages' => $posts->pagination, 'header' => "<div class='pagination' style='margin-bottom:0'>"));
+    $this->widget('bootstrap.widgets.TbPager', ['pages' => $posts->pagination, 'header' => "<div class='pagination' style='margin-bottom:0'>"]);
 
     foreach ($posts->data as $post) {
         $post->author = $user;
@@ -37,11 +37,11 @@ $this->renderPartial('profile_head', array('user' => $user, 'h1' => 'посты'
         } elseif ($post->book_id == 0 && !isset(Yii::app()->params['blog_topics']['common'][$post->topics])) {
             echo "<p class='access-denied'>Пост написан в блоге, к которому у вас нет доступа.</p>";
         } else {
-            $this->renderPartial('//blog/_post', array('post' => $post, 'placement' => 'user', 'has' => array('edit' => false)));
+            $this->renderPartial('//blog/_post', ['post' => $post, 'placement' => 'user', 'has' => ['edit' => false]]);
         }
     }
 
-    $this->widget('bootstrap.widgets.TbPager', array('pages' => $posts->pagination));
+    $this->widget('bootstrap.widgets.TbPager', ['pages' => $posts->pagination]);
     ?>
 
 <?php endif ?>

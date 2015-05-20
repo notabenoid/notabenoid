@@ -54,7 +54,7 @@ Yii::app()->bootstrap->registerModal();
 		<li class="search">
 			<form class="form-search" method="get" action="/search">
 				<?php
-                    $a = array('Вы что-то потеряли?', 'Ищете что-нибудь?', 'Поиск переводов', 'Ищите и обрящете');
+                    $a = ['Вы что-то потеряли?', 'Ищете что-нибудь?', 'Поиск переводов', 'Ищите и обрящете'];
                 ?>
 				<input type="hidden" name="from" value="header">
 				<input type="text" name="t" class="input-medium search-query span3" placeholder="<?=$a[rand(0, count($a) - 1)]; ?>" title="Кстати, отсюда можно найти и переводчика, если собаку (@), а потом сразу его ник."/>

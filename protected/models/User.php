@@ -69,7 +69,7 @@ class User extends CActiveRecord
 
     public function attributeLabels()
     {
-        return array(
+        return [
             'verifyCode' => 'Код проверки',
             'login' => 'Логин',
             'pass' => 'Пароль',
@@ -92,64 +92,64 @@ class User extends CActiveRecord
 
             'pass2' => 'Ещё раз',
             'remember' => 'Запомнить меня на сайте',
-        );
+        ];
     }
 
     public function rules()
     {
-        return array(
+        return [
             // on => "login"
-            array('login, pass', 'required', 'on' => 'login', 'message' => 'Пожалуйста, введите {attribute}'),
-            array('remember', 'boolean', 'on' => 'login'),
+            ['login, pass', 'required', 'on' => 'login', 'message' => 'Пожалуйста, введите {attribute}'],
+            ['remember', 'boolean', 'on' => 'login'],
 
             // on => "register"
-            array('login, pass, email, sex, lang', 'required', 'message' => 'Укажите {attribute}.', 'on' => 'register'),
-            array('login, email', 'filter', 'filter' => 'trim', 'on' => 'register'),
-            array('login', 'length', 'min' => 2, 'max' => 16, 'tooShort' => 'Слишком короткий логин', 'tooLong' => 'Слишком длинный логин', 'on' => 'register'),
-            array('login', 'match', 'pattern' => '/^[A-Za-z\d_]+$/', 'message' => 'Недопустимый символ', 'on' => 'register'),
-            array('login', 'unique', 'caseSensitive' => false, 'message' => 'Такой логин уже используется, придумайте другой.', 'on' => 'register'),
-            array('pass, pass2', 'length', 'min' => 5, 'max' => 32, 'tooShort' => 'Слишком короткий пароль', 'tooLong' => 'Слишком длинный пароль', 'on' => 'register'),
-            array('pass', 'compare', 'compareAttribute' => 'pass2', 'message' => 'Пароли не совпадают.', 'on' => 'register'),
-            array('pass2', 'safe', 'on' => 'register'),
-            array('email', 'length', 'max' => 255, 'tooLong' => 'Слишком длинный адрес электронной почты', 'on' => 'register'),
-            array('email', 'email', 'checkPort' => false, 'message' => 'Неверный адрес электронной почты.', 'on' => 'register, edit-admin'),
-            array('email', 'unique', 'caseSensitive' => false, 'message' => 'Пользователь с таким адресом электронной почты уже зарегистрирован.', 'on' => 'register, edit-admin'),
-            array('sex', 'in', 'range' => array('m', 'f'), 'message' => 'Вы должны быть либо мужчиной, либо, ещё лучше, женщиной.', 'on' => 'register'),
-            array('sex', 'in', 'range' => array('m', 'f', 'x', '-'), 'message' => 'Пол - это m, f, x или дефис.', 'on' => 'edit-admin'),
-            array('lang', 'numerical', 'integerOnly' => true, 'min' => 1, 'message' => 'Этот язык нам, увы, неизвестен.', 'on' => 'register'),
-            array('verifyCode', 'captcha', 'message' => 'Вы неправильно ввели буквы с картинки.', 'on' => 'register'),
-            array('tos', 'compare', 'compareValue' => '1', 'message' => 'Вы должны прочитать и согласиться с правилами.', 'on' => 'register'),
+            ['login, pass, email, sex, lang', 'required', 'message' => 'Укажите {attribute}.', 'on' => 'register'],
+            ['login, email', 'filter', 'filter' => 'trim', 'on' => 'register'],
+            ['login', 'length', 'min' => 2, 'max' => 16, 'tooShort' => 'Слишком короткий логин', 'tooLong' => 'Слишком длинный логин', 'on' => 'register'],
+            ['login', 'match', 'pattern' => '/^[A-Za-z\d_]+$/', 'message' => 'Недопустимый символ', 'on' => 'register'],
+            ['login', 'unique', 'caseSensitive' => false, 'message' => 'Такой логин уже используется, придумайте другой.', 'on' => 'register'],
+            ['pass, pass2', 'length', 'min' => 5, 'max' => 32, 'tooShort' => 'Слишком короткий пароль', 'tooLong' => 'Слишком длинный пароль', 'on' => 'register'],
+            ['pass', 'compare', 'compareAttribute' => 'pass2', 'message' => 'Пароли не совпадают.', 'on' => 'register'],
+            ['pass2', 'safe', 'on' => 'register'],
+            ['email', 'length', 'max' => 255, 'tooLong' => 'Слишком длинный адрес электронной почты', 'on' => 'register'],
+            ['email', 'email', 'checkPort' => false, 'message' => 'Неверный адрес электронной почты.', 'on' => 'register, edit-admin'],
+            ['email', 'unique', 'caseSensitive' => false, 'message' => 'Пользователь с таким адресом электронной почты уже зарегистрирован.', 'on' => 'register, edit-admin'],
+            ['sex', 'in', 'range' => ['m', 'f'], 'message' => 'Вы должны быть либо мужчиной, либо, ещё лучше, женщиной.', 'on' => 'register'],
+            ['sex', 'in', 'range' => ['m', 'f', 'x', '-'], 'message' => 'Пол - это m, f, x или дефис.', 'on' => 'edit-admin'],
+            ['lang', 'numerical', 'integerOnly' => true, 'min' => 1, 'message' => 'Этот язык нам, увы, неизвестен.', 'on' => 'register'],
+            ['verifyCode', 'captcha', 'message' => 'Вы неправильно ввели буквы с картинки.', 'on' => 'register'],
+            ['tos', 'compare', 'compareValue' => '1', 'message' => 'Вы должны прочитать и согласиться с правилами.', 'on' => 'register'],
 
-            array('ini', 'type', 'type' => 'array', 'on' => 'settings'),
+            ['ini', 'type', 'type' => 'array', 'on' => 'settings'],
 
             ['n_invites', 'numerical', 'on' => 'edit-admin'],
-        );
+        ];
     }
 
     public function relations()
     {
-        return array(
-            'books' => array(self::HAS_MANY, 'Book',        'owner_id'),
-            'userinfo' => array(self::HAS_MANY, 'Userinfo',    'user_id'), // , "order" => "prop_id", "select" => "prop_id, value"
-            'membership' => array(self::HAS_ONE,  'GroupMember', 'user_id'),
-            'invitedBy' => array(self::BELONGS_TO,  'User', 'invited_by'),
-        );
+        return [
+            'books' => [self::HAS_MANY, 'Book',        'owner_id'],
+            'userinfo' => [self::HAS_MANY, 'Userinfo',    'user_id'], // , "order" => "prop_id", "select" => "prop_id, value"
+            'membership' => [self::HAS_ONE,  'GroupMember', 'user_id'],
+            'invitedBy' => [self::BELONGS_TO,  'User', 'invited_by'],
+        ];
     }
 
     public function membership($book_id)
     {
-        $this->getDbCriteria()->mergeWith(array(
-            'with' => array('membership' => array('on' => "membership.book_id = {$book_id}")),
-        ));
+        $this->getDbCriteria()->mergeWith([
+            'with' => ['membership' => ['on' => "membership.book_id = {$book_id}"]],
+        ]);
 
         return $this;
     }
 
     public function members_of($book_id)
     {
-        $this->getDbCriteria()->mergeWith(array(
-            'with' => array('membership' => array('condition' => "membership.book_id = {$book_id}")),
-        ));
+        $this->getDbCriteria()->mergeWith([
+            'with' => ['membership' => ['condition' => "membership.book_id = {$book_id}"]],
+        ]);
 
         return $this;
     }
@@ -166,10 +166,10 @@ class User extends CActiveRecord
 
     public function byLogin($login)
     {
-        $this->getDbCriteria()->mergeWith(array(
+        $this->getDbCriteria()->mergeWith([
             'condition' => 'LOWER(login) = :login',
-            'params' => array(':login' => trim(strtolower($login))),
-        ));
+            'params' => [':login' => trim(strtolower($login))],
+        ]);
 
         return $this;
     }
@@ -398,7 +398,7 @@ class User extends CActiveRecord
         }
         @unlink($this->upicPath);
         @unlink($this->upicPathBig);
-        $this->upic = array(0, 0, 0);
+        $this->upic = [0, 0, 0];
 
         return true;
     }
@@ -463,7 +463,7 @@ class User extends CActiveRecord
 
         // Уведомление по мылу, если надо
         if ($this->ini_get(self::INI_MAIL_NOTICES)) {
-            $subj = array(
+            $subj = [
                 Notice::INVITE => 'Приглашение в группу перевода',
                 Notice::JOIN_REQUEST => 'Заявка на вступление в группу перевода',
                 Notice::JOIN_ACCEPTED => 'Заявка принята',
@@ -475,12 +475,12 @@ class User extends CActiveRecord
                 Notice::DEPOSED => 'Лишение модераторских полномочий',
                 Notice::CHAPTER_ADDED => 'Новая глава в переводе, за которым вы следите',
                 Notice::CHAPTER_STATUS => 'Изменился статус перевода, за которым вы следите',
-            );
+            ];
             $msg = new YiiMailMessage($subj[$Notice->typ]);
             $msg->view = 'notice';
-            $msg->setFrom(array(Yii::app()->params['systemEmail'] => 'Оповещение'));
+            $msg->setFrom([Yii::app()->params['systemEmail'] => 'Оповещение']);
             $msg->addTo($this->email);
-            $msg->setBody(array('Notice' => $Notice, 'user' => $this), 'text/html');
+            $msg->setBody(['Notice' => $Notice, 'user' => $this], 'text/html');
             Yii::app()->mail->send($msg);
         }
 

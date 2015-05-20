@@ -8,7 +8,7 @@
      * @var string
      * @var string
      */
-    $filters = array(
+    $filters = [
         0 => 'Всё',
         1 => 'Непереведённое',
         7 => 'С 2 и более версиями перевода',
@@ -17,7 +17,7 @@
         2 => 'От переводчика',
         5 => 'Оригинал содержит',
         6 => 'Перевод содержит',
-    );
+    ];
 
     Yii::app()->getClientScript()
         ->registerCssFile('/css/translate.css?13')
@@ -101,7 +101,7 @@
 	T.setStats(<?php echo "{$chap->n_vars}, {$chap->d_vars}, {$chap->n_verses}"; ?>);
 </script>
 
-<?php $this->widget('bootstrap.widgets.TbPager', array('pages' => $orig_dp->pagination, 'header' => "<div class='pagination pagination-centered'>")); ?>
+<?php $this->widget('bootstrap.widgets.TbPager', ['pages' => $orig_dp->pagination, 'header' => "<div class='pagination pagination-centered'>"]); ?>
 
 <?php
     if ($orig_dp->totalItemCount == 0):
@@ -134,18 +134,18 @@
         $user = Yii::app()->user;
         $pos = $orig_dp->pagination->currentPage * $orig_dp->pagination->pageSize;
         // Опции Translate::render() для автора версии перевода
-        $tr_opts_owner = array(
+        $tr_opts_owner = [
             'edit' => true, // $chap->book->membership->status == GroupMember::MODERATOR,
             'rm' => true,
             'rate' => false,
-        );
+        ];
         // Опции Translate::render() для всех остальных версий
-        $tr_opts = array(
+        $tr_opts = [
             'edit' => $chap->book->membership->status == GroupMember::MODERATOR,
             'rm' => $chap->book->membership->status == GroupMember::MODERATOR,
             'rate' => $chap->can('rate'),
             'rate-' => $chap->book->membership->status == GroupMember::MODERATOR,
-        );
+        ];
         $fixer = new OrigCountFixer();
         $to_esc = preg_quote($to);
 
@@ -234,7 +234,7 @@
                  * и то же самое в OrigController::actionTranslate
                  **/
                 $trs = $o->trs;
-            usort($trs, array('Translation', 'trcmp'));
+            usort($trs, ['Translation', 'trcmp']);
 
             $max_id = null;
             $max_rating = null;
@@ -268,7 +268,7 @@
 <?php
     $fixer->fix();
 
-    $this->widget('bootstrap.widgets.TbPager', array('pages' => $orig_dp->pagination, 'header' => "<div class='pagination pagination-centered'>"));
+    $this->widget('bootstrap.widgets.TbPager', ['pages' => $orig_dp->pagination, 'header' => "<div class='pagination pagination-centered'>"]);
 ?>
 
 <div id="rating-descr" class="modal hide"></div>

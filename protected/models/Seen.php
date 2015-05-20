@@ -12,7 +12,7 @@ class Seen extends CActiveRecord
     }
     public function primaryKey()
     {
-        return array('user_id', 'post_id');
+        return ['user_id', 'post_id'];
     }
 
     public $user_id, $post_id, $orig_id;

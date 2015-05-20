@@ -35,30 +35,30 @@ class Chapter extends CActiveRecord
 
     public function attributeLabels()
     {
-        return array(
+        return [
             'title' => 'Название',
             'ord' => 'Порядок',
             'status' => 'Статус',
-        );
+        ];
     }
 
     public function rules()
     {
-        return array(
-            array('title', 'required', 'message' => 'Пожалуйста, введите заголовок'),
-            array('ord', 'numerical', 'integerOnly' => true),
-            array('status', 'in', 'range' => array_keys(Yii::app()->params['translation_statuses'])),
-            array('ac_read, ac_trread, ac_gen, ac_rate, ac_comment, ac_tr', 'filter', 'filter' => 'trim'),
-            array('ac_read, ac_trread, ac_gen, ac_rate, ac_comment, ac_tr', 'in', 'range' => array('a', 'g', 'm', 'o')),
-            array('has_override', 'boolean'),
-            array('has_override', 'rule_has_override'),
-        );
+        return [
+            ['title', 'required', 'message' => 'Пожалуйста, введите заголовок'],
+            ['ord', 'numerical', 'integerOnly' => true],
+            ['status', 'in', 'range' => array_keys(Yii::app()->params['translation_statuses'])],
+            ['ac_read, ac_trread, ac_gen, ac_rate, ac_comment, ac_tr', 'filter', 'filter' => 'trim'],
+            ['ac_read, ac_trread, ac_gen, ac_rate, ac_comment, ac_tr', 'in', 'range' => ['a', 'g', 'm', 'o']],
+            ['has_override', 'boolean'],
+            ['has_override', 'rule_has_override'],
+        ];
     }
 
     public function rule_has_override()
     {
         if (!$this->has_override) {
-            foreach (array('ac_read', 'ac_trread', 'ac_gen', 'ac_rate', 'ac_comment', 'ac_tr') as $ac) {
+            foreach (['ac_read', 'ac_trread', 'ac_gen', 'ac_rate', 'ac_comment', 'ac_tr'] as $ac) {
                 $this->$ac = null;
             }
         }
@@ -66,9 +66,9 @@ class Chapter extends CActiveRecord
 
     public function relations()
     {
-        $rel = array(
-            'book' => array(self::BELONGS_TO, 'Book', 'book_id'),
-        );
+        $rel = [
+            'book' => [self::BELONGS_TO, 'Book', 'book_id'],
+        ];
 
         return $rel;
     }
@@ -85,7 +85,7 @@ class Chapter extends CActiveRecord
         if ($this->ac_read.$this->ac_gen.$this->ac_rate.$this->ac_comment.$this->ac_tr != '') {
             $r = Yii::app()->db
                 ->createCommand("SELECT 1 FROM chapters WHERE book_id = :book_id AND id != :id AND (ac_read || ac_gen || ac_rate || ac_comment || ac_tr != '')")
-                ->query(array('book_id' => $this->book_id, 'id' => $this->id));
+                ->query(['book_id' => $this->book_id, 'id' => $this->id]);
 
             if ($r->rowCount > 0) {
                 $this->addError('ac_read', 'В переводе только одна глава может иметь особые права доступа.');
@@ -101,7 +101,7 @@ class Chapter extends CActiveRecord
 
         if ($this->isNewRecord) {
             $this->book->n_chapters++;
-            $this->book->save(false, array('n_chapters'));
+            $this->book->save(false, ['n_chapters']);
         }
     }
 
@@ -124,7 +124,7 @@ class Chapter extends CActiveRecord
 			FROM effort WHERE users.id = effort.user_id;
 
 			COMMIT;
-		')->execute(array(':chap_id' => $this->id, ':book_id' => $this->book_id));
+		')->execute([':chap_id' => $this->id, ':book_id' => $this->book_id]);
 
         return parent::beforeDelete();
     }
@@ -138,7 +138,7 @@ class Chapter extends CActiveRecord
         $this->book->n_vars -= $this->n_vars;
         $this->book->d_vars -= $this->d_vars;
 
-        $this->book->save(false, array('n_chapters', 'n_verses', 'n_vars', 'd_vars'));
+        $this->book->save(false, ['n_chapters', 'n_verses', 'n_vars', 'd_vars']);
     }
 
     /**
@@ -150,16 +150,16 @@ class Chapter extends CActiveRecord
             $this->book->n_verses -= $this->n_verses;
             $this->book->n_vars -= $this->n_vars;
             $this->book->d_vars -= $this->d_vars;
-            $this->book->save(false, array('n_verses', 'n_vars', 'd_vars'));
+            $this->book->save(false, ['n_verses', 'n_vars', 'd_vars']);
         }
 
         // translate не очистится из-за того, что foreign-ключ на translate.orig_id жутко тормозит при удалении главы
-        Yii::app()->db->createCommand('DELETE FROM orig WHERE chap_id = :chap_id')->execute(array(':chap_id' => $this->id));
+        Yii::app()->db->createCommand('DELETE FROM orig WHERE chap_id = :chap_id')->execute([':chap_id' => $this->id]);
 
         $this->n_verses = 0;
         $this->n_vars = 0;
         $this->d_vars = 0;
-        $this->save(false, array('n_verses', 'n_vars', 'd_vars'));
+        $this->save(false, ['n_verses', 'n_vars', 'd_vars']);
     }
 
     public function getUrl($area = '')
@@ -293,10 +293,10 @@ class Chapter extends CActiveRecord
             return false;
         }
 
-        $this->n_verses = Yii::app()->db->createCommand('SELECT COUNT(*) FROM orig WHERE chap_id = :id')->queryScalar(array('id' => $this->id));
-        list($this->n_vars, $this->d_vars) = Yii::app()->db->createCommand('SELECT COUNT(*), COUNT(DISTINCT orig_id) FROM translate WHERE chap_id = :id')->queryRow(false, array('id' => $this->id));
+        $this->n_verses = Yii::app()->db->createCommand('SELECT COUNT(*) FROM orig WHERE chap_id = :id')->queryScalar(['id' => $this->id]);
+        list($this->n_vars, $this->d_vars) = Yii::app()->db->createCommand('SELECT COUNT(*), COUNT(DISTINCT orig_id) FROM translate WHERE chap_id = :id')->queryRow(false, ['id' => $this->id]);
 
-        $this->save(false, array('n_verses', 'n_vars', 'd_vars'));
+        $this->save(false, ['n_verses', 'n_vars', 'd_vars']);
 
         return true;
     }
@@ -333,7 +333,7 @@ class Chapter extends CActiveRecord
             if ($this->book->facecontrol == Book::FC_CONFIRM) {
                 $msg .= "Чтобы вступить в группу, нужно подать заявку владельцу ({$this->book->owner->ahref})".($this->book->ac_membership == 'm' ? ' или модераторам' : '').'.';
                 if ($tools) {
-                    $msg .= Yii::app()->controller->renderPartial('//book/_join', array('book' => $this->book), true);
+                    $msg .= Yii::app()->controller->renderPartial('//book/_join', ['book' => $this->book], true);
                 }
             } elseif ($this->book->facecontrol == Book::FC_INVITE) {
                 $msg = "Чтобы вступить в группу, нужно получить приглашение от владельца ({$this->book->owner->ahref})".($this->book->ac_membership == 'm' ? ' или модераторов' : '').'.';
@@ -375,10 +375,10 @@ class Chapter extends CActiveRecord
     public function registerJS($varName = 'Chap')
     {
         $js = "var {$varName} = {\n";
-        foreach (array('id', 'book_id', 'n_verses', 'n_vars', 'd_vars') as $k) {
+        foreach (['id', 'book_id', 'n_verses', 'n_vars', 'd_vars'] as $k) {
             $js .= "\t{$k}: ".intval($this->$k).",\n";
         }
-        foreach (array('title', 'ac_read', 'ac_gen', 'ac_rate', 'ac_comment', 'ac_tr') as $k) {
+        foreach (['title', 'ac_read', 'ac_gen', 'ac_rate', 'ac_comment', 'ac_tr'] as $k) {
             $js .= "\t{$k}: '".addcslashes($this->$k, "\t\r\n'\"")."',\n";
         }
         $js .= "};\n";

@@ -4,24 +4,24 @@ class MailController extends Controller
 {
     public function filters()
     {
-        return array(
+        return [
             'accessControl', // perform access control for CRUD operations
-        );
+        ];
     }
 
     public function accessRules()
     {
-        return array(
-            array('allow',
-                'actions' => array('index', 'message', 'write'),
-                'users' => array('@'),
-            ),
-            array('allow',
-                'actions' => array('spam'),
-                'users' => array('notabenoid'),
-            ),
-            array('deny', 'users' => array('*')),
-        );
+        return [
+            ['allow',
+                'actions' => ['index', 'message', 'write'],
+                'users' => ['@'],
+            ],
+            ['allow',
+                'actions' => ['spam'],
+                'users' => ['notabenoid'],
+            ],
+            ['deny', 'users' => ['*']],
+        ];
     }
 
     public function actionIndex()
@@ -32,7 +32,7 @@ class MailController extends Controller
             }
 
             $in = '';
-            $params = array(':user_id' => Yii::app()->user->id);
+            $params = [':user_id' => Yii::app()->user->id];
             foreach ($_POST['id'] as $k => $v) {
                 if ($in) {
                     $in .= ', ';
@@ -63,13 +63,13 @@ class MailController extends Controller
             $crit->addCondition('NOT t.seen');
         }
 
-        $mail_dp = new CActiveDataProvider(Mail::model()->folder(Yii::app()->user->id, $folder)->with('buddy'), array(
-            'pagination' => array('pageSize' => 30),
+        $mail_dp = new CActiveDataProvider(Mail::model()->folder(Yii::app()->user->id, $folder)->with('buddy'), [
+            'pagination' => ['pageSize' => 30],
             'criteria' => $crit,
-        ));
+        ]);
 
-        $this->side_view = array('index_side' => array('folder' => $folder));
-        $this->render('index', array('mail_dp' => $mail_dp, 'folder' => $folder));
+        $this->side_view = ['index_side' => ['folder' => $folder]];
+        $this->render('index', ['mail_dp' => $mail_dp, 'folder' => $folder]);
     }
 
     public function actionMessage($id)
@@ -81,14 +81,14 @@ class MailController extends Controller
 
         $message->setSeen();
 
-        $this->side_view = array('message_side' => array('message' => $message));
-        $this->render('message', array('message' => $message));
+        $this->side_view = ['message_side' => ['message' => $message]];
+        $this->render('message', ['message' => $message]);
     }
 
     public function actionWrite()
     {
         if (isset($_GET['reply'])) {
-            $reply = Mail::model()->with('buddy')->findByPk((int) $_GET['reply'], 't.user_id = :user_id', array(':user_id' => Yii::app()->user->id));
+            $reply = Mail::model()->with('buddy')->findByPk((int) $_GET['reply'], 't.user_id = :user_id', [':user_id' => Yii::app()->user->id]);
             $reply->setSeen();
         } else {
             $reply = null;
@@ -118,18 +118,18 @@ class MailController extends Controller
         }
 
         if (!$reply) {
-            $buddies = User::model()->findAll(array(
-                'select' => array('t.id', 't.login', 't.sex', 't.upic'),
+            $buddies = User::model()->findAll([
+                'select' => ['t.id', 't.login', 't.sex', 't.upic'],
                 'join' => 'RIGHT JOIN mail ON t.id = mail.buddy_id',
                 'condition' => 'mail.user_id = :user_id',
                 'group' => 't.id',
                 'order' => 'COUNT(*) DESC',
                 'limit' => 20,
-                'params' => array(':user_id' => Yii::app()->user->id),
-            ));
+                'params' => [':user_id' => Yii::app()->user->id],
+            ]);
 
-            $this->side_view = array('write_side' => array('message' => $message, 'buddies' => $buddies));
+            $this->side_view = ['write_side' => ['message' => $message, 'buddies' => $buddies]];
         }
-        $this->render('write', array('message' => $message, 'reply' => $reply));
+        $this->render('write', ['message' => $message, 'reply' => $reply]);
     }
 }

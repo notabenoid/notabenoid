@@ -9,7 +9,7 @@ Yii::app()->clientScript
 
 $this->pageTitle = $user->login.': профиль';
 
-$this->renderPartial('profile_head', array('user' => $user));
+$this->renderPartial('profile_head', ['user' => $user]);
 ?>
 
 <table class="personal">

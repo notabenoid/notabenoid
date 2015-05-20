@@ -5,7 +5,7 @@ class TrFilter extends CFormModel
     public $show = 0, $to = '', $tt = '', $show_user = '';
     public $to_esc, $tt_esc;
 
-    public static $modes = array(
+    public static $modes = [
         0 => 'Всё',
         1 => 'Непереведённое',
         7 => 'С 2 и более версиями перевода',
@@ -14,12 +14,12 @@ class TrFilter extends CFormModel
         2 => 'От переводчика',
         5 => 'Оригинал содержит',
         6 => 'Перевод содержит',
-    );
+    ];
 
     protected function beforeValidate()
     {
         $this->show = (int) $this->show;
-        foreach (array('show_user', 'to', 'tt') as $k) {
+        foreach (['show_user', 'to', 'tt'] as $k) {
             $this->$k = trim($this->$k);
         }
 
@@ -31,20 +31,20 @@ class TrFilter extends CFormModel
 
     public function rules()
     {
-        return array(
-            array('show', 'numerical', 'integerOnly' => true),
-            array('to, tt, show_user', 'safe'),
-        );
+        return [
+            ['show', 'numerical', 'integerOnly' => true],
+            ['to, tt, show_user', 'safe'],
+        ];
     }
 
     public function attributeLabels()
     {
-        return array(
+        return [
             'show' => 'Фильтр',
             'to' => 'Оригинал содержит',
             'tt' => 'Перевод содержит',
             'show_user' => 'От переводчика',
-        );
+        ];
     }
 
     public function getButtonTitle()

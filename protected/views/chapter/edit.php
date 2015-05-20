@@ -44,17 +44,17 @@ $(E.init);
 
 <?php
     /** @var TbActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
         'id' => 'form-edit',
         'type' => 'horizontal',
-        'htmlOptions' => array(
+        'htmlOptions' => [
             'style' => 'margin-bottom:0;',
-        ),
-    ));
+        ],
+    ]);
 
     echo $form->errorSummary($chap);
 
-    echo $form->textFieldRow($chap, 'title', array('class' => 'span5'));
+    echo $form->textFieldRow($chap, 'title', ['class' => 'span5']);
 ?>
 <div class="control-group">
 	<label class="control-label">Статус</label>
@@ -84,7 +84,7 @@ $(E.init);
             foreach (Yii::app()->params['ac_areas_chap'] as $role => $title) {
                 echo '<tr>';
                 echo "<th>{$title}</th>";
-                foreach (array('a', 'g', 'm', 'o', '') as $v) {
+                foreach (['a', 'g', 'm', 'o', ''] as $v) {
                     echo "<td class='c'>";
                     if ($role != 'ac_read' or $v != 'a') {
                         echo "<input type='radio' name='Chapter[{$role}]' value='{$v}'".($chap->$role == $v ? ' checked' : '').($chap->book->opts_get(Book::OPTS_BAN_COPYRIGHT) && $v == 'a' ? ' disabled' : '').' />';
@@ -107,17 +107,17 @@ $(E.init);
     echo "<div class='form-actions' style='margin-bottom:0'>";
     echo CHtml::htmlButton(
         "<i class='icon-ok icon-white'></i> Сохранить",
-        array('type' => 'submit', 'class' => 'btn btn-primary click-wait')
+        ['type' => 'submit', 'class' => 'btn btn-primary click-wait']
     ).' ';
     if (!$chap->isNewRecord) {
         echo CHtml::htmlButton(
         "<i class='icon-ban-circle icon-white'></i> Удалить",
-        array('onclick' => 'E.rm()', 'class' => 'btn btn-danger', 'id' => 'btn-remove')
+        ['onclick' => 'E.rm()', 'class' => 'btn btn-danger', 'id' => 'btn-remove']
     ).' ';
     }
     echo CHtml::htmlButton(
         'Отмена',
-        array('onclick' => $ajax ? 'CE.cancel()' : ("location.href='".($chap->book->url)."'"), 'class' => 'btn')
+        ['onclick' => $ajax ? 'CE.cancel()' : ("location.href='".($chap->book->url)."'"), 'class' => 'btn']
     );
     echo '</div>';
 

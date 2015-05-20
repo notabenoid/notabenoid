@@ -30,9 +30,9 @@ class BookBanReason extends CActiveRecord
 
     public function rules()
     {
-        return array(
-            array('title, url, email, message', 'safehtml'),
-        );
+        return [
+            ['title, url, email, message', 'safehtml'],
+        ];
     }
 
     public function safehtml($attr, $params)

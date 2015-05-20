@@ -10,15 +10,15 @@
     $user = Yii::app()->user;
 
     if (!is_array($has)) {
-        $has = array();
+        $has = [];
     }
-    $has = array_merge(array(
+    $has = array_merge([
         'edit' => $post->can('edit'),
         'mytalks' => !$user->isGuest,
         'bookLink' => true,
-    ), $has);
+    ], $has);
 
-    $T = array();
+    $T = [];
     if ($has['edit']) {
         $T[] = "<a href='".$post->getUrl('edit')."'>править</a>";
     }
@@ -39,7 +39,7 @@
         echo "<{$tag}><a href='{$post->url}'>{$post->title}</a></{$tag}>";
     }
     if ($post->book_id) {
-        $Q = array();
+        $Q = [];
         if ($post->isAnnounce) {
             $Q[] = $post->topicHtml;
         }
@@ -59,7 +59,7 @@
     echo "<div class='info'>";
 
     echo "<span class='author'>";
-    $A = array('m' => 'Написал', 'f' => 'Написала', 'x' => 'Написало');
+    $A = ['m' => 'Написал', 'f' => 'Написала', 'x' => 'Написало'];
     echo $A[$post->author->sex].' '.$post->author->ahref;
     echo '</span> ';
 

@@ -6,18 +6,18 @@
 
 <?php
     /** @var TbActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
         'id' => 'form-login',
         'type' => 'horizontal',
         'inlineErrors' => false,
-        'focus' => array($model, 'login'),
-    ));
+        'focus' => [$model, 'login'],
+    ]);
 
     echo $form->errorSummary($model);
 ?>
 
 <div class="control-group">
-	<?php echo $form->labelEx($model, 'login', array('class' => 'control-label')); ?>
+	<?php echo $form->labelEx($model, 'login', ['class' => 'control-label']); ?>
 	<div class="controls">
 		<?php echo $form->textField($model, 'login'); ?>
 		<span class="help-inline">
@@ -27,7 +27,7 @@
 </div>
 
 <div class="control-group">
-	<?php echo $form->labelEx($model, 'pass', array('class' => 'control-label')); ?>
+	<?php echo $form->labelEx($model, 'pass', ['class' => 'control-label']); ?>
 	<div class="controls">
 		<?php echo $form->passwordField($model, 'pass'); ?>
 		<span class="help-inline">
@@ -46,7 +46,7 @@
 </div>
 
 <div class="form-actions">
-	<?php echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Войти", array('type' => 'submit', 'class' => 'btn btn-primary')).' '; ?>
+	<?php echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Войти", ['type' => 'submit', 'class' => 'btn btn-primary']).' '; ?>
 </div>
 
 <?php $this->endWidget(); ?>

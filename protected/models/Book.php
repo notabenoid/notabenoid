@@ -47,13 +47,13 @@ class Book extends CActiveRecord
 
     public $rm_img, $new_img;
 
-    public $img = array(0,0,0,0,0);
+    public $img = [0,0,0,0,0];
 
 //	public $banned, $ban_until; /* OBSOLETE */
 
     public function attributeLabels()
     {
-        return array(
+        return [
             'id' => 'ID',
             's_lang' => 'Язык оригинала',
             't_lang' => 'Язык перевода',
@@ -62,29 +62,29 @@ class Book extends CActiveRecord
             'descr' => 'Описание',
             'new_img' => 'Картинка в оглавление',
             'facecontrol' => 'Участие в группе',
-        );
+        ];
     }
 
     public function rules()
     {
-        return array(
-            array('cat_id',            'exist', 'allowEmpty' => true, 'className' => 'Category', 'attributeName' => 'id', 'criteria' => array('condition' => 'available'), 'message' => 'В этот раздел нельзя добавлять переводы', 'on' => 'cat'),
+        return [
+            ['cat_id',            'exist', 'allowEmpty' => true, 'className' => 'Category', 'attributeName' => 'id', 'criteria' => ['condition' => 'available'], 'message' => 'В этот раздел нельзя добавлять переводы', 'on' => 'cat'],
 
-            array('s_title, t_title',  'clean', 'on' => 'info'),
-            array('descr',             'safehtml', 'on' => 'info'),
-            array('s_title, t_title',  'required', 'on' => 'info'),
-            array('s_lang, t_lang',    'numerical', 'integerOnly' => true, 'allowEmpty' => false, 'on' => 'info'),
-            array('s_title, t_title',  'length', 'max' => 255, 'allowEmpty' => false, 'on' => 'info'),
-            array('rm_img',            'boolean', 'on' => 'info'),
-            array('new_img',           'file', 'allowEmpty' => true, 'types' => 'jpg, gif, png, jpeg', 'wrongType' => 'Неверный формат файла. Пожалуйста, загружайте JPG, PNG или GIF', 'on' => 'info'),
+            ['s_title, t_title',  'clean', 'on' => 'info'],
+            ['descr',             'safehtml', 'on' => 'info'],
+            ['s_title, t_title',  'required', 'on' => 'info'],
+            ['s_lang, t_lang',    'numerical', 'integerOnly' => true, 'allowEmpty' => false, 'on' => 'info'],
+            ['s_title, t_title',  'length', 'max' => 255, 'allowEmpty' => false, 'on' => 'info'],
+            ['rm_img',            'boolean', 'on' => 'info'],
+            ['new_img',           'file', 'allowEmpty' => true, 'types' => 'jpg, gif, png, jpeg', 'wrongType' => 'Неверный формат файла. Пожалуйста, загружайте JPG, PNG или GIF', 'on' => 'info'],
 
-            array('facecontrol',        'numerical', 'integerOnly' => true, 'on' => 'access'),
-            array('ac_read, ac_trread, ac_gen, ac_rate, ac_comment, ac_tr, ac_blog_r, ac_blog_w, ac_blog_c',
-                                        'in', 'range' => array('a', 'g', 'm', 'o'), 'on' => 'access', ),
-            array('ac_announce',        'in', 'range' => array('g', 'm', 'o'), 'on' => 'access'),
-            array('ac_chap_edit, ac_book_edit, ac_membership',
-                                        'in', 'range' => array('m', 'o'), 'on' => 'access', ),
-        );
+            ['facecontrol',        'numerical', 'integerOnly' => true, 'on' => 'access'],
+            ['ac_read, ac_trread, ac_gen, ac_rate, ac_comment, ac_tr, ac_blog_r, ac_blog_w, ac_blog_c',
+                                        'in', 'range' => ['a', 'g', 'm', 'o'], 'on' => 'access', ],
+            ['ac_announce',        'in', 'range' => ['g', 'm', 'o'], 'on' => 'access'],
+            ['ac_chap_edit, ac_book_edit, ac_membership',
+                                        'in', 'range' => ['m', 'o'], 'on' => 'access', ],
+        ];
     }
 
     public function clean($attr, $params)
@@ -101,23 +101,23 @@ class Book extends CActiveRecord
 
     public function relations()
     {
-        $rel = array(
-            'chapters' => array(self::HAS_MANY,   'Chapter',      'book_id',   'select' => array('*', new CDbExpression('EXTRACT(EPOCH FROM now() - last_tr)::int as idle_time')), 'order' => 'ord'),
-            'owner' => array(self::BELONGS_TO, 'User',         'owner_id',  'select' => array('id', 'login', 'sex', 'email', 'upic', 'ini')),
-            'members' => array(self::HAS_MANY,   'GroupMember',  'book_id'),
-            'membership' => array(self::HAS_ONE,    'GroupMember',  'book_id',   'on' => 'membership.user_id = '.intval(Yii::app()->user->id)),
-            'cat' => array(self::BELONGS_TO, 'Category',     'cat_id'),
-            'moder_cat' => array(self::HAS_ONE,    'ModerBookCat', 'book_id',   'joinType' => 'RIGHT JOIN'),
-            'dict_cnt' => array(self::STAT,       'Dict',         'book_id'),
-        );
+        $rel = [
+            'chapters' => [self::HAS_MANY,   'Chapter',      'book_id',   'select' => ['*', new CDbExpression('EXTRACT(EPOCH FROM now() - last_tr)::int as idle_time')], 'order' => 'ord'],
+            'owner' => [self::BELONGS_TO, 'User',         'owner_id',  'select' => ['id', 'login', 'sex', 'email', 'upic', 'ini']],
+            'members' => [self::HAS_MANY,   'GroupMember',  'book_id'],
+            'membership' => [self::HAS_ONE,    'GroupMember',  'book_id',   'on' => 'membership.user_id = '.intval(Yii::app()->user->id)],
+            'cat' => [self::BELONGS_TO, 'Category',     'cat_id'],
+            'moder_cat' => [self::HAS_ONE,    'ModerBookCat', 'book_id',   'joinType' => 'RIGHT JOIN'],
+            'dict_cnt' => [self::STAT,       'Dict',         'book_id'],
+        ];
         if (!Yii::app()->user->isGuest) {
-            $rel['bookmark'] = array(
+            $rel['bookmark'] = [
                 self::HAS_ONE, 'Bookmark', 'book_id', 'on' => 'bookmark.user_id = '.Yii::app()->user->id.' AND bookmark.orig_id IS NULL',
-            );
+            ];
         } else {
-            $rel['bookmark'] = array(
+            $rel['bookmark'] = [
                 self::HAS_ONE, 'Bookmark', 'book_id', 'on' => 'bookmark.user_id IS NULL',
-            );
+            ];
         }
 
         return $rel;
@@ -125,26 +125,26 @@ class Book extends CActiveRecord
 
     public function membership($user_id)
     {
-        $this->getDbCriteria()->mergeWith(array(
-            'with' => array('membership' => array('on' => "membership.user_id = {$user_id}")),
-        ));
+        $this->getDbCriteria()->mergeWith([
+            'with' => ['membership' => ['on' => "membership.user_id = {$user_id}"]],
+        ]);
 
         return $this;
     }
 
     public function moderated_by($user_id)
     {
-        $this->getDbCriteria()->mergeWith(array(
-            'with' => array(
-                'membership' => array(
+        $this->getDbCriteria()->mergeWith([
+            'with' => [
+                'membership' => [
                     'joinType' => 'RIGHT JOIN',
                     'condition' => "membership.user_id = {$user_id} AND membership.status = 2",
                     'on' => '',
                     'order' => 't.s_title',
-                ),
-                'dict_cnt' => array(),
-            ),
-        ));
+                ],
+                'dict_cnt' => [],
+            ],
+        ]);
 
         return $this;
     }
@@ -312,7 +312,7 @@ class Book extends CActiveRecord
 
     public function role_areas($role)
     {
-        $A = array();
+        $A = [];
         foreach (Yii::app()->params['ac_areas'] as $ac => $title) {
             if ($this->$ac == 'g') {
                 $A[] = $ac;
@@ -330,7 +330,7 @@ class Book extends CActiveRecord
 
         return Yii::app()->db
             ->createCommand('SELECT 1 FROM invites WHERE book_id = :book_id AND to_uid = :my_uid')
-            ->query(array(':book_id' => $this->id, ':my_uid' => $user_id))
+            ->query([':book_id' => $this->id, ':my_uid' => $user_id])
             ->count();
     }
 
@@ -344,7 +344,7 @@ class Book extends CActiveRecord
             if ($this->facecontrol == self::FC_CONFIRM) {
                 $msg .= " Чтобы вступить в группу, нужно подать заявку владельцу ({$this->owner->ahref})".($this->ac_membership == 'm' ? ' или модераторам' : '').'.';
                 if ($tools) {
-                    $msg .= Yii::app()->controller->renderPartial('//book/_join', array('book' => $this), true);
+                    $msg .= Yii::app()->controller->renderPartial('//book/_join', ['book' => $this], true);
                 }
             } elseif ($this->facecontrol == self::FC_INVITE) {
                 $msg = "Чтобы вступить в группу, нужно получить приглашение от владельца ({$this->owner->ahref})".($this->ac_membership == 'm' ? ' или модераторов' : '').'.';
@@ -400,10 +400,10 @@ class Book extends CActiveRecord
     public function registerJS($varName = 'Book')
     {
         $js = "var {$varName} = new CBook({\n";
-        foreach (array('id', 'owner_id', 'facecontrol', 's_lang', 't_lang', 'n_verses', 'n_vars', 'd_vars') as $k) {
+        foreach (['id', 'owner_id', 'facecontrol', 's_lang', 't_lang', 'n_verses', 'n_vars', 'd_vars'] as $k) {
             $js .= "\t{$k}: ".intval($this->$k).",\n";
         }
-        foreach (array('typ', 's_title', 't_title') as $k) {
+        foreach (['typ', 's_title', 't_title'] as $k) {
             $js .= "\t{$k}: '".addcslashes($this->$k, "\t\r\n'\"")."',\n";
         }
         if ($this->hasRelated('membership')) {

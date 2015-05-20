@@ -4,32 +4,32 @@ class ModeratorController extends Controller
 {
     public $layout = 'column1';
 
-    public $areas = array(
+    public $areas = [
         'catalog' => 'Структура каталога',
         'book_cat' => 'Переводы по разделам',
-    );
+    ];
     public $area = '';
 
     public function filters()
     {
-        return array(
+        return [
             'accessControl',
-        );
+        ];
     }
 
     public function accessRules()
     {
-        return array(
+        return [
             ['allow',
                 'users' => Yii::app()->user->accessFilterUsers('cat_moderate'),
-                'actions' => array('index', 'catalog', 'kitten', 'chpid', 'catedit', 'catremove', 'catswap', 'book_cat'),
+                'actions' => ['index', 'catalog', 'kitten', 'chpid', 'catedit', 'catremove', 'catswap', 'book_cat'],
             ],
             ['allow',
                 'users' => Yii::app()->user->accessFilterUsers('blog_topic_moderate'),
                 'actions' => ['blogTopic'],
             ],
             ['deny', 'users' => ['*']],
-        );
+        ];
     }
 
     public function actionIndex()
@@ -48,7 +48,7 @@ class ModeratorController extends Controller
             $edit_node = new Category();
         }
 
-        $this->render('catalog', array('categories' => $categories, 'edit_node' => $edit_node));
+        $this->render('catalog', ['categories' => $categories, 'edit_node' => $edit_node]);
     }
 
     public function actionKitten($pid = 0)
@@ -124,26 +124,26 @@ class ModeratorController extends Controller
             $this->redirect("/moderator/catalog/?edit={$id}");
         }
 
-        $scope1 = Yii::app()->db->createCommand("SELECT id FROM catalog WHERE mp[0:{$mp_len}] = :mp")->queryColumn(array(
+        $scope1 = Yii::app()->db->createCommand("SELECT id FROM catalog WHERE mp[0:{$mp_len}] = :mp")->queryColumn([
             ':mp' => $cat1->mpPacked,
-        ));
+        ]);
 
-        $scope2 = Yii::app()->db->createCommand("SELECT id FROM catalog WHERE mp[0:{$mp_len}] = :mp")->queryColumn(array(
+        $scope2 = Yii::app()->db->createCommand("SELECT id FROM catalog WHERE mp[0:{$mp_len}] = :mp")->queryColumn([
             ':mp' => $cat2->mpPacked,
-        ));
+        ]);
 
         $n = $mp_len + 1;
 
         Yii::app()->db->createCommand()->update(
             'catalog',
-            array('mp' => new CDbExpression(":mp::smallint[] || mp[{$n}:999]", array(':mp' => $cat2->mpPacked))),
-            array('in', 'id', $scope1)
+            ['mp' => new CDbExpression(":mp::smallint[] || mp[{$n}:999]", [':mp' => $cat2->mpPacked])],
+            ['in', 'id', $scope1]
         );
 
         Yii::app()->db->createCommand()->update(
             'catalog',
-            array('mp' => new CDbExpression(":mp::smallint[] || mp[{$n}:999]", array(':mp' => $cat1->mpPacked))),
-            array('in', 'id', $scope2)
+            ['mp' => new CDbExpression(":mp::smallint[] || mp[{$n}:999]", [':mp' => $cat1->mpPacked])],
+            ['in', 'id', $scope2]
         );
 
         $this->redirect("/moderator/catalog/?edit={$id}");
@@ -182,13 +182,13 @@ class ModeratorController extends Controller
 
             $n = count($handle->mp);
             $cats = Category::model()->findAll(
-                array(
+                [
                     'order' => 'mp',
                     'condition' => "mp[1:{$n}] = :mp",
-                    'params' => array(
+                    'params' => [
                         ':mp' => '{'.implode(',', $handle->mp).'}',
-                    ),
-                )
+                    ],
+                ]
             );
 
             if ($debug) {
@@ -199,7 +199,7 @@ class ModeratorController extends Controller
                 echo "</ul>\n\n";
             }
 
-            $t = Yii::app()->db->createCommand('SELECT MAX(mp) FROM catalog WHERE pid = :pid')->queryScalar(array(':pid' => $parent->id));
+            $t = Yii::app()->db->createCommand('SELECT MAX(mp) FROM catalog WHERE pid = :pid')->queryScalar([':pid' => $parent->id]);
             if ($t == '') {
                 $mp_base = $parent->mp;
                 $mp_base[] = 1;
@@ -216,8 +216,8 @@ class ModeratorController extends Controller
             }
             $n = count($handle->mp);
             $i = 0;
-            $sql = array();
-            $params = array();
+            $sql = [];
+            $params = [];
             $sql[] = 'UPDATE catalog SET pid = :pid WHERE id = :id';
             $params[':pid'] = $parent->id;
             $params[':id'] = $handle->id;
@@ -263,7 +263,7 @@ class ModeratorController extends Controller
         $this->area = 'book_cat';
 
         if (isset($_POST['cat_id'])) {
-            $sql = array();
+            $sql = [];
             foreach ($_POST['cat_id'] as $book_id => $cat_id) {
                 $cat_id = (int) $cat_id;
                 $book_id = (int) $book_id;
@@ -286,20 +286,20 @@ class ModeratorController extends Controller
         }
 
         $f = Book::model()->with('moder_cat');
-        $books_dp = new CActiveDataProvider($f, array(
-            'criteria' => array('order' => 't.s_title'),
-            'pagination' => array('pageSize' => 10),
-        ));
+        $books_dp = new CActiveDataProvider($f, [
+            'criteria' => ['order' => 't.s_title'],
+            'pagination' => ['pageSize' => 10],
+        ]);
 
         $cats = Category::model()->indented_list()->findAll();
-        $categories = array();
+        $categories = [];
         $branches = Yii::app()->params['catalog_branches'];
         foreach ($cats as $cat) {
             $typ = $branches[$cat->mp[0]];
             $categories[$typ][] = $cat;
         }
 
-        $this->render('book_cat', array('books_dp' => $books_dp, 'categories' => $categories));
+        $this->render('book_cat', ['books_dp' => $books_dp, 'categories' => $categories]);
     }
 
     public function actionBlogTopic()

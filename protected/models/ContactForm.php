@@ -18,14 +18,14 @@ class ContactForm extends CFormModel
      */
     public function rules()
     {
-        return array(
+        return [
             // name, email, subject and body are required
-            array('name, email, subject, body', 'required'),
+            ['name, email, subject, body', 'required'],
             // email has to be a valid email address
-            array('email', 'email'),
+            ['email', 'email'],
             // verifyCode needs to be entered correctly
-            array('verifyCode', 'captcha', 'allowEmpty' => !CCaptcha::checkRequirements()),
-        );
+            ['verifyCode', 'captcha', 'allowEmpty' => !CCaptcha::checkRequirements()],
+        ];
     }
 
     /**
@@ -35,8 +35,8 @@ class ContactForm extends CFormModel
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'verifyCode' => 'Verification Code',
-        );
+        ];
     }
 }

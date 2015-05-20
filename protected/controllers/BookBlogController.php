@@ -7,24 +7,24 @@ class BookBlogController extends BookBaseController
 
     public function filters()
     {
-        return array('accessControl');
+        return ['accessControl'];
     }
 
     public function accessRules()
     {
-        return array(
-            array('allow', 'users' => array('*'),
-                'actions' => array('index', 'post'),
-            ),
-            array('allow', 'users' => array('@'),
-                'actions' => array(
+        return [
+            ['allow', 'users' => ['*'],
+                'actions' => ['index', 'post'],
+            ],
+            ['allow', 'users' => ['@'],
+                'actions' => [
                     'comment_reply', 'comment_remove', 'comment_rate', 'edit', 'remove',
-                ),
-            ),
-            array('deny',
-                'users' => array('*'),
-            ),
-        );
+                ],
+            ],
+            ['deny',
+                'users' => ['*'],
+            ],
+        ];
     }
 
     public function actionIndex($book_id)
@@ -47,17 +47,17 @@ class BookBlogController extends BookBaseController
             $topic = 0;
         }
 
-        $lenta = new CActiveDataProvider(BlogPost::model()->with('author', 'seen')->book($this->book->id), array(
+        $lenta = new CActiveDataProvider(BlogPost::model()->with('author', 'seen')->book($this->book->id), [
             'criteria' => $criteria,
-            'pagination' => array('pageSize' => 20),
-        ));
+            'pagination' => ['pageSize' => 20],
+        ]);
 
-        $this->side_view = array(
-            'blog_side' => array('book' => $this->book, 'topic' => $topic),
-            '//book/index_side' => array('book' => $this->book),
-        );
+        $this->side_view = [
+            'blog_side' => ['book' => $this->book, 'topic' => $topic],
+            '//book/index_side' => ['book' => $this->book],
+        ];
 
-        $this->render('index', array('book' => $this->book, 'lenta' => $lenta, 'topic' => $topic));
+        $this->render('index', ['book' => $this->book, 'lenta' => $lenta, 'topic' => $topic]);
     }
 
     public function actionPost($book_id, $post_id)
@@ -89,9 +89,9 @@ class BookBlogController extends BookBaseController
 
         $post->setSeen();
 
-        $this->side_view = array('blog_side' => array('book' => $this->book, 'topic' => $post->topics));
+        $this->side_view = ['blog_side' => ['book' => $this->book, 'topic' => $post->topics]];
 
-        $this->render('post', array('book' => $this->book, 'post' => $post, 'comments' => $comments));
+        $this->render('post', ['book' => $this->book, 'post' => $post, 'comments' => $comments]);
     }
 
     public function actionComment_reply($book_id, $post_id, $comment_id = 0)
@@ -136,14 +136,14 @@ class BookBlogController extends BookBaseController
 
         if ($_POST['ajax']) {
             if (Yii::app()->user->hasFlash('error')) {
-                echo json_encode(array('error' => Yii::app()->user->getFlash('error')));
+                echo json_encode(['error' => Yii::app()->user->getFlash('error')]);
             } else {
                 $view = Yii::app()->user->ini['t.iface'] == 1 ? '//blog/_comment-1' : '//blog/_comment';
                 $comment->is_new = true;
-                echo json_encode(array(
+                echo json_encode([
                     'id' => $comment->id, 'pid' => $comment->pid,
-                    'html' => $this->renderPartial($view, array('comment' => $comment), true),
-                ));
+                    'html' => $this->renderPartial($view, ['comment' => $comment], true),
+                ]);
             }
         } else {
             $this->redirect($parent->post->url.'#cmt_'.$comment->id);
@@ -167,7 +167,7 @@ class BookBlogController extends BookBaseController
             $this->redirect("/book/{$book_id}/blog/{$post_id}");
         }
 
-        $json = array('id' => $comment_id);
+        $json = ['id' => $comment_id];
         $user = Yii::app()->user;
 
         // Загружаем удаляемый комментарий вместе с постом
@@ -276,7 +276,7 @@ class BookBlogController extends BookBaseController
             }
         }
 
-        $this->render('//blog/edit', array('post' => $post));
+        $this->render('//blog/edit', ['post' => $post]);
     }
 
     public function actionRemove($book_id, $post_id)

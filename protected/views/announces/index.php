@@ -15,11 +15,11 @@
     if ($dp->getTotalItemCount() == 0) {
         echo "<div class='alert alert-info'>Ничего не найдено. Попробуйте расширить критерии поиска.</div>";
     } else {
-        $this->widget('bootstrap.widgets.TbPager', array('pages' => $dp->pagination));
+        $this->widget('bootstrap.widgets.TbPager', ['pages' => $dp->pagination]);
         foreach ($announces as $announce) {
-            $this->renderPartial('_announce', array('announce' => $announce));
+            $this->renderPartial('_announce', ['announce' => $announce]);
         }
-        $this->widget('bootstrap.widgets.TbPager', array('pages' => $dp->pagination));
+        $this->widget('bootstrap.widgets.TbPager', ['pages' => $dp->pagination]);
     }
 ?>
 </div>

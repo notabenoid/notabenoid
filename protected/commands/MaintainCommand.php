@@ -2,17 +2,17 @@
 
 class MaintainCommand extends CConsoleCommand
 {
-    private $options = array(
+    private $options = [
         'profile-sql' => true,
-    );
+    ];
 
-    private $profileInfo = array();
+    private $profileInfo = [];
     private function profileStart($title)
     {
-        $this->profileInfo = array(
+        $this->profileInfo = [
             'title' => $title,
             'startTime' => time(),
-        );
+        ];
     }
 
     private function profileStop($msg = '')
@@ -65,12 +65,12 @@ class MaintainCommand extends CConsoleCommand
 
         // Считаем глобальные показатели статистики
         $this->profileStart('global counters');
-        $global_stat = array(
+        $global_stat = [
             'n_users' => Yii::app()->db->createCommand("SELECT reltuples::int FROM pg_class WHERE relname = 'users'")->queryScalar(),
             'n_books' => Yii::app()->db->createCommand("SELECT reltuples::int FROM pg_class WHERE relname = 'books'")->queryScalar(),
             'n_orig' => Yii::app()->db->createCommand("SELECT reltuples::int FROM pg_class WHERE relname = 'orig'")->queryScalar(),
             'n_tr' => Yii::app()->db->createCommand("SELECT reltuples::int FROM pg_class WHERE relname = 'translate'")->queryScalar(),
-        );
+        ];
         file_put_contents(YiiBase::getPathOfAlias('application.runtime').'/global_stat.ser', serialize($global_stat));
         $this->profileStop();
 
@@ -191,7 +191,7 @@ class MaintainCommand extends CConsoleCommand
 
     public function actionSwitchStats()
     {
-        $users = array();
+        $users = [];
         $fh = fopen(Yii::app()->basePath.'/runtime/higgs.log', 'r');
         while (!feof($fh)) {
             $l = fgets($fh);
@@ -205,7 +205,7 @@ class MaintainCommand extends CConsoleCommand
         }
         fclose($fh);
 
-        $states = array(0 => 0, 1 => 0);
+        $states = [0 => 0, 1 => 0];
         foreach ($users as $u => $state) {
             $states[$state]++;
         }
@@ -255,7 +255,7 @@ ORDER BY s.user_id;
 					NOT (user_id IS NULL AND body = '') AND post_id IS NOT NULL
 					AND post_id = :post_id
 					AND (cdate <= :seen OR user_id = :user_id)
-			")->queryScalar(array(':post_id' => $s['post_id'], ':user_id' => $s['user_id'], ':seen' => $s['seen']));
+			")->queryScalar([':post_id' => $s['post_id'], ':user_id' => $s['user_id'], ':seen' => $s['seen']]);
 
             if ($seen_comments == $s['n_comments']) {
                 continue;
@@ -264,7 +264,7 @@ ORDER BY s.user_id;
             echo "{$s['user_id']}:{$s['post_id']}:\t{$s['seen']}, {$s['n_comments']}. Really had seen {$seen_comments}     \r";
 
             Yii::app()->db->createCommand('UPDATE seen SET n_comments = :n_comments WHERE user_id = :user_id AND post_id = :post_id')
-                ->execute(array(':user_id' => $s['user_id'], ':post_id' => $s['post_id'], ':n_comments' => $seen_comments));
+                ->execute([':user_id' => $s['user_id'], ':post_id' => $s['post_id'], ':n_comments' => $seen_comments]);
 
             $n_fixed++;
         }
@@ -293,11 +293,11 @@ ORDER BY s.user_id;
 					NOT (user_id IS NULL AND body = '')
 					AND orig_id = :orig_id
 					AND (cdate <= :lastcomment OR user_id = :user_id)
-			")->queryScalar(array(':user_id' => $o['user_id'], ':orig_id' => $o['orig_id'], ':lastcomment' => $o['lastcomment']));
+			")->queryScalar([':user_id' => $o['user_id'], ':orig_id' => $o['orig_id'], ':lastcomment' => $o['lastcomment']]);
 
             // echo "{$o["user_id"]}\t{$o["orig_id"]}\t{$seen_comments}\n";
             $a = Yii::app()->db->createCommand('UPDATE seen SET track = true, n_comments = :n_comments WHERE user_id = :user_id AND orig_id = :orig_id')
-                ->execute(array(':user_id' => $o['user_id'], ':orig_id' => $o['orig_id'], ':n_comments' => $seen_comments));
+                ->execute([':user_id' => $o['user_id'], ':orig_id' => $o['orig_id'], ':n_comments' => $seen_comments]);
             if ($a == 0) {
                 $n_inserted++;
             } else {

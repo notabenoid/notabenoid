@@ -45,7 +45,7 @@ FB;
 		<dd>
 			<div id="ac_icons">
 			<?php
-                $ac_important = array('ac_read', 'ac_trread', 'ac_gen', 'ac_rate', 'ac_comment', 'ac_tr');
+                $ac_important = ['ac_read', 'ac_trread', 'ac_gen', 'ac_rate', 'ac_comment', 'ac_tr'];
                 foreach ($ac_important as $ac) {
                     echo "<i class='{$ac} {$book->$ac}'></i> ";
                 }
@@ -68,9 +68,9 @@ FB;
 					<td>Участие в группе</td>
 					<td class='d'><?php
                         if ($book->ac_membership == 'm') {
-                            $A = array(Book::FC_OPEN => 'нет группы', Book::FC_CONFIRM => 'после подтверждения модераторами', Book::FC_INVITE => 'по приглашению от модераторов');
+                            $A = [Book::FC_OPEN => 'нет группы', Book::FC_CONFIRM => 'после подтверждения модераторами', Book::FC_INVITE => 'по приглашению от модераторов'];
                         } else {
-                            $A = array(Book::FC_OPEN => 'нет группы', Book::FC_CONFIRM => 'после подтверждения создателем', Book::FC_INVITE => 'по приглашению от создателя');
+                            $A = [Book::FC_OPEN => 'нет группы', Book::FC_CONFIRM => 'после подтверждения создателем', Book::FC_INVITE => 'по приглашению от создателя'];
                         }
                         echo $A[$book->facecontrol];
                     ?></td>
@@ -88,7 +88,7 @@ FB;
                 echo '&mdash;';
             } else {
                 $procent = floor($book->d_vars / $book->n_verses * 10000) / 100;
-                $classes = array(100 => 'progress-danger', 80 => 'progress-warning', 60 => 'progress-success', 40 => '', 20 => 'progress-info');
+                $classes = [100 => 'progress-danger', 80 => 'progress-warning', 60 => 'progress-success', 40 => '', 20 => 'progress-info'];
                 foreach ($classes as $p => $class) {
                     if ($procent >= $p) {
                         break;
@@ -140,7 +140,7 @@ FB;
 
 
 <?php
-    $Tools = array();
+    $Tools = [];
     $Tools[] = "<a href='http://www.imdb.com/find?q=".urlencode($book->s_title)."&s=tt' target='_blank' rel='nofollow'>Искать на IMDb</a>";
     $Tools[] = "<a href='http://www.kinopoisk.ru/index.php?first=no&what=&kp_query=".urlencode($book->s_title)."&s=tt' target='_blank' rel='nofollow'>Искать на kinopoisk.ru</a>";
     if (!Yii::app()->user->isGuest) {

@@ -33,7 +33,7 @@
         if (Yii::app()->user->ini_get(User::INI_MYTALKS_NEW)) {
             echo "Новых комментариев {$modes[$mode]}, где вы отметились, нет.";
         } else {
-            $A = array('p' => 'пост', 'o' => 'фрагмент оригинала');
+            $A = ['p' => 'пост', 'o' => 'фрагмент оригинала'];
             echo "Вы ещё не добавили в &laquo;Мои обсуждения&raquo; ни один {$A[$mode]}. Посты и фрагменты появляются здесь автоматически, если вы прокомментировали их или нажали на кнопку &laquo;в мои обсуждения&raquo;.";
         }
         echo '</p>';
@@ -47,7 +47,7 @@
                     $post->seen->save(false, 'n_comments');
                 }
 
-                $this->renderPartial('//blog/_post', array('post' => $post, 'placement' => 'talks'));
+                $this->renderPartial('//blog/_post', ['post' => $post, 'placement' => 'talks']);
             }
         } elseif ($mode == 'o') {
             foreach ($lenta->getData() as $orig) {
@@ -78,5 +78,5 @@
 </div>
 
 <?php
-    $this->widget('CLinkPager', array('pages' => $lenta->pagination));
+    $this->widget('CLinkPager', ['pages' => $lenta->pagination]);
 ?>

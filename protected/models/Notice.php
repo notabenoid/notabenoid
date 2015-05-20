@@ -34,10 +34,10 @@ class Notice extends CActiveRecord
     public function user($user_id, $new_only = true)
     {
         $c = $this->getDbCriteria();
-        $c->mergeWith(array(
+        $c->mergeWith([
             'condition' => 't.user_id = '.intval($user_id),
             'order' => 't.cdate desc',
-        ));
+        ]);
         if ($new_only) {
             $c->addCondition('seen = false');
         }

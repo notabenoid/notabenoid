@@ -33,24 +33,24 @@ function getAttrMinMaxLength($model, $attr, $default = [1, 32])
 
 <?php
     /** @var TbActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
         'id' => 'form-register',
         'type' => 'horizontal',
         'inlineErrors' => false,
-        'focus' => array($model, 'verifyCode'),
-    ));
+        'focus' => [$model, 'verifyCode'],
+    ]);
     CHtml::$afterRequiredLabel = '';
 ?>
 <div class="control-group <?=$model->hasErrors('verifyCode') ? ' error' : ''; ?>">
-	<?php echo $form->labelEx($model, 'verifyCode', array('class' => 'control-label required', 'style' => 'margin-top:50px;')); ?>
+	<?php echo $form->labelEx($model, 'verifyCode', ['class' => 'control-label required', 'style' => 'margin-top:50px;']); ?>
 	<div class="controls">
 		<?php $this->widget(
             'CCaptcha',
-            array(
+            [
                 'clickableImage' => true,
                 'showRefreshButton' => false,
-                'imageOptions' => array('title' => 'показать другую картинку', 'class' => 'captcha'),
-            )); ?>
+                'imageOptions' => ['title' => 'показать другую картинку', 'class' => 'captcha'],
+            ]); ?>
 		<?php echo $form->textField($model, 'verifyCode'); ?>
 		<?php echo $form->error($model, 'verifyCode'); ?>
 		<p class="help-block" title="На самом деле, это необходимо, чтобы убедиться, что вы умеете читать">Защита от роботов: введите буквы, которые видите на картинке, в любом регистре.</p>
@@ -70,8 +70,8 @@ echo $form->textFieldRow(
 <div class="control-group <?=($model->hasErrors('pass') or $model->hasErrors('pass2')) ? ' error' : ''; ?>">
 	<label class="control-label required">Пароль, 2 раза:</label>
 	<div class="controls">
-		<?php echo $form->passwordField($model, 'pass', array('class' => 'span3')); ?>
-		<?php echo $form->passwordField($model, 'pass2', array('class' => 'span3 offset5')); ?>
+		<?php echo $form->passwordField($model, 'pass', ['class' => 'span3']); ?>
+		<?php echo $form->passwordField($model, 'pass2', ['class' => 'span3 offset5']); ?>
 		<?php echo $form->error($model, 'pass'); ?>
 		<?php echo $form->error($model, 'pass2'); ?>
 		<p class="help-block">
@@ -83,14 +83,14 @@ echo $form->textFieldRow(
 	</div>
 </div>
 <?php
-    echo $form->textFieldRow($model, 'email', array('class' => 'span6', 'hint' => 'Мы не будем отправлять вам спам.'));
-    echo $form->radioButtonListInlineRow($model, 'sex', array('m' => 'мужчина', 'f' => 'женщина'), array('hint' => 'Чтобы знать, как к вам обращаться.'));
+    echo $form->textFieldRow($model, 'email', ['class' => 'span6', 'hint' => 'Мы не будем отправлять вам спам.']);
+    echo $form->radioButtonListInlineRow($model, 'sex', ['m' => 'мужчина', 'f' => 'женщина'], ['hint' => 'Чтобы знать, как к вам обращаться.']);
     echo $form->dropDownListRow($model, 'lang', Yii::app()->langs->select());
     echo $form->checkBoxRow($model, 'tos');
 ?>
 <div class="form-actions">
 <?php
-    echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Зарегистрироваться", array('type' => 'submit', 'class' => 'btn btn-primary')).' ';
+    echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Зарегистрироваться", ['type' => 'submit', 'class' => 'btn btn-primary']).' ';
 ?>
 </div>
 

@@ -5,7 +5,7 @@ Yii::import('application.components.ReadyGenerator');
 
 class OrigCountFixer
 {
-    private $sql = array();
+    private $sql = [];
     public $max_updates = 20;
     public function add($id, $n_trs)
     {
@@ -36,26 +36,26 @@ class ChapterController extends Controller
 
     public function filters()
     {
-        return array(
+        return [
             'accessControl', // perform access control for CRUD operations
-        );
+        ];
     }
 
     public function accessRules()
     {
-        return array(
-            array('allow',
-                'actions' => array('index', 'dict', 'rating_describe', 'rating_explain', 'ready', 'download', 'orig', 'orig_download', 'go', 'switchiface'),
-                'users' => array('*'),
-            ),
-            array('allow',
-                'actions' => array('edit', 'remove', 'import', 'import_subs', 'import_text', 'import_text_save', 'rate_tr', 'timeshift', 'renum'),
-                'users' => array('@'),
-            ),
-            array('deny',  // deny all users
-                'users' => array('*'),
-            ),
-        );
+        return [
+            ['allow',
+                'actions' => ['index', 'dict', 'rating_describe', 'rating_explain', 'ready', 'download', 'orig', 'orig_download', 'go', 'switchiface'],
+                'users' => ['*'],
+            ],
+            ['allow',
+                'actions' => ['edit', 'remove', 'import', 'import_subs', 'import_text', 'import_text_save', 'rate_tr', 'timeshift', 'renum'],
+                'users' => ['@'],
+            ],
+            ['deny',  // deny all users
+                'users' => ['*'],
+            ],
+        ];
     }
 
     /**
@@ -136,9 +136,9 @@ class ChapterController extends Controller
 
         $f = new Orig();
         $f->with('seen', 'bookmark', 'trs.user')->chapter($chap->id);
-        $crit = new CDbCriteria(array(
+        $crit = new CDbCriteria([
             'order' => ($chap->book->typ == 'S' ? 't.t1' : 't.ord'),
-        ));
+        ]);
         // $crit->mergeWith($filter->getCriteria()) или $filter->modifyCriteria($crit)
         if ($filter->show == 1) {
             // Непереведённое
@@ -148,7 +148,7 @@ class ChapterController extends Controller
             $crit->addCondition('t.n_trs > 1');
         } elseif ($filter->show == 2) {
             // От пользователя
-            $u = User::model()->findByAttributes(array('login' => $filter->show_user));
+            $u = User::model()->findByAttributes(['login' => $filter->show_user]);
             if (!$u) {
                 $filter->show = 0;
                 Yii::app()->user->setFlash('error', 'Пользователя '.CHtml::encode($filter->show_user).' не существует.');
@@ -158,20 +158,20 @@ class ChapterController extends Controller
             }
         } elseif ($filter->show == 3) {
             // С комментариями
-            $crit->mergeWith(array('condition' => 't.n_comments > 0'));
+            $crit->mergeWith(['condition' => 't.n_comments > 0']);
         } elseif ($filter->show == 4) {
             // С новыми комментариями
-            $crit->mergeWith(array('condition' => 'COALESCE(seen.n_comments, 0) < t.n_comments'));
+            $crit->mergeWith(['condition' => 'COALESCE(seen.n_comments, 0) < t.n_comments']);
         } elseif ($filter->show == 5) {
             // Оригинал содержит
             $to = trim(strip_tags($to));
             if ($to == '') {
                 $filter->show = 0;
             } else {
-                $crit->mergeWith(array(
+                $crit->mergeWith([
                     'condition' => 't.body ILIKE :like',
-                    'params' => array(':like' => '%'.addcslashes($to, '%_').'%'),
-                ));
+                    'params' => [':like' => '%'.addcslashes($to, '%_').'%'],
+                ]);
             }
         } elseif ($filter->show == 6) {
             // Перевод содержит
@@ -179,18 +179,18 @@ class ChapterController extends Controller
             if ($tt == '') {
                 $filter->show = 0;
             } else {
-                $crit->mergeWith(array(
+                $crit->mergeWith([
                     'condition' => 'trs.body ILIKE :like',
-                    'params' => array(':like' => '%'.addcslashes($tt, '%_').'%'),
-                ));
+                    'params' => [':like' => '%'.addcslashes($tt, '%_').'%'],
+                ]);
                 $f->together();
             }
         }
 
-        $orig_dp = new CActiveDataProvider($f, array(
+        $orig_dp = new CActiveDataProvider($f, [
             'criteria' => $crit,
-            'pagination' => array('pageSize' => 50),
-        ));
+            'pagination' => ['pageSize' => 50],
+        ]);
         if ($filter->show == 0) {
             $orig_dp->totalItemCount = $chap->n_verses;
         }
@@ -198,10 +198,10 @@ class ChapterController extends Controller
         $chap->book->registerJS();
         $chap->registerJS();
         $view = 'index-'.intval(Yii::app()->user->ini['t.iface']);
-        $this->render($view, array(
+        $this->render($view, [
             'chap' => $chap, 'orig_dp' => $orig_dp, 'filter' => $filter,
             'show' => $show, 'show_user' => $show_user, 'to' => $to, 'tt' => $tt,
-        ));
+        ]);
     }
 
     public function actionSwitchiface($book_id, $chap_id)
@@ -234,7 +234,7 @@ class ChapterController extends Controller
             $sql = 'SELECT id FROM chapters WHERE book_id = :book_id AND ord > :ord ORDER BY ord LIMIT 1';
         }
 
-        $id = Yii::app()->db->createCommand($sql)->queryScalar(array(':book_id' => $book_id, ':ord' => $ord));
+        $id = Yii::app()->db->createCommand($sql)->queryScalar([':book_id' => $book_id, ':ord' => $ord]);
         if ($id) {
             $get = $_GET;
             unset($get['book_id']);
@@ -257,7 +257,7 @@ class ChapterController extends Controller
             throw new CHttpException(404, 'Изменять тайминг можно только у субтитров.');
         }
 
-        foreach (array('from', 'to', 'value') as $k) {
+        foreach (['from', 'to', 'value'] as $k) {
             if ($_POST[$k] != '' && !preg_match('/^-?\d+:\d+:\d+\.\d+$/', $_POST[$k], $res)) {
                 Yii::app()->user->setFlash('error', 'Вы указали время в неправильном формате ('.CHtml::encode($_POST[$k]).'). Хотелось бы видеть что-то вроде 01:23:45.678 (что означает 1 час 23 минуты 45 целых 678 сотых секунды).');
                 $this->redirect($chap->url);
@@ -267,7 +267,7 @@ class ChapterController extends Controller
         $value = trim(strip_tags($_POST['value']));
 
         $sql = 'UPDATE orig SET t1 = t1 + interval :shift, t2 = t2 + interval :shift WHERE chap_id = :chap_id';
-        $params = array(':shift' => $value, ':chap_id' => $chap->id);
+        $params = [':shift' => $value, ':chap_id' => $chap->id];
 
         if (isset($_POST['from']) && isset($_POST['to']) && ($_POST['from'] != '00:00:00.000' || $_POST['to'] != '23:59:59.999')) {
             $sql .= ' AND t1 >= :from AND t2 <= :to';
@@ -295,7 +295,7 @@ class ChapterController extends Controller
             Yii::app()->db->createCommand('
 				WITH o AS (SELECT row_number() OVER (order by t1) as ord, id FROM orig WHERE chap_id = :chap_id ORDER BY t1)
 				UPDATE orig SET ord = o.ord FROM o WHERE orig.id = o.id
-			')->execute(array(':chap_id' => $chap->id));
+			')->execute([':chap_id' => $chap->id]);
         }
 
         $this->redirect($chap->url);
@@ -336,12 +336,12 @@ class ChapterController extends Controller
         }
 
         if ($chap->n_vars == 0) {
-            $this->render('ready_empty', array('chap' => $chap));
+            $this->render('ready_empty', ['chap' => $chap]);
         } elseif ($chap->book->typ == 'S') {
-            $this->render('ready', array('chap' => $chap, 'options' => $options, 'authors' => $authors));
+            $this->render('ready', ['chap' => $chap, 'options' => $options, 'authors' => $authors]);
         } elseif ($chap->book->typ == 'A') {
-            $this->side_view = array('ready_read_side' => array('chap' => $chap, 'options' => $options, 'authors' => $authors));
-            $this->render('ready_read', array('chap' => $chap, 'generator' => $G));
+            $this->side_view = ['ready_read_side' => ['chap' => $chap, 'options' => $options, 'authors' => $authors]];
+            $this->render('ready_read', ['chap' => $chap, 'generator' => $G]);
         } else {
             throw new CHttpException(404, 'Эта страница должна быть, но её, тем не менее, нет.');
         }
@@ -458,7 +458,7 @@ class ChapterController extends Controller
 
             // Счётчик скачиваний
             $ip = $_SERVER['HTTP_X_REAL_IP'] ? $_SERVER['HTTP_X_REAL_IP'] : $_SERVER['REMOTE_ADDR'];
-            $p = array(':book_id' => $chap->book->id, ':chap_id' => $chap->id, ':ip' => $ip);
+            $p = [':book_id' => $chap->book->id, ':chap_id' => $chap->id, ':ip' => $ip];
             $sql = 'SELECT downloaded_book(:book_id, :chap_id, :ip, NULL)';
             if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                 $via = $ip;
@@ -501,7 +501,7 @@ class ChapterController extends Controller
             if (isset($_POST['TextSource'])) {
                 $options->setAttributes($_POST['TextSource']);
                 if ($options->validate()) {
-                    $this->render('import_A_2', array('chap' => $chap, 'text' => $options->prepareText($chap)));
+                    $this->render('import_A_2', ['chap' => $chap, 'text' => $options->prepareText($chap)]);
 
                     return;
                 } else {
@@ -509,11 +509,11 @@ class ChapterController extends Controller
                 }
             }
 
-            $this->render('import_A_1', array('chap' => $chap, 'options' => $options));
+            $this->render('import_A_1', ['chap' => $chap, 'options' => $options]);
         } elseif ($chap->book->typ == 'S') {
             $options = new ImportOptionsSubs();
 
-            $this->render('import_S', array('chap' => $chap, 'options' => $options));
+            $this->render('import_S', ['chap' => $chap, 'options' => $options]);
         }
     }
 
@@ -539,7 +539,7 @@ class ChapterController extends Controller
             $orig->chap_id = $chap->id;
             $orig->ord = (int) $ord + 1;
 
-            $orig->setAttributes(array('body' => trim($body)));
+            $orig->setAttributes(['body' => trim($body)]);
             if ($orig->body == '') {
                 continue;
             }
@@ -551,8 +551,8 @@ class ChapterController extends Controller
 
         $chap->n_verses += $n_verses;
         $chap->book->n_verses += $n_verses;
-        $chap->save(false, array('n_verses'));
-        $chap->book->save(false, array('n_verses'));
+        $chap->save(false, ['n_verses']);
+        $chap->book->save(false, ['n_verses']);
 
         $this->redirect($chap->url);
     }
@@ -608,8 +608,8 @@ class ChapterController extends Controller
 
             $chap->n_verses += $n_verses;
             $chap->book->n_verses += $n_verses;
-            $chap->save(false, array('n_verses'));
-            $chap->book->save(false, array('n_verses'));
+            $chap->save(false, ['n_verses']);
+            $chap->book->save(false, ['n_verses']);
 
             $this->redirect($chap->url);
         } else {
@@ -632,7 +632,7 @@ class ChapterController extends Controller
         $options->saveOptions();
 
         if ($chap->book->typ == 'S') {
-            $this->render('orig', array('chap' => $chap, 'options' => $options));
+            $this->render('orig', ['chap' => $chap, 'options' => $options]);
         }
     }
 
@@ -648,9 +648,9 @@ class ChapterController extends Controller
         }
         $options->saveOptions();
 
-        $crit = new CDbCriteria(array(
+        $crit = new CDbCriteria([
             'order' => $chap->book->typ == 'S' ? 't.t1' : 't.ord',
-        ));
+        ]);
         $orig = Orig::model()->chapter($chap->id)->findAll($crit);
 
         $G = ReadyGenerator::factory($options, $chap, $orig);
@@ -714,16 +714,16 @@ class ChapterController extends Controller
         } else {
             $overridedId = Yii::app()->db
                 ->createCommand("SELECT id FROM chapters WHERE book_id = :book_id AND (ac_read != '' OR ac_trread != '' OR ac_gen != '' OR ac_rate != '' OR ac_comment != '' OR ac_tr != '')")
-                ->queryScalar(array(':book_id' => $chap->book_id));
+                ->queryScalar([':book_id' => $chap->book_id]);
         }
 
         if (count($_POST['Chapter']) > 0) {
             if ($chap_id == 0) {
                 // Будущий ord
                 if ($_GET['placement'] == -1) {
-                    $chap->ord = Yii::app()->db->createCommand('SELECT MIN(ord) FROM chapters WHERE book_id = :book_id')->queryScalar(array(':book_id' => $book_id)) - 1;
+                    $chap->ord = Yii::app()->db->createCommand('SELECT MIN(ord) FROM chapters WHERE book_id = :book_id')->queryScalar([':book_id' => $book_id]) - 1;
                 } else {
-                    $chap->ord = Yii::app()->db->createCommand('SELECT MAX(ord) FROM chapters WHERE book_id = :book_id')->queryScalar(array(':book_id' => $book_id)) + 1;
+                    $chap->ord = Yii::app()->db->createCommand('SELECT MAX(ord) FROM chapters WHERE book_id = :book_id')->queryScalar([':book_id' => $book_id]) + 1;
                 }
             }
             $old_status = $chap->status;
@@ -750,7 +750,7 @@ class ChapterController extends Controller
             }
         }
 
-        $p = array('chap' => $chap, 'ajax' => $ajax, 'overridedId' => $overridedId);
+        $p = ['chap' => $chap, 'ajax' => $ajax, 'overridedId' => $overridedId];
         if ($ajax) {
             $this->renderPartial('edit', $p);
         } else {
@@ -789,7 +789,7 @@ class ChapterController extends Controller
         $id = (int) $_POST['id'];
 
         /** @var Translation $tr */
-        $tr = Translation::model()->with('mark', 'user')->findByPk($id, array('condition' => 'chap_id = :chap_id', 'params' => array(':chap_id' => $chap->id)));
+        $tr = Translation::model()->with('mark', 'user')->findByPk($id, ['condition' => 'chap_id = :chap_id', 'params' => [':chap_id' => $chap->id]]);
         if (!$tr) {
             throw new CHttpException(404, 'Версия перевода удалена.');
         }
@@ -809,10 +809,10 @@ class ChapterController extends Controller
             throw new CHttpException(403, 'Только модераторы могут ставить минусы.');
         }
 
-        $JSON = array('id' => $id);
+        $JSON = ['id' => $id];
 
-        $sql = array();
-        $sql_params = array(':user_id' => $user->id, ':id' => $tr->id);
+        $sql = [];
+        $sql_params = [':user_id' => $user->id, ':id' => $tr->id];
         $d_rating = $d_n_votes = 0;
 
         if ($tr->mark) {
@@ -895,10 +895,10 @@ class ChapterController extends Controller
         if ($n_votes != $tr->n_votes || $rating != $tr->rating) {
             $tr->n_votes = $n_votes;
             $tr->rating = $rating;
-            $tr->save(false, array('rating', 'n_votes'));
+            $tr->save(false, ['rating', 'n_votes']);
         }
 
-        $this->renderPartial('rating_describe', array('tr' => $tr, 'chap' => $chap));
+        $this->renderPartial('rating_describe', ['tr' => $tr, 'chap' => $chap]);
     }
 
     /**
@@ -930,16 +930,16 @@ class ChapterController extends Controller
         if ($n_votes != $tr->n_votes || $rating != $tr->rating) {
             $tr->n_votes = $n_votes;
             $tr->rating = $rating;
-            $tr->save(false, array('rating', 'n_votes'));
+            $tr->save(false, ['rating', 'n_votes']);
         }
 
-        $json = array();
+        $json = [];
         foreach (array_reverse($tr->marks) as $mark) {
-            $json[] = array(
+            $json[] = [
                 'id' => $mark->user->id,
                 'login' => $mark->user->login,
                 'mark' => $mark->mark,
-            );
+            ];
         }
         echo json_encode($json);
     }

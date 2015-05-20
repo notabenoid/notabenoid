@@ -18,21 +18,21 @@ class Mark extends CActiveRecord
     }
     public function primaryKey()
     {
-        return array('tr_id', 'user_id');
+        return ['tr_id', 'user_id'];
     }
 
     public function relations()
     {
-        return array(
-            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
-            'translate' => array(self::BELONGS_TO, 'Translate', 'tr_id'),
-        );
+        return [
+            'user' => [self::BELONGS_TO, 'User', 'user_id'],
+            'translate' => [self::BELONGS_TO, 'Translate', 'tr_id'],
+        ];
     }
 
     public function rules()
     {
-        return array(
-            array('mark', 'in', 'range' => array(-1, 0, 1)),
-        );
+        return [
+            ['mark', 'in', 'range' => [-1, 0, 1]],
+        ];
     }
 }

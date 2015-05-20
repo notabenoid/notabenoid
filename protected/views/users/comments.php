@@ -10,7 +10,7 @@
 
     $this->pageTitle = $user->login.': комментарии';
 
-    $this->renderPartial('profile_head', array('user' => $user, 'h1' => 'комментарии'));
+    $this->renderPartial('profile_head', ['user' => $user, 'h1' => 'комментарии']);
 ?>
 
 <style type="text/css">
@@ -19,20 +19,20 @@
 </style>
 
 <?php
-$this->widget('bootstrap.widgets.TbMenu', array(
+$this->widget('bootstrap.widgets.TbMenu', [
     'type' => 'pills', // '', 'tabs', 'pills' (or 'list')
     'stacked' => false, // whether this is a stacked menu
-    'items' => array(
-        array('label' => 'В общем блоге',      'url' => '?mode=blog',  'active' => $mode == 'blog'),
-        array('label' => 'В блогах переводов', 'url' => '?mode=tblog', 'active' => $mode == 'tblog'),
-        array('label' => 'В переводах',        'url' => '?mode=tr',    'active' => $mode == 'tr'),
-    ),
-));
+    'items' => [
+        ['label' => 'В общем блоге',      'url' => '?mode=blog',  'active' => $mode == 'blog'],
+        ['label' => 'В блогах переводов', 'url' => '?mode=tblog', 'active' => $mode == 'tblog'],
+        ['label' => 'В переводах',        'url' => '?mode=tr',    'active' => $mode == 'tr'],
+    ],
+]);
 ?>
 
 <?php
     if ($comments->totalItemCount == 0) {
-        $A = array('blog' => 'в общем блоге', 'tblog' => 'в блогах общедоступных переводов', 'tr' => 'в общедоступных переводах');
+        $A = ['blog' => 'в общем блоге', 'tblog' => 'в блогах общедоступных переводов', 'tr' => 'в общедоступных переводах'];
         echo "<p>{$user->login} не написал".$user->sexy()." ни одного комментария {$A[$mode]}</p>";
     } else {
         echo '<h2>'.Yii::t('app', '{n} комментарий|{n} комментария|{n} комментариев', $comments->totalItemCount).'</h2>';
@@ -42,7 +42,7 @@ $this->widget('bootstrap.widgets.TbMenu', array(
 
         $data = $comments->data;
 
-        $this->widget('bootstrap.widgets.TbPager', array('pages' => $comments->pagination));
+        $this->widget('bootstrap.widgets.TbPager', ['pages' => $comments->pagination]);
 
         echo "<div class='comments'>";
         $view = Yii::app()->user->ini['t.iface'] == 1 ? '//blog/_comment-1' : '//blog/_comment';
@@ -71,6 +71,6 @@ $this->widget('bootstrap.widgets.TbMenu', array(
         }
         echo '</div>';
 
-        $this->widget('bootstrap.widgets.TbPager', array('pages' => $comments->pagination));
+        $this->widget('bootstrap.widgets.TbPager', ['pages' => $comments->pagination]);
     }
 ?>

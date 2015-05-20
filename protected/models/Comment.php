@@ -11,7 +11,7 @@ class Comment extends CActiveRecord
         return 'comments';
     }
 
-    public $id, $pid, $mp = array(), $cdate, $ip, $user_id, $body, $is_new = false, $rating = 0, $n_votes = 0;
+    public $id, $pid, $mp = [], $cdate, $ip, $user_id, $body, $is_new = false, $rating = 0, $n_votes = 0;
     public $post_id, $orig_id;
     public $parent = null;
 
@@ -24,11 +24,11 @@ class Comment extends CActiveRecord
 
     public function rules()
     {
-        return array(
-            array('body', 'safehtml'),
-            array('body', 'required'),
-            array('pid', 'numerical', 'integerOnly' => true),
-        );
+        return [
+            ['body', 'safehtml'],
+            ['body', 'required'],
+            ['pid', 'numerical', 'integerOnly' => true],
+        ];
     }
 
     public function safehtml($attr, $params)
@@ -40,45 +40,45 @@ class Comment extends CActiveRecord
 
     public function attributeLabels()
     {
-        return array(
+        return [
             'body' => 'Комментарий',
-        );
+        ];
     }
 
     public function relations()
     {
-        return array(
-            'author' => array(self::BELONGS_TO, 'User', 'user_id', 'select' => array('id', 'login', 'sex', 'upic', 'email', 'ini', 'can')),
-            'post' => array(self::BELONGS_TO, 'BlogPost', 'post_id', 'select' => array('id', 'user_id', 'book_id', 'cdate', 'topics', 'title')),
-            'orig' => array(self::BELONGS_TO, 'Orig', 'orig_id'),
-        );
+        return [
+            'author' => [self::BELONGS_TO, 'User', 'user_id', 'select' => ['id', 'login', 'sex', 'upic', 'email', 'ini', 'can']],
+            'post' => [self::BELONGS_TO, 'BlogPost', 'post_id', 'select' => ['id', 'user_id', 'book_id', 'cdate', 'topics', 'title']],
+            'orig' => [self::BELONGS_TO, 'Orig', 'orig_id'],
+        ];
     }
 
     // SCOPES
 
     public function defaultScope()
     {
-        return array(
+        return [
             'order' => 't.mp, t.cdate',
-        );
+        ];
     }
 
     public function newer($date)
     {
         if ($date != '') {
-            $this->getDbCriteria()->mergeWith(array(
-                'select' => array(
+            $this->getDbCriteria()->mergeWith([
+                'select' => [
                     't.*',
                     new CDbExpression("t.cdate >= '{$date}' as is_new"),
-                ),
-            ));
+                ],
+            ]);
         } else {
-            $this->getDbCriteria()->mergeWith(array(
-                'select' => array(
+            $this->getDbCriteria()->mergeWith([
+                'select' => [
                     't.*',
                     new CDbExpression('1 as is_new'),
-                ),
-            ));
+                ],
+            ]);
         }
 
         return $this;
@@ -86,27 +86,27 @@ class Comment extends CActiveRecord
 
     public function post($post_id)
     {
-        $this->getDbCriteria()->mergeWith(array(
+        $this->getDbCriteria()->mergeWith([
             'condition' => "t.post_id = '{$post_id}'",
-        ));
+        ]);
 
         return $this;
     }
 
     public function orig($orig_id)
     {
-        $this->getDbCriteria()->mergeWith(array(
+        $this->getDbCriteria()->mergeWith([
             'condition' => "t.orig_id = '{$orig_id}'",
-        ));
+        ]);
 
         return $this;
     }
 
     public function user($user_id)
     {
-        $this->getDbCriteria()->mergeWith(array(
+        $this->getDbCriteria()->mergeWith([
             'condition' => 't.user_id = '.intval($user_id),
-        ));
+        ]);
 
         return $this;
     }
@@ -134,13 +134,13 @@ class Comment extends CActiveRecord
         if ($this->user_id) {
             // Заносим пост в мои вещи
             if ($this->orig_id) {
-                Yii::app()->db->createCommand('SELECT track_orig(:user_id, :orig_id, 1)')->execute(array(':orig_id' => $this->orig_id, ':user_id' => $this->user_id));
+                Yii::app()->db->createCommand('SELECT track_orig(:user_id, :orig_id, 1)')->execute([':orig_id' => $this->orig_id, ':user_id' => $this->user_id]);
             } else {
-                Yii::app()->db->createCommand('SELECT track_post(:user_id, :post_id, 1)')->execute(array(':post_id' => $this->post_id, ':user_id' => $this->user_id));
+                Yii::app()->db->createCommand('SELECT track_post(:user_id, :post_id, 1)')->execute([':post_id' => $this->post_id, ':user_id' => $this->user_id]);
             }
 
             // Увеличиваем счётчик комментариев юзера
-            Yii::app()->db->createCommand('UPDATE users SET n_comments = n_comments + 1 WHERE id = :user_id')->execute(array(':user_id' => $this->user_id));
+            Yii::app()->db->createCommand('UPDATE users SET n_comments = n_comments + 1 WHERE id = :user_id')->execute([':user_id' => $this->user_id]);
         }
     }
 
@@ -153,16 +153,16 @@ class Comment extends CActiveRecord
         // Правим seen
         $field = $this->orig_id ? 'orig_id' : 'post_id';
         $sql = "UPDATE seen SET n_comments = n_comments - 1 WHERE {$field} = :page_id AND (seen >= :cdate OR user_id = :my_uid)";
-        $params = array(
+        $params = [
             ':page_id' => $this->orig_id ? $this->orig_id : $this->post_id,
             ':cdate' => $this->cdate,
             ':my_uid' => Yii::app()->user->id,
-        );
+        ];
         Yii::app()->db->createCommand($sql)->execute($params);
 
         if ($this->user_id) {
             Yii::app()->db->createCommand('UPDATE users SET n_comments = n_comments - 1 WHERE id = :user_id')
-                ->execute(array('user_id' => $this->user_id));
+                ->execute(['user_id' => $this->user_id]);
         }
 
         parent::afterDelete();
@@ -221,11 +221,11 @@ class Comment extends CActiveRecord
         }
 
         $n = count($this->mp);
-        $p = array(
+        $p = [
             ':id' => $this->id,
             ':page_id' => $this->orig_id ? $this->orig_id : $this->post_id,
             ':mp' => '{'.implode(',', $this->mp).'}',
-        );
+        ];
         $field = $this->orig_id ? 'orig_id' : 'post_id';
 
         // Есть ли у удаляемого комментария неудалённые потомки? (дети могут при этом быть удалены, поэтому не WHERE pid = :id)
@@ -235,7 +235,7 @@ class Comment extends CActiveRecord
 
         if ($has_kids) {
             // Под нами есть неудалённые комментарии, помечаем наш, как удалённый
-            Yii::app()->db->createCommand("UPDATE comments SET body = '', user_id = NULL WHERE id = :id")->execute(array('id' => $this->id));
+            Yii::app()->db->createCommand("UPDATE comments SET body = '', user_id = NULL WHERE id = :id")->execute(['id' => $this->id]);
         } else {
             // Ниже нас либо нет комментариев вообще, либо толко удалённые. Стираем всю ветку. Последний AND в WHERE - для перестраховки
             Yii::app()->db->createCommand("DELETE FROM comments WHERE {$field} = :page_id AND mp[0:{$n}] = :mp AND (id = :id OR body = '')")->execute($p);
@@ -252,7 +252,7 @@ class Comment extends CActiveRecord
         $user = Yii::app()->user;
         $debug = '';
 
-        $sql = array();
+        $sql = [];
         $params = [':user_id' => $user->id, ':comment_id' => $this->id];
 
         $old_mark = Yii::app()->db->createCommand('SELECT mark FROM comments_rating WHERE user_id = :user_id AND comment_id = :comment_id')

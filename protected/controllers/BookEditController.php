@@ -6,17 +6,17 @@ class BookEditController extends BookBaseController
 
     public function filters()
     {
-        return array('accessControl');
+        return ['accessControl'];
     }
 
     public function accessRules()
     {
-        return array(
-            array('allow', 'users' => array('@'),
-                'actions' => array('index', 'cat', 'info', 'access', 'remove'),
-            ),
-            array('deny', 'users' => array('*')),
-        );
+        return [
+            ['allow', 'users' => ['@'],
+                'actions' => ['index', 'cat', 'info', 'access', 'remove'],
+            ],
+            ['deny', 'users' => ['*']],
+        ];
     }
 
     /** @return Book */
@@ -102,9 +102,9 @@ class BookEditController extends BookBaseController
             if ($this->saveBook($book)) {
                 if (!$book->isNewRecord) {
                     if ($book->cat_id && $old_cat_id != $book->cat_id && !Yii::app()->user->can('cat_moderate')) {
-                        Yii::app()->db->createCommand('SELECT moder_book_cat_put(:book_id)')->execute(array(':book_id' => $book->id));
+                        Yii::app()->db->createCommand('SELECT moder_book_cat_put(:book_id)')->execute([':book_id' => $book->id]);
                     } else {
-                        Yii::app()->db->createCommand('DELETE FROM moder_book_cat WHERE book_id = :book_id')->execute(array(':book_id' => $book->id));
+                        Yii::app()->db->createCommand('DELETE FROM moder_book_cat WHERE book_id = :book_id')->execute([':book_id' => $book->id]);
                     }
                 }
                 $this->redirect($book->isNewRecord ? $book->getUrl('edit/info') : $book->url);
@@ -115,7 +115,7 @@ class BookEditController extends BookBaseController
 
         $cats = Category::model()->tree()->findAll();
 
-        $this->render('cat', array('book' => $book, 'cats' => $cats));
+        $this->render('cat', ['book' => $book, 'cats' => $cats]);
     }
 
     public function actionInfo($book_id)
@@ -135,7 +135,7 @@ class BookEditController extends BookBaseController
             }
         }
 
-        $this->render('info', array('book' => $book));
+        $this->render('info', ['book' => $book]);
     }
 
     public function actionAccess($book_id)
@@ -154,32 +154,32 @@ class BookEditController extends BookBaseController
                 if ($book_id == 0) {
                     // Вступаем в группу сразу модератором
                     Yii::app()->db->createCommand('INSERT INTO groups (book_id, user_id, status) VALUES (:book_id, :user_id, 2)')
-                        ->query(array('book_id' => $book->id, 'user_id' => Yii::app()->user->id));
+                        ->query(['book_id' => $book->id, 'user_id' => Yii::app()->user->id]);
 
                     // Добавляем в закладки
                     Yii::app()->db->createCommand('
 						INSERT INTO bookmarks (user_id, book_id, ord)
 						VALUES
 						(:user_id, :book_id, (SELECT COALESCE(MAX(ord),0) + 1 FROM bookmarks WHERE user_id = :user_id AND orig_id IS NULL))
-					')->execute(array(
+					')->execute([
                         ':user_id' => Yii::app()->user->id,
                         ':book_id' => $book->id,
-                    ));
+                    ]);
 
                     // Отправляем на очередь модерации, если выбран раздел каталога
                     if ($book->cat_id && !Yii::app()->user->can('cat_moderate')) {
-                        Yii::app()->db->createCommand('SELECT moder_book_cat_put(:book_id)')->execute(array(':book_id' => $book->id));
+                        Yii::app()->db->createCommand('SELECT moder_book_cat_put(:book_id)')->execute([':book_id' => $book->id]);
                     }
                 } else {
                     // Если фейсконтроль понизился до FC_OPEN
                     if ($prev_facecontrol != Book::FC_OPEN && $book->facecontrol == Book::FC_OPEN) {
                         // удаляем всех, кто ничего не сделал в группе
                         Yii::app()->db->createCommand('DELETE FROM groups WHERE book_id = :book_id AND status = :member AND n_trs = 0')
-                            ->execute(array(':member' => GroupMember::MEMBER, ':book_id' => $book->id));
+                            ->execute([':member' => GroupMember::MEMBER, ':book_id' => $book->id]);
 
                         // всем MEMBER присваиваем статус CONTRIBUTOR
                         Yii::app()->db->createCommand('UPDATE groups SET status = :contributor WHERE book_id = :book_id AND status = :member AND n_trs > 0')
-                            ->execute(array(':contributor' => GroupMember::CONTRIBUTOR, ':member' => GroupMember::MEMBER, ':book_id' => $book->id));
+                            ->execute([':contributor' => GroupMember::CONTRIBUTOR, ':member' => GroupMember::MEMBER, ':book_id' => $book->id]);
 
                         // @todo: все действия, назначенные для группы назначать роли "все"; поместить этот код до $book->save() (Book::beforeSave()?)
                         /*
@@ -194,7 +194,7 @@ class BookEditController extends BookBaseController
             }
         }
 
-        $this->render('access', array('book' => $book));
+        $this->render('access', ['book' => $book]);
     }
 
     public function actionRemove($book_id)

@@ -37,14 +37,14 @@ class Languages extends CActiveRecord
     {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
-        return array(
-            array('typ', 'required'),
-            array('typ', 'numerical', 'integerOnly' => true),
-            array('title, title_r', 'length', 'max' => 100),
+        return [
+            ['typ', 'required'],
+            ['typ', 'numerical', 'integerOnly' => true],
+            ['title, title_r', 'length', 'max' => 100],
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, typ, title, title_r', 'safe', 'on' => 'search'),
-        );
+            ['id, typ, title, title_r', 'safe', 'on' => 'search'],
+        ];
     }
 
     /**
@@ -54,8 +54,8 @@ class Languages extends CActiveRecord
     {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
-        return array(
-        );
+        return [
+        ];
     }
 
     /**
@@ -63,12 +63,12 @@ class Languages extends CActiveRecord
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'id' => 'ID',
             'typ' => 'Typ',
             'title' => 'Title',
             'title_r' => 'Title R',
-        );
+        ];
     }
 
     /**
@@ -88,8 +88,8 @@ class Languages extends CActiveRecord
         $criteria->compare('title', $this->title, true);
         $criteria->compare('title_r', $this->title_r, true);
 
-        return new CActiveDataProvider($this, array(
+        return new CActiveDataProvider($this, [
             'criteria' => $criteria,
-        ));
+        ]);
     }
 }

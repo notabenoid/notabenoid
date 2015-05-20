@@ -6,25 +6,25 @@ class SearchFilter extends CFormModel
     public $topic = 0;
     public $category = null;
 
-    public static $sortOptions = array(
+    public static $sortOptions = [
         0 => 'По степени готовности',
         1 => 'По названию на языке оригинала',
         2 => 'По названию на языке перевода',
         3 => 'По дате создания',
         4 => 'По дате последней активности',
-    );
+    ];
 
-    public static $sortSQL = array(
+    public static $sortSQL = [
         0 => 'ready(t.n_verses, t.d_vars) desc',
         1 => 't.s_title',
         2 => 't.t_title',
         3 => 't.cdate desc',
         4 => 't.last_tr desc NULLS LAST',
-    );
+    ];
 
     public function beforeValidate()
     {
-        foreach (array('cat', 's_lang', 't_lang', 'ready', 'gen', 'tr', 'sort') as $k) {
+        foreach (['cat', 's_lang', 't_lang', 'ready', 'gen', 'tr', 'sort'] as $k) {
             $this->$k = (int) $this->$k;
         }
         if ($this->cat) {
@@ -36,7 +36,7 @@ class SearchFilter extends CFormModel
 
     public function getFilterTitle($attr)
     {
-        $html = array(
+        $html = [
             't' => '<a>Название или описание содержит текст</a>',
             'cat' => '<a href="#" onclick="return S.catChoose()">Из раздела каталога</a>',
             's_lang' => '<a>Язык оригинала</a>',
@@ -44,7 +44,7 @@ class SearchFilter extends CFormModel
             'ready' => '<a>100% готовые</a>',
             'gen' => '<a>Доступные для скачавания</a>',
             'tr' => '<a>Доступные для перевода</a>',
-        );
+        ];
 
         return $html[$attr];
     }
@@ -58,7 +58,7 @@ class SearchFilter extends CFormModel
 
             return '<input type="hidden" name="cat" value="'.$this->category->id.'" />Из раздела каталога &laquo;<span class="name">'.$this->category->title.'</span>&raquo;';
         }
-        $html = array(
+        $html = [
             't' => '<input type="text" name="t" class="span8" />',
             'cat' => '<input type="hidden" name="cat" />Из раздела каталога &laquo;<span class="name"></span>&raquo;',
             's_lang' => 'Язык оригинала: <select name="t_lang">'.Yii::app()->langs->options(Langs::FORM_INF).'</select>',
@@ -66,7 +66,7 @@ class SearchFilter extends CFormModel
             'ready' => '<label><input type="checkbox" name="ready" value="1" checked /> готовые на 100%</label>',
             'gen' => '<label><input type="checkbox" name="gen" value="1" checked /> доступные для скачивания</label>',
             'tr' => '<label><input type="checkbox" name="tr" value="1" checked /> доступные для перевода</label>',
-        );
+        ];
 
         return $html[$attr];
     }
@@ -83,26 +83,26 @@ class SearchFilter extends CFormModel
 
     public function rules()
     {
-        return array(
-            array('t', 'filter', 'filter' => 'strip_tags', 'on' => 'search'),
-            array('t', 'filter', 'filter' => 'trim', 'on' => 'search'),
-            array('cat', 'numerical', 'integerOnly' => true),
-            array('s_lang, t_lang', 'numerical', 'integerOnly' => 'true'),
-            array('gen, tr', 'boolean'),
-            array('ready', 'boolean', 'on' => 'search'),
-            array('ready', 'numerical', 'integerOnly' => true, 'on' => 'announces'),
-            array('sort', 'in', 'range' => array_keys(self::$sortOptions), 'on' => 'search'),
-            array('topic', 'numerical', 'integerOnly' => true, 'on' => 'announces'),
-        );
+        return [
+            ['t', 'filter', 'filter' => 'strip_tags', 'on' => 'search'],
+            ['t', 'filter', 'filter' => 'trim', 'on' => 'search'],
+            ['cat', 'numerical', 'integerOnly' => true],
+            ['s_lang, t_lang', 'numerical', 'integerOnly' => 'true'],
+            ['gen, tr', 'boolean'],
+            ['ready', 'boolean', 'on' => 'search'],
+            ['ready', 'numerical', 'integerOnly' => true, 'on' => 'announces'],
+            ['sort', 'in', 'range' => array_keys(self::$sortOptions), 'on' => 'search'],
+            ['topic', 'numerical', 'integerOnly' => true, 'on' => 'announces'],
+        ];
     }
 
     public function attributeLabels()
     {
-        return array(
+        return [
             't' => 'Название',
             's_lang' => 'Язык оригинала',
             't_lang' => 'Язык перевода',
             'cat' => 'Из раздела каталога',
-        );
+        ];
     }
 }

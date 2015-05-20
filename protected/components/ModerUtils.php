@@ -2,7 +2,7 @@
 
 class ModerUtils extends CApplicationComponent
 {
-    public $moderators = array('notabenoid');
+    public $moderators = ['notabenoid'];
 
     public function init()
     {

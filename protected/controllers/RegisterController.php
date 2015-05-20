@@ -4,16 +4,16 @@ class RegisterController extends Controller
 {
     public function actions()
     {
-        return array(
-            'captcha' => array('class' => 'CCaptchaAction'),
-        );
+        return [
+            'captcha' => ['class' => 'CCaptchaAction'],
+        ];
     }
 
     public function filters()
     {
-        return array(
+        return [
             'usersOnly + settings, logout, invite',
-        );
+        ];
     }
 
     protected function performAjaxValidation($model)
@@ -68,7 +68,7 @@ class RegisterController extends Controller
                 $message->view = 'welcome';
                 $message->from = Yii::app()->params['adminEmail'];
                 $message->addTo($user->email);
-                $message->setBody(array('user' => $user), 'text/html');
+                $message->setBody(['user' => $user], 'text/html');
                 Yii::app()->mail->send($message);
 
                 // залогинить
@@ -85,7 +85,7 @@ class RegisterController extends Controller
             }
         }
 
-        $this->render('index', array('model' => $user));
+        $this->render('index', ['model' => $user]);
     }
 
     public function actionLogout()
@@ -186,7 +186,7 @@ class RegisterController extends Controller
             }
 
             foreach ($_POST['ini'] as $area => $ini) {
-                if (!in_array($area, array('l', 't', 'c'))) {
+                if (!in_array($area, ['l', 't', 'c'])) {
                     continue;
                 }
                 foreach ($ini as $k => $v) {
@@ -212,6 +212,6 @@ class RegisterController extends Controller
             }
         }
 
-        $this->render('settings', array('model' => $form));
+        $this->render('settings', ['model' => $form]);
     }
 }

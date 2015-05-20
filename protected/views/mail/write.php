@@ -33,29 +33,29 @@ $(W.init);
     echo '<h1>'.($reply ? 'Ответить' : 'Написать письмо').'</h1>';
 
     /** @var TbActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
         'id' => 'form-write',
         'type' => 'horizontal',
-    ));
+    ]);
 
     echo $form->errorSummary($message);
 
-    echo $form->textFieldRow($message, 'sendTo', array('class' => 'span6'));
+    echo $form->textFieldRow($message, 'sendTo', ['class' => 'span6']);
 
-    echo $form->textFieldRow($message, 'subj', array('class' => 'span6'));
+    echo $form->textFieldRow($message, 'subj', ['class' => 'span6']);
 
     if ($reply) {
         $quote = htmlspecialchars_decode($reply->body);
         $quote = '> '.str_replace("\n", "\n> ", $quote);
         $message->body = $quote;
     }
-    echo $form->textAreaRow($message, 'body', array('class' => 'span6', 'hint' => 'Здесь можно использовать некоторые HTML-теги'));
+    echo $form->textAreaRow($message, 'body', ['class' => 'span6', 'hint' => 'Здесь можно использовать некоторые HTML-теги']);
 ?>
 <div class="form-actions">
 <?php
-    echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Отправить", array('type' => 'submit', 'class' => 'btn btn-primary')).' ';
+    echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Отправить", ['type' => 'submit', 'class' => 'btn btn-primary']).' ';
     $back = $reply ? $reply->url : '/my/mail';
-    echo CHtml::htmlButton("<i class='icon-remove icon-white'></i> Отмена", array('onclick' => "location.href='{$back}'", 'class' => 'btn btn-success'));
+    echo CHtml::htmlButton("<i class='icon-remove icon-white'></i> Отмена", ['onclick' => "location.href='{$back}'", 'class' => 'btn btn-success']);
 ?>
 </div>
 <?php $this->endWidget(); ?>

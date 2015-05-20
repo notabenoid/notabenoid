@@ -1,30 +1,30 @@
 <?php
 
-return array(
+return [
     'basePath' => dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name' => 'Notabenoid.Org',
     'language' => 'ru',
     'sourceLanguage' => 'en',
 
-    'preload' => array('log', 'bootstrap'),
+    'preload' => ['log', 'bootstrap'],
 
-    'import' => array(
+    'import' => [
         'application.models.*',
         'application.components.*',
         'ext.yii-mail.YiiMailMessage',
-    ),
+    ],
 
-    'modules' => array(
-    ),
+    'modules' => [
+    ],
 
-    'components' => array(
-        'request' => array(
+    'components' => [
+        'request' => [
             'enableCookieValidation' => true,
-        ),
-        'urlManager' => array(
+        ],
+        'urlManager' => [
             'urlFormat' => 'path',
             'showScriptName' => false,
-            'rules' => array(
+            'rules' => [
                 'users/<id:\d+>' => 'users/books',
                 'users/<id:\d+>/<action:\w+>' => 'users/<action>',
                 'users/<id:\d+>/translations/<book_id:\d+>' => 'users/translations',
@@ -71,8 +71,8 @@ return array(
                 'catalog/<cat_id:\d+>' => 'catalog/index',
 
                 'site/login' => 'register/login',
-            ),
-        ),
+            ],
+        ],
         'db' => [
             'connectionString' => 'pgsql:host=localhost;dbname=notabenoid',
             'username' => 'notabenoid',
@@ -97,25 +97,25 @@ return array(
             ],
             'keyPrefix' => 'nb',
         ],
-        'readycache' => array(
+        'readycache' => [
             'class' => 'application.components.ReadyCache',
             'directoryLevel' => '3',
             'gCProbability' => 0,    // garbage collection - только вручную, ну его нахуй
-        ),
-        'errorHandler' => array(
+        ],
+        'errorHandler' => [
             'errorAction' => 'site/error',
-        ),
-        'log' => array(
+        ],
+        'log' => [
             'class' => 'CLogRouter',
             'routes' => [
                 ['class' => 'CFileLogRoute', 'levels' => 'error, warning'],
             ],
-        ),
-        'widgetFactory' => array(
-            'widgets' => array(
-                'CActiveForm' => array(
-                ),
-                'TbPager' => array(
+        ],
+        'widgetFactory' => [
+            'widgets' => [
+                'CActiveForm' => [
+                ],
+                'TbPager' => [
                     'maxButtonCount' => 20,
                     'header' => "<div class='pagination'>",
                     'footer' => '</div>',
@@ -124,8 +124,8 @@ return array(
                     'lastPageLabel' => '&raquo;&raquo;&raquo;',
                     'nextPageLabel' => '&raquo;',
                     'prevPageLabel' => '&laquo;',
-                ),
-                'CLinkPager' => array(
+                ],
+                'CLinkPager' => [
                     'maxButtonCount' => 20,
                     'cssFile' => '/css/pager.css',
                     'header' => false,
@@ -133,75 +133,75 @@ return array(
                     'lastPageLabel' => '&raquo;&raquo;&raquo;',
                     'nextPageLabel' => '&raquo;',
                     'prevPageLabel' => '&laquo;',
-                ),
-                'CGridView' => array(
+                ],
+                'CGridView' => [
                     'template' => "{pager}\n{items}\n{pager}",
                     'cssFile' => '/css/grid.css',
                     'rowCssClass' => '',
                     'selectableRows' => 0,
-                ),
-                'CHtmlPurifier' => array(
-                    'options' => array(
+                ],
+                'CHtmlPurifier' => [
+                    'options' => [
                         'HTML.Allowed' => 'a[href],b,strong,i,em,u',
-                    ),
-                ),
-            ),
-        ),
+                    ],
+                ],
+            ],
+        ],
 
         /*
         * 3rd party-компоненты
         */
-        'mail' => array(
+        'mail' => [
             'class' => 'ext.yii-mail.YiiMail',
             'transportType' => 'php',
             'viewPath' => 'application.views.email',
-        ),
-        'bootstrap' => array(
+        ],
+        'bootstrap' => [
             'class' => 'ext.bootstrap.components.Bootstrap',
             'coreCss' => true,
             'responsiveCss' => true,
-            'plugins' => array(
+            'plugins' => [
                 'transition' => false, // disable CSS transitions
-                'tooltip' => array(
+                'tooltip' => [
                     'selector' => 'a.tooltip', // bind the plugin tooltip to anchor tags with the 'tooltip' class
-                    'options' => array(
+                    'options' => [
                         'placement' => 'bottom', // place the tooltips below instead
-                    ),
-                ),
-            ),
-        ),
-        'curl' => array(
+                    ],
+                ],
+            ],
+        ],
+        'curl' => [
             'class' => 'application.extensions.curl.Curl',
-            'options' => array(
+            'options' => [
                 'timeout' => 30,
-                'setOptions' => array(
+                'setOptions' => [
                     CURLOPT_USERAGENT => 'Notabenoid.Org Translation Service (support@notabenoid.org)',
                     CURLOPT_RANGE => '0-2048000',   // Качаем не более 2 мегов
                     CURLOPT_TIMEOUT => 15,
-                ),
-            ),
-        ),
-        'filecache' => array(
+                ],
+            ],
+        ],
+        'filecache' => [
             'class' => 'system.caching.CFileCache',
-        ),
+        ],
 
         /*
         * Мои компоненты
         */
-        'user' => array(
+        'user' => [
             'class' => 'application.components.WebUser',
             'allowAutoLogin' => true,
             'autoRenewCookie' => true,
-        ),
-        'langs' => array(
+        ],
+        'langs' => [
             'class' => 'application.components.Langs',
-        ),
-        'parser' => array(
+        ],
+        'parser' => [
             'class' => 'application.components.Parser',
-        ),
-    ),
+        ],
+    ],
 
-    'params' => array(
+    'params' => [
         'domain' => 'notabenoid.org',
         'passwordSalt' => '------------------------------------>>> ПРИДУМАЙТЕ СЮДА ЧТО-НИБУДЬ !!! <<<------------------',
         'adminEmail' => 'support@notabenoid.org',
@@ -212,11 +212,11 @@ return array(
          */
         'registerType' => 'OPEN',
 
-        'HTMLPurifierOptions' => array(
+        'HTMLPurifierOptions' => [
             'HTML.Allowed' => 'a[href],b,strong,i,em,u,s,blockquote,table,tr,th,td,ul,ol,li,dl,dt,dd,br,img[src],small,sub,sup,font[color],span,abbr,*[title],code,tt',
-        ),
-        'sex' => array('m' => 'мужчина', 'f' => 'женщина', 'x' => 'существо'),
-        'countries' => array(
+        ],
+        'sex' => ['m' => 'мужчина', 'f' => 'женщина', 'x' => 'существо'],
+        'countries' => [
             '',
             1 => 'Россия', 2 => 'Украина', 3 => 'Белоруссия', 4 => 'Абхазия', 5 => 'Австралия', 6 => 'Австрия', 7 => 'Азербайджан', 8 => 'Албания', 9 => 'Алжир',
             10 => 'Ангола', 11 => 'Андорра', 12 => 'Антигуа и Барбуда', 13 => 'Аргентина', 14 => 'Армения', 15 => 'Афганистан', 16 => 'Багамы', 17 => 'Бангладеш', 18 => 'Барбадос', 19 => 'Бахрейн',
@@ -239,10 +239,10 @@ return array(
             180 => 'Уганда', 181 => 'Узбекистан', 182 => 'Уругвай', 183 => 'Федеративные Штаты Микронезии', 184 => 'Фиджи', 185 => 'Филиппины', 186 => 'Финляндия', 187 => 'Франция', 188 => 'Хорватия', 199 => 'Центрально-Африканская Республика',
             190 => 'Чад', 191 => 'Черногория', 192 => 'Чехия', 193 => 'Чили', 194 => 'Швейцария', 195 => 'Швеция', 196 => 'Шри-Ланка', 197 => 'Эквадор', 198 => 'Экваториальная Гвинея', 199 => 'Эритрея',
             200 => 'Эстония', 201 => 'Эфиопия', 202 => 'Южно-Африканская Республика', 203 => 'Южная Осетия', 204 => 'Ямайка', 205 => 'Япония',
-        ),
-        'month_acc' => array('', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'),
-        'month_in' => array('', 'январе', 'феврале', 'марте', 'апреле', 'мае', 'июне', 'июле', 'августе', 'сентябре', 'октябре', 'ноябре', 'декабре'),
-        'encodings' => array(
+        ],
+        'month_acc' => ['', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'],
+        'month_in' => ['', 'январе', 'феврале', 'марте', 'апреле', 'мае', 'июне', 'июле', 'августе', 'сентябре', 'октябре', 'ноябре', 'декабре'],
+        'encodings' => [
             // iconv-название => человеческое название
             'UTF-8' => 'UTF-8',
             'CP1251' => 'Windows-1251 (Кириллица Windows)',
@@ -252,11 +252,11 @@ return array(
             'utf-16' => 'Unicode UTF-16 (16-битный юникод)',
             'MacCyrillic' => 'MacCyrillic (Кириллица Macintosh)',
             'MacCentralEurope' => 'MacCentralEurope (Центральная Европа Macintosh)',
-        ),
-        'book_types' => array('A' => 'текст', 'S' => 'субтитры'),
-        'catalog_branches' => array(1 => 'S', 2 => 'A', 3 => 'A'),
-        'book_topics' => array(
-            'S' => array(
+        ],
+        'book_types' => ['A' => 'текст', 'S' => 'субтитры'],
+        'catalog_branches' => [1 => 'S', 2 => 'A', 3 => 'A'],
+        'book_topics' => [
+            'S' => [
                 0 => 'Сериал',
                 1 => 'Мультфильм',
                 2 => 'Документальный фильм',
@@ -268,8 +268,8 @@ return array(
                 8 => 'Детектив',
                 9 => 'Мелодрама',
                 10 => 'Мюзикл',
-            ),
-            'A' => array(
+            ],
+            'A' => [
                 0 => 'Классика',
                 1 => 'Художественная литература',
                 10 => 'Научная фантастика',
@@ -282,38 +282,38 @@ return array(
                 8 => 'Комиксы',
                 9 => 'Игры',
                 11 => 'Стихи и песни',
-            ),
-        ),
-        'ac_areas' => array(
+            ],
+        ],
+        'ac_areas' => [
             'ac_read' => 'войти', 'ac_trread' => 'видеть все версии', 'ac_gen' => 'скачивать', 'ac_rate' => 'оценивать', 'ac_comment' => 'комментировать', 'ac_tr' => 'переводить',
             'ac_blog_r' => 'читать блог', 'ac_blog_c' => 'комментировать в блоге', 'ac_blog_w' => 'писать посты в блоге',
             'ac_announce' => 'создавать анонсы перевода', 'ac_membership' => 'управлять членством в группе перевода',
             'ac_chap_edit' => 'редактировать оригинал', 'ac_book_edit' => 'редактировать описание перевода',
-        ),
-        'ac_areas_chap' => array('ac_read' => 'читать', 'ac_trread' => 'видеть все версии', 'ac_gen' => 'скачивать', 'ac_rate' => 'оценивать', 'ac_comment' => 'комментировать', 'ac_tr' => 'переводить'),
-        'ac_roles' => array('a' => 'все', 'g' => 'группа', 'm' => 'модераторы', 'o' => 'никто'),
-        'ac_roles_title' => array('a' => 'все', 'g' => 'только члены группы перевода', 'm' => 'только модераторы', 'o' => 'только владелец'),
+        ],
+        'ac_areas_chap' => ['ac_read' => 'читать', 'ac_trread' => 'видеть все версии', 'ac_gen' => 'скачивать', 'ac_rate' => 'оценивать', 'ac_comment' => 'комментировать', 'ac_tr' => 'переводить'],
+        'ac_roles' => ['a' => 'все', 'g' => 'группа', 'm' => 'модераторы', 'o' => 'никто'],
+        'ac_roles_title' => ['a' => 'все', 'g' => 'только члены группы перевода', 'm' => 'только модераторы', 'o' => 'только владелец'],
 
-        'translation_statuses' => array(
+        'translation_statuses' => [
             0 => '',
             1 => 'идёт перевод',
             2 => 'перевод редактируется',
             3 => 'перевод готов',
-        ),
-        'translation_statuses_short' => array(
+        ],
+        'translation_statuses_short' => [
             0 => '',
             1 => 'переводится',
             2 => 'редактируется',
             3 => 'готово',
-        ),
+        ],
 
-        'blog_topics' => array(
-            'book' => array(// 1 - 19
+        'blog_topics' => [
+            'book' => [// 1 - 19
                 1 => 'Обсуждение оригинала',
                 2 => 'Перевод',
                 3 => 'Общение',
-            ),
-            'common' => array(// 40 - 79
+            ],
+            'common' => [// 40 - 79
                 64 => 'Новости проекта',
                 65 => 'Техподдержка',
                 66 => 'Общение',
@@ -321,15 +321,15 @@ return array(
                 69 => 'Как это перевести?',
 
 //				70 => array("Стройплощадка", "can" => "betatest", "manifest" => "Этот блог доступен только участникам Стройплощадки.", "side_view" => "betatest_side"),
-            ),
-            'announce' => array(// 80 - 89
+            ],
+            'announce' => [// 80 - 89
                 81 => 'Ищем переводчиков',
                 82 => 'Готово',
                 89 => 'Всякое',
-            ),
-        ),
+            ],
+        ],
 
         'ENVIRONMENT' => 'production',
         'version' => '3.3',
-    ),
-);
+    ],
+];
