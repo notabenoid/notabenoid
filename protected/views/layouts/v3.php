@@ -157,8 +157,8 @@ if (!Yii::app()->user->isGuest):
 
 <footer>
     <div class="<?=$containerClass; ?>"><div class="row">
-        <div class="span6">
-            &copy; <a href="http://romakhin.ru/" rel="nofollow">Дмитрий Ромахин</a> 2008&ndash;<?php echo date('Y'); ?>
+        <div class="span9">
+            Powered by <a href="https://github.com/notabenoid/notabenoid">Notabenoid</a>, written and opensourced by <a href="http://romakhin.ru/" rel="nofollow">Дмитрий Ромахин</a> (his <a href="http://facebook.com/uisky">Facebook</a>)
             <br />
             <a href="/site/help">Справка</a> |
             <a href="/blog?topic=65">Техподдержка</a> |
