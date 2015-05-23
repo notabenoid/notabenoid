@@ -103,7 +103,7 @@ class User extends CActiveRecord
             ['remember', 'boolean', 'on' => 'login'],
 
             // on => "register"
-            ['login, pass, email, sex, lang', 'required', 'message' => 'Укажите {attribute}.', 'on' => 'register'],
+            ['login, pass, sex, lang', 'required', 'message' => 'Укажите {attribute}.', 'on' => 'register'],
             ['login, email', 'filter', 'filter' => 'trim', 'on' => 'register'],
             ['login', 'length', 'min' => 2, 'max' => 16, 'tooShort' => 'Слишком короткий логин', 'tooLong' => 'Слишком длинный логин', 'on' => 'register'],
             ['login', 'match', 'pattern' => '/^[A-Za-z\d_]+$/', 'message' => 'Недопустимый символ', 'on' => 'register'],

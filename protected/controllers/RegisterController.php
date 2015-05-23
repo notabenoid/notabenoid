@@ -63,13 +63,15 @@ class RegisterController extends Controller
         if (isset($_POST['User'])) {
             $user->attributes = $_POST['User'];
             if ($user->save()) {
-                // отправить письмо
-                $message = new YiiMailMessage('Добро пожаловать на '.Yii::app()->name);
-                $message->view = 'welcome';
-                $message->from = Yii::app()->params['adminEmail'];
-                $message->addTo($user->email);
-                $message->setBody(['user' => $user], 'text/html');
-                Yii::app()->mail->send($message);
+                if ($user->email) {
+                    // отправить письмо
+                    $message = new YiiMailMessage('Добро пожаловать на '.Yii::app()->name);
+                    $message->view = 'welcome';
+                    $message->from = Yii::app()->params['adminEmail'];
+                    $message->addTo($user->email);
+                    $message->setBody(['user' => $user], 'text/html');
+                    Yii::app()->mail->send($message);
+                }
 
                 // залогинить
                 $identity = new UserIdentity($user->login, $_POST['User']['pass']);
