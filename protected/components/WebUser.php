@@ -268,17 +268,17 @@ class WebUser extends CWebUser
 
     private static $roles = [
         // Модераторы блога
-        'blog_moderate' => ['notabenoid' => 1],
-        'blog_topic_moderate' => ['notabenoid' => 1],
+        'blog_moderate' => ['admin' => 1],
+        'blog_topic_moderate' => ['admin' => 1],
 
         // Модераторы каталога
-        'cat_moderate' => ['notabenoid' => 1],
+        'cat_moderate' => ['admin' => 1],
 
         // Программисты, сисадмины - доступ к технической информации и её редактирование
-        'geek' => ['notabenoid' => 1],
+        'geek' => ['admin' => 1],
 
         // Суперадмины
-        'admin' => ['notabenoid' => 1],
+        'admin' => ['admin' => 1],
     ];
 
     public function can($role)
