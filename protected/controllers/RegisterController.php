@@ -62,6 +62,9 @@ class RegisterController extends Controller
         $this->performAjaxValidation($user);
         if (isset($_POST['User'])) {
             $user->attributes = $_POST['User'];
+            if (!$user->sex) {
+                $user->sex = 'x';
+            }
             if ($user->save()) {
                 if ($user->email) {
                     // отправить письмо

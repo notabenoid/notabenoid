@@ -103,7 +103,7 @@ class User extends CActiveRecord
             ['remember', 'boolean', 'on' => 'login'],
 
             // on => "register"
-            ['login, pass, sex, lang', 'required', 'message' => 'Укажите {attribute}.', 'on' => 'register'],
+            ['login, pass, lang', 'required', 'message' => 'Укажите {attribute}.', 'on' => 'register'],
             ['login, email', 'filter', 'filter' => 'trim', 'on' => 'register'],
             ['login', 'length', 'min' => 2, 'max' => 16, 'tooShort' => 'Слишком короткий логин', 'tooLong' => 'Слишком длинный логин', 'on' => 'register'],
             ['login', 'match', 'pattern' => '/^[A-Za-z\d_]+$/', 'message' => 'Недопустимый символ', 'on' => 'register'],
@@ -114,7 +114,6 @@ class User extends CActiveRecord
             ['email', 'length', 'max' => 255, 'tooLong' => 'Слишком длинный адрес электронной почты', 'on' => 'register'],
             ['email', 'email', 'checkPort' => false, 'message' => 'Неверный адрес электронной почты.', 'on' => 'register, edit-admin'],
             ['email', 'unique', 'caseSensitive' => false, 'message' => 'Пользователь с таким адресом электронной почты уже зарегистрирован.', 'on' => 'register, edit-admin'],
-            ['sex', 'in', 'range' => ['m', 'f'], 'message' => 'Вы должны быть либо мужчиной, либо, ещё лучше, женщиной.', 'on' => 'register'],
             ['sex', 'in', 'range' => ['m', 'f', 'x', '-'], 'message' => 'Пол - это m, f, x или дефис.', 'on' => 'edit-admin'],
             ['lang', 'numerical', 'integerOnly' => true, 'min' => 1, 'message' => 'Этот язык нам, увы, неизвестен.', 'on' => 'register'],
             ['verifyCode', 'captcha', 'message' => 'Вы неправильно ввели буквы с картинки.', 'on' => 'register'],
