@@ -176,12 +176,6 @@ class SiteController extends Controller
         $this->redirect('/');
     }
 
-    public function actionDonate()
-    {
-        $this->layout = 'column1';
-        $this->render('donate');
-    }
-
     public function actionHelp()
     {
         $this->layout = 'column1';
