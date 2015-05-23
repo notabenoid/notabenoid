@@ -4,7 +4,7 @@
      * Переменные снаружи.
      *
      * @var BlogPost
-     * @var string   "index", "post", "talks", "user" - размешение поста (лента, страница поста, мои обсуждения, посты пользователя)
+     * @var string   "index", "post", "talks", "user" - размещение поста (лента, страница поста, мои обсуждения, посты пользователя)
      * @var array    array("edit" => boolean, "mytalks" => boolean, "bookLink" => boolean)
      */
     $user = Yii::app()->user;
