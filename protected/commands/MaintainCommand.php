@@ -189,35 +189,6 @@ class MaintainCommand extends CConsoleCommand
 */
     }
 
-    public function actionSwitchStats()
-    {
-        $users = [];
-        $fh = fopen(Yii::app()->basePath.'/runtime/higgs.log', 'r');
-        while (!feof($fh)) {
-            $l = fgets($fh);
-            if ($l == '') {
-                continue;
-            }
-
-            $a = explode("\t", $l);
-            $a[2] = (int) $a[2];
-            $users[$a[1]] = $a[2];
-        }
-        fclose($fh);
-
-        $states = [0 => 0, 1 => 0];
-        foreach ($users as $u => $state) {
-            $states[$state]++;
-        }
-
-        $n = count($users);
-        printf("Попробовали новый интерфейс: %d\nОстались: %d (%d%%)\nВернулись к старому: %d (%d%%)\n",
-            $n,
-            $states[1], $states[1] / $n * 100,
-            $states[0], $states[0] / $n * 100
-        );
-    }
-
     /**
      * Запускалось один раз после миграции с 2.0
      * Лучше больше не повторять.

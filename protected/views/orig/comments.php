@@ -6,7 +6,6 @@
 ?>
 <div class='comments'>
 	<?php
-        $view = Yii::app()->user->ini['t.iface'] == 1 ? '//blog/_comment-1' : '//blog/_comment';
         $prev_indent = $indent = 0;
         foreach ($comments as $comment) {
             $comment->orig = $orig;
@@ -19,7 +18,7 @@
             }
             echo "<div class='thread'>";
 
-            $this->renderPartial($view, ['comment' => $comment]);
+            $this->renderPartial('//blog/_comment-1', ['comment' => $comment]);
 
             $prev_indent = $indent;
         }

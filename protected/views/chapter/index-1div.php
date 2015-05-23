@@ -124,7 +124,6 @@
 	<?php endif; ?>
 
 	<div class="group">
-		<a href="<?=$chap->getUrl('switchiface'); ?>"><i class="icon-thumbs-down" title="Старый	интерфейс"></i></a>
 		<a href="/blog/20938"><i class="icon-bullhorn" title="Обсуждение в блоге"></i></a>
 	</div>
 

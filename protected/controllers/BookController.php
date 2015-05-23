@@ -599,7 +599,7 @@ SQL;
         $dict = Dict::model()->book($book->id)->findAll(['order' => 't.term']);
 
         $p = ['book' => $book, 'dict' => $dict, 'ajax' => $ajax];
-        $view = Yii::app()->user->ini['t.iface'] == 1 ? 'dict-1' : 'dict';
+        $view = 'dict-1';
         if ($ajax) {
             $this->renderPartial($view, $p);
         } else {

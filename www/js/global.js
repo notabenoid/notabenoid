@@ -339,7 +339,6 @@ function CUser(init) {
 		"l.lineheight": 18,
 		"l.metascheme": 0,
 
-		"t.iface": 1,
 		"t.hlr": 1,
 		"t.oe_hide": 1,
 		"t.dict": 0,

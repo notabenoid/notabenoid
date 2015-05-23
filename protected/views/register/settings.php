@@ -118,21 +118,6 @@ $(function() {
 		</div>
 	</div>
 
-	<div class="control-group">
-		<label class="control-label">Интерфейс перевода</label>
-		<div class="controls">
-			<select name="ini[t][iface]">
-				<?php
-                    $A = [0 => 'им. Поля Дирака', 1 => 'им. Питера Хиггса (тестируется)'];
-                    foreach ($A as $k => $v) {
-                        echo "<option value='{$k}'".($user->ini['t.iface'] == $k ? ' selected' : '').">{$v}</option>";
-                    }
-                ?>
-			</select>
-		</div>
-	</div>
-
-	<?php if ($user->ini['t.iface'] == 1): ?>
 		<div class="control-group" id="nc-controls">
 			<label class="control-label">Выделение новых комментариев</label>
 			<div class="controls">
@@ -189,9 +174,6 @@ $(function() {
                 ?>
 			</div>
 		</div>
-
-
-	<?php endif; ?>
 
 </fieldset>
 

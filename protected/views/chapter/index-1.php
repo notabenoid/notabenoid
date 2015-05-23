@@ -131,10 +131,6 @@
 	<?php endif; ?>
 
 
-	<div class="group">
-		<a href="<?=$chap->getUrl('switchiface'); ?>"><i class="icon-thumbs-down" title="Старый	интерфейс"></i></a>
-	</div>
-
 	<div class="tb-progress group"></div>
 
 	<?php

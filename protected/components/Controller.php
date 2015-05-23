@@ -83,7 +83,7 @@ TTT
             ->registerScriptFile('/js/jquery.form.js')
             ->registerScriptFile('/js/jquery.cookie.js')
             ->registerScriptFile('/js/global.js?16')
-            ->registerCssFile(Yii::app()->user->ini['t.iface'] == 1 ? '/css/v3.1.css?3' : '/css/v3.css?13')    // чтобы в конец списка CSS ёбнулось
+            ->registerCssFile('/css/v3.1.css?3')    // чтобы в конец списка CSS ёбнулось
         ;
 
         if (!$user->isGuest) {
@@ -98,12 +98,6 @@ TTT
             }
 
             Yii::app()->clientScript->registerScript('user_init', 'var User = new CUser({id: '.Yii::app()->user->id.", login: '".Yii::app()->user->login."'});\n", CClientScript::POS_HEAD);
-
-            // Статистика использования интерфейса
-            $higgsStat = Yii::app()->cache->get('higgsStat');
-            $higgsStat[$user->id] = $user->ini['t.iface'];
-            Yii::app()->cache->set('higgsStat', $higgsStat);
-            unset($higgsStat);
         } else {
             Yii::app()->clientScript->registerScript('user_init', "var User = new CUser({id: 0, login: 'anonymous'});\n", CClientScript::POS_HEAD);
         }
@@ -114,9 +108,7 @@ TTT
             Yii::app()->clientScript->registerScriptFile('/js/paiduser.js');
         }
 
-        if (Yii::app()->user->ini['t.iface'] == 1) {
-            Yii::app()->clientScript->registerCss('user_ini_css', Yii::app()->user->ini->getCss());
-        }
+        Yii::app()->clientScript->registerCss('user_ini_css', Yii::app()->user->ini->getCss());
     }
 
     public function beforeAction($action)

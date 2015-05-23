@@ -45,7 +45,7 @@ class ChapterController extends Controller
     {
         return [
             ['allow',
-                'actions' => ['index', 'dict', 'rating_describe', 'rating_explain', 'ready', 'download', 'orig', 'orig_download', 'go', 'switchiface'],
+                'actions' => ['index', 'dict', 'rating_describe', 'rating_explain', 'ready', 'download', 'orig', 'orig_download', 'go'],
                 'users' => ['*'],
             ],
             ['allow',
@@ -197,29 +197,10 @@ class ChapterController extends Controller
 
         $chap->book->registerJS();
         $chap->registerJS();
-        $view = 'index-'.intval(Yii::app()->user->ini['t.iface']);
-        $this->render($view, [
+        $this->render('index-1', [
             'chap' => $chap, 'orig_dp' => $orig_dp, 'filter' => $filter,
             'show' => $show, 'show_user' => $show_user, 'to' => $to, 'tt' => $tt,
         ]);
-    }
-
-    public function actionSwitchiface($book_id, $chap_id)
-    {
-        $book_id = (int) $book_id;
-        $chap_id = (int) $chap_id;
-        $user = Yii::app()->user;
-
-        $user->ini->set('t.iface', $user->ini['t.iface'] == 1 ? 0 : 1);
-        $user->ini->save();
-
-        file_put_contents(
-            Yii::app()->basePath.'/runtime/higgs.log',
-            date('Y-m-d H:i:s')."\t".($user->isGuest ? '<guest>' : $user->login)."\t".$user->ini['t.iface']."\n",
-            FILE_APPEND
-        );
-
-        $this->redirect("/book/{$book_id}/{$chap_id}");
     }
 
     public function actionGo($book_id, $chap_id, $nach, $ord)

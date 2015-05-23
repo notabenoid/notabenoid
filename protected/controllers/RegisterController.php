@@ -177,14 +177,6 @@ class RegisterController extends Controller
         if (isset($_POST['UserSettings'])) {
             $_POST['ini']['t']['copy'] = (int) $_POST['ini']['t']['copy'];
 
-            if ($_POST['ini']['t']['iface'] != $user->ini['t.iface']) {
-                file_put_contents(
-                    Yii::app()->basePath.'/runtime/higgs.log',
-                    date('Y-m-d H:i:s')."\t".$user->login."\t".$_POST['ini']['t']['iface']."\n",
-                    FILE_APPEND
-                );
-            }
-
             foreach ($_POST['ini'] as $area => $ini) {
                 if (!in_array($area, ['l', 't', 'c'])) {
                     continue;

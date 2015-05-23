@@ -141,11 +141,10 @@ class BlogController extends Controller
             if (Yii::app()->user->hasFlash('error')) {
                 echo json_encode(['error' => Yii::app()->user->getFlash('error')]);
             } else {
-                $view = Yii::app()->user->ini['t.iface'] == 1 ? '//blog/_comment-1' : '//blog/_comment';
                 $comment->is_new = true;
                 echo json_encode([
                     'id' => $comment->id, 'pid' => $comment->pid,
-                    'html' => $this->renderPartial($view, ['comment' => $comment], true),
+                    'html' => $this->renderPartial('//blog/_comment-1', ['comment' => $comment], true),
                 ]);
             }
         } else {

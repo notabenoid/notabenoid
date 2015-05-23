@@ -46,18 +46,6 @@ var T = {
 			$modal.find("[name=from]").focus();
 			$this.parents(".control-label").text("На время:")
 		});
-
-		if($.cookie("wow.1")) {
-			$(".switchiface a").attr("title", "Переключиться на новый интерфейс перевода");
-		} else {
-			$(".switchiface a").popover({
-				trigger: 'manual',
-				title: 'Новый интерфейс',
-				content: "Хотите попробовать новый интерфейс перевода? Нажмите на эту кнопку."
-			}).popover('show');
-			$(".popover").click(function(e) {$(".switchiface a").popover("hide"); });
-			$.cookie("wow.1", 1, {expires: 365, path: '/'});
-		}
 	},
 
 	rate: {

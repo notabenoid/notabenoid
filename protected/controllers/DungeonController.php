@@ -13,7 +13,7 @@ class DungeonController extends Controller
     {
         return [
             ['allow',  // allow all users
-                'actions' => ['index', 'higgsInfo'],
+                'actions' => ['index'],
                 'users' => ['@'],
             ],
             [
@@ -24,53 +24,6 @@ class DungeonController extends Controller
             ],
             ['deny', 'users' => ['*']],
         ];
-    }
-
-    public function actionHiggsInfo()
-    {
-        /*
-        $fh = fopen(Yii::app()->basePath . "/runtime/higgs.log", "r");
-        $startHour = null;
-        $data = [];
-        $users = [];
-        $stay = 0;
-        $left = 0;
-        $prevDay = null;
-        while(!feof($fh)) {
-            $t = trim(fgets($fh));
-            if($t == "") continue;
-            list($timestamp, $login, $state) = explode("\t", $t);
-            $ts = strtotime($timestamp);
-
-            $day = intval(date("z", $ts));
-            $hour = $day * 24 + date("H", $ts);
-            if($startHour === null) $startHour = $hour;
-            $hour -= $startHour;
-
-            if(!isset($users[$login])) {
-                if($state == 1) {
-                    $stay++;
-                } else {
-                    $left++;
-                }
-            } elseif($users[$login] == 0 && $state == 1) {
-                $left--; $stay++;
-            } elseif($users[$login] == 1 && $state == 0) {
-                $stay--; $left++;
-            }
-
-            $data[$hour]["stay"] = $stay;
-            $data[$hour]["left"] = $left;
-
-            if($day != $prevDay) {
-                $data[$hour]["label"] = date("d.m.Y", $ts);
-                $prevDay = $day;
-            }
-
-            $users[$login] = $state;
-        }
-*/
-        $this->render('higgsInfo');
     }
 
     public function actionPollResults()

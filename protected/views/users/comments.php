@@ -45,7 +45,6 @@ $this->widget('bootstrap.widgets.TbMenu', [
         $this->widget('bootstrap.widgets.TbPager', ['pages' => $comments->pagination]);
 
         echo "<div class='comments'>";
-        $view = Yii::app()->user->ini['t.iface'] == 1 ? '//blog/_comment-1' : '//blog/_comment';
         foreach ($comments->data as $comment) {
             $x = '';
 
@@ -61,7 +60,7 @@ $this->widget('bootstrap.widgets.TbMenu', [
                 $x .= "<a href='{$comment->orig->url}'>{$comment->orig->chap->book->fullTitle}</a>";
             }
 
-            $this->renderPartial($view, [
+            $this->renderPartial('//blog/_comment-1', [
                     'comment' => $comment, 'meta_extra' => $x,
                     'disable_dot' => true, 'disable_reply' => true,
                     'disable_delete' => true, 'disable_up' => true,

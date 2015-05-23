@@ -311,10 +311,6 @@ class Orig extends CActiveRecord
 
     public function render($filter = null)
     {
-        if (Yii::app()->user->ini['t.iface'] == 0) {
-            return $this->renderOld($filter);
-        }
-
         $body = nl2br(htmlspecialchars($this->body));
         if ($filter && $filter->show == 5) {
             $body = preg_replace("/({$filter->to_esc})/i", "<span class='shl'>\\1</span>", $body);
@@ -346,23 +342,9 @@ class Orig extends CActiveRecord
         return $html;
     }
 
-    public function renderOld($filter)
-    {
-        $body = nl2br(htmlspecialchars($this->body));
-        if ($filter && $filter->show == 5) {
-            $body = preg_replace("/({$filter->to_esc})/i", "<span class='shl'>\\1</span>", $body);
-        }
-
-        return "<span class='b'>".$body.'</span>';
-    }
-
     public function renderTranslations($filter = null)
     {
         $user = Yii::app()->user;
-
-        if ($user->ini['t.iface'] == 0) {
-            return $this->renderTranslationsOld($filter);
-        }
 
         // Сортируем переводы по дате
         $trs = $this->trs;
@@ -461,48 +443,6 @@ class Orig extends CActiveRecord
         }
 
         return $ret;
-    }
-
-    private function renderTranslationsOld()
-    {
-        $trs = $this->trs;
-        usort($trs, ['Translation', 'trcmp']);
-
-        $user = Yii::app()->user;
-
-        $max_id = null;
-        $max_rating = null;
-        $max_cdate = null;
-        foreach ($trs as $tr) {
-            if ($max_id === null || $tr->rating >= $max_rating) {
-                $max_id = $tr->id;
-                $max_rating = $tr->rating;
-            }
-        }
-        $tr_opts = [
-            'edit' => $this->chap->book->membership->status == GroupMember::MODERATOR,
-            'rm' => $this->chap->book->membership->status == GroupMember::MODERATOR,
-            'rate' => $this->chap->can('rate'),
-            'rate-' => $this->chap->book->membership->status == GroupMember::MODERATOR,
-        ];
-        $tr_opts_owner = [
-            'edit' => true,
-            'rm' => true,
-            'rate' => false,
-        ];
-        $html = '';
-        foreach ($trs as $tr) {
-            if (!$this->chap->can('trread') && $tr->user_id != $user->id) {
-                continue;
-            }
-            $tr->chap = $this->chap;
-            if ($user->ini['t.hlr'] == 1) {
-                $tr_opts['best'] = $tr_opts_owner['best'] = $tr->id == $max_id;
-            }
-            $html .= $tr->render(($tr->user_id == $user->id) ? $tr_opts_owner : $tr_opts);
-        }
-
-        return $html;
     }
 
     /**
