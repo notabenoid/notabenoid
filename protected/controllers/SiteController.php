@@ -239,10 +239,4 @@ class SiteController extends Controller
 
         $this->render('moving');
     }
-
-    public function actionClosed()
-    {
-        $this->layout = 'offline';
-        $this->render('closed');
-    }
 }
