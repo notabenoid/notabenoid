@@ -14,7 +14,6 @@ class UserSettings extends User
     public function rules()
     {
         return array_merge(parent::rules(), [
-            ['email', 'required'],
             ['email', 'length', 'max' => 255, 'tooLong' => 'Слишком длинный адрес электронной почты'],
             ['email', 'email', 'checkPort' => false, 'message' => 'Неверный адрес электронной почты.'],
             ['email', 'unique',
