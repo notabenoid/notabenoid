@@ -91,12 +91,6 @@ TTT
 
             Yii::app()->clientScript->registerScriptFile('/js/chat.js?3');
 
-            if ($user->can('betatest')) {
-                $A = Yii::app()->params['blog_topics'];
-                $A['common'][70] = 'Стройплощадка';
-                Yii::app()->params['blog_topics'] = $A;
-            }
-
             Yii::app()->clientScript->registerScript('user_init', 'var User = new CUser({id: '.Yii::app()->user->id.", login: '".Yii::app()->user->login."'});\n", CClientScript::POS_HEAD);
         } else {
             Yii::app()->clientScript->registerScript('user_init', "var User = new CUser({id: 0, login: 'anonymous'});\n", CClientScript::POS_HEAD);

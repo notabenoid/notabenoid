@@ -78,9 +78,6 @@ class BlogController extends Controller
         $lenta->totalItemCount = Yii::app()->db->cache(60 * 60)->createCommand('SELECT COUNT(*) FROM blog_posts WHERE '.implode(' AND ', $where))->queryScalar();
 
         $this->side_view = ['index_side' => ['topics' => $topics]];
-        if (in_array(70, $topics)) {
-            $this->side_view['betatest_side'] = [];
-        }
         $this->render('index', ['lenta' => $lenta]);
     }
 

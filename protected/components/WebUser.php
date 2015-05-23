@@ -269,27 +269,10 @@ class WebUser extends CWebUser
     private static $roles = [
         // Модераторы блога
         'blog_moderate' => ['notabenoid' => 1],
-        'blog_topic_moderate' => ['notabenoid' => 1, 'wishera' => 1, 'Jolka' => 1],
+        'blog_topic_moderate' => ['notabenoid' => 1],
 
         // Модераторы каталога
-        'cat_moderate' => ['notabenoid' => 1, 'wishera' => 1],
-
-        // Бета-тестеры новых хуен
-        'betatest' => [
-            'notabenoid' => 1, 'kostya_testing' => 1, 'iimuhin' => 1, 'parfenov' => 1,
-            'bbn' => 1, 'tetka' => 1, 'splinterx' => 1, 'jolka' => 1, 'sun_eyed_girl' => 1,
-            'geragod' => 1, 'aist' => 1, 'cepylka' => 1, 'izolenta' => 1, 'xandra' => 1,
-            'esperanza' => 1, 'wishera' => 1, 'vipere' => 1, 'truetranslate' => 1, 'stylesmile' => 1,
-            'caranemica' => 1, 'peritta' => 1, '2be_real' => 1, 'nikopol' => 1, 'z23' => 1,
-            'freex25' => 1, 'julias' => 1, 'alex_ander' => 1, 'podruga' => 1, 'sorc' => 1,
-            'svetyska' => 1, 'nataliya' => 1, 'macymissa' => 1, 'vovka' => 1, 'mih83' => 1,
-            'molli' => 1, 'zlae4ka' => 1, 'monster' => 1, 'blanes' => 1, 'lisok' => 1,
-            'veste' => 1, 'chudoyudo' => 1, 'vitalogy' => 1, 'luizot' => 1, 'merrzavka' => 1,
-            '_highflyer' => 1, 'fucshia' => 1, 'd722tar' => 1, 'quatra' => 1, 'valentinakorea' => 1,
-            'nnn99' => 1, 'thesam' => 1, 'nd404' => 1, 'knoppka' => 1, 'mydimka' => 1,
-            'antoniolagrande' => 1, 'aredhel' => 1, 'prestige1905' => 1, 'kpymo' => 1, '18061987' => 1,
-            'grenada' => 1, 'parabashka' => 1, 'lori2014' => 1, 'doe' => 1,
-        ],
+        'cat_moderate' => ['notabenoid' => 1],
 
         // Программисты, сисадмины - доступ к технической информации и её редактирование
         'geek' => ['notabenoid' => 1],
