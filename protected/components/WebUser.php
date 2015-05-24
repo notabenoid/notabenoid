@@ -104,19 +104,7 @@ TTT;
     {
         if (isset(Yii::app()->request->cookies[self::COOKIE_NAME])) {
             $cookie = Yii::app()->request->cookies[self::COOKIE_NAME]->value;
-            $prefix = substr($cookie, 0, 2);
-            if ($prefix == '2@') {
-                $this->unserialize($cookie);
-            } else {
-                // Старый формат кукиса, парсим, сохраняем в новом формате
-                $ini = unserialize(base64_decode($cookie));
-                if (is_array($ini)) {
-                    foreach ($ini as $k => $v) {
-                        $this[$k] = $v;
-                    }
-                }
-                $this->save();
-            }
+            $this->unserialize($cookie);
         };
     }
 
