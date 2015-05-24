@@ -1,4 +1,6 @@
-# Notabenoid - a web service for collaborative translation
+# Notabenoid
+
+Notabenoid is a web service for collaborative translation.
 
 ## Running the site
 
