@@ -2,10 +2,6 @@
 <div class="row">
 	<div class="span8">
 		<?php echo $content; ?>
-
-		<div style='margin-top:30px'>
-		<?php echo $this->ad(Controller::AD_PLACE_BOTTOM); ?>
-		</div>
 	</div>
 
 	<div class="span4 sr">
@@ -22,8 +18,6 @@
             } elseif ($this->side_view != '') {
                 echo $this->renderPartial($this->side_view, $this->side_params);
             }
-
-            echo $this->ad(Controller::AD_PLACE_SIDE);
         ?>
 	</div>
 </div>

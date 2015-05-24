@@ -4,8 +4,6 @@
      * @var CActiveDataProvider
      */
     $this->pageTitle = 'Поиск';
-    $this->ad_deny[Controller::AD_PLACE_BOTTOM] = true;
-    $this->ad_deny[Controller::AD_PLACE_SIDE] = true;
 ?>
 <style type="text/css">
 ul.search-results {list-style:none; padding:0; margin:0;}
@@ -29,26 +27,6 @@ $(function() {
 		return false;
 	});
 });
-
-// Размер шрифтов
-var yandex_ad_fontSize = 1;
-
-// Настройки объявлений Директа
-var yandex_direct_fontColor = '000000';
-var yandex_direct_titleColor = '005580';
-var yandex_direct_siteurlColor = '006600';
-var yandex_direct_linkColor = '005580';
-function yandex_direct_print(){ }
-
-// Настройки объявлений Маркета
-var yandex_market_fontColor = '000000';
-var yandex_market_catColor = '666666';
-var yandex_market_offerlinkColor = '005580';
-var yandex_market_linkColor = '005580';
-function yandex_market_print(){ }
-
-var yandex_r = Math.round(Math.random() * 100000);
-document.write('<sc'+'ript type="text/javascript" src="http://an.yandex.ru/code/102609?rnd=' + yandex_r + '&text=<?php echo urlencode($filter->t); ?>&page-no=<?php echo $dp->pagination->currentPage; ?>&charset=utf-8"></'+'sc'+'ript>');
 </script>
 
 <h1>Поиск переводов</h1>

@@ -188,12 +188,6 @@ class SiteController extends Controller
         $this->render('tos');
     }
 
-    public function actionAd()
-    {
-        $this->layout = 'column1';
-        $this->render('ad');
-    }
-
     public function actionError()
     {
         if ($error = Yii::app()->errorHandler->error) {

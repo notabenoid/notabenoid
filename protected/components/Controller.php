@@ -39,31 +39,6 @@ class Controller extends CController
     ];
 
     public $siteArea = '';
-
-    /**
-     * Реклама.
-     */
-    const AD_PLACE_BOTTOM = 1;
-    const AD_PLACE_SIDE = 2;
-    const AD_PLACE_FACE1 = 3;
-    public $ad_deny = [
-        self::AD_PLACE_BOTTOM => false,
-        self::AD_PLACE_SIDE => false,
-        self::AD_PLACE_FACE1 => false,
-    ];
-    private $ad_html = [
-        self::AD_PLACE_SIDE => <<<TTT
-TTT
-,
-        self::AD_PLACE_BOTTOM => <<<TTT
-TTT
-,
-    ];
-    public function ad($place_id)
-    {
-        return "<!-- A: {$place_id} -->".$this->ad_html[$place_id];
-    }
-
     public $breadcrumbs = [];
     public $menu = [];
 
