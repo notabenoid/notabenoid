@@ -563,3 +563,6 @@ input[type="radio"], input[type="checkbox"] { margin-top: 2px; }
 	background:#eee;
 	padding:5px;
 }
+.tools select {
+	width: 200px;
+}
