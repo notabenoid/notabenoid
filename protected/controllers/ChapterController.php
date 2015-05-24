@@ -32,7 +32,7 @@ class OrigCountFixer
 
 class ChapterController extends Controller
 {
-    public $siteArea = 'books'; // | films | phrases
+    public $siteArea = 'books'; // | films
 
     public function filters()
     {

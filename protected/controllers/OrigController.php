@@ -2,7 +2,7 @@
 
 class OrigController extends Controller
 {
-    public $siteArea = 'books'; // | films | phrases
+    public $siteArea = 'books'; // | films
 
     /** @property Chapter $chap	*/
     public $chap;

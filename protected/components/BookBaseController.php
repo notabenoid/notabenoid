@@ -14,10 +14,6 @@ class BookBaseController extends Controller
             throw new CHttpException(404, "Такого перевода не существует. Возможно, он удалён или вы неправильно набрали адрес. Попробуйте воспользоваться <a href='/search'>поиском</a>, например.");
         }
 
-        if ($this->book->typ == 'P') {
-            throw new CHttpException(410, "Извините, раздел перевода фраз временно отключен для переосмысления. Следите за <a href='/blog?topic=64'>нашим блогом</a>, если хотите первыми узнать, когда он снова будет запущен.");
-        }
-
         if ($this->book->opts_get(Book::OPTS_BAN_COPYRIGHT)) {
             $this->book->facecontrol = Book::FC_INVITE;
             foreach (Yii::app()->params['ac_areas'] as $ac => $title) {

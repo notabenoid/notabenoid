@@ -33,7 +33,6 @@ class Controller extends CController
     public $siteAreas = [
         'films' => ['url' => '/search/?SearchFilter[typ]=S', 'label' => 'ПЕРЕВОДИМ ФИЛЬМЫ'],
         'books' => ['url' => '/search/?SearchFilter[typ]=A', 'label' => 'ПЕРЕВОДИМ КНИГИ'],
-        'phrases' => ['url' => '/search/?SearchFilter[typ]=P', 'label' => 'ПЕРЕВОДИМ ФРАЗЫ'],
         'blog' => ['url' => '/blog/',                    'label' => 'БЛОГ'],
         'users' => ['url' => '/users/',                   'label' => 'ПЕРЕВОДЧИКИ'],
     ];
