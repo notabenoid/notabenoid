@@ -38,7 +38,6 @@ class BookBaseController extends Controller
                     $html .= " (<a href='mailto:{$reason->email}'>{$reason->email}</a>)";
                 }
                 $html .= '.<br /><br />';
-                $html .= "<img src='http://img.leprosorium.com/2182718' style='display: block; margin: 20px auto' />";
                 throw new CHttpException(403, $html);
             }
         }
