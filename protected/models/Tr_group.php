@@ -6,6 +6,7 @@ class Tr_group extends CActiveRecord
     {
         return parent::model($className);
     }
+
     public function tableName()
     {
         return 'tr_groups';

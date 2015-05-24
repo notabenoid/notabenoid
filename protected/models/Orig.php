@@ -19,6 +19,7 @@ class Orig extends CActiveRecord
     {
         return parent::model($className);
     }
+
     public function tableName()
     {
         return 'orig';

@@ -6,6 +6,7 @@ class Contribution extends CActiveRecord
     {
         return parent::model($className);
     }
+
     public function tableName()
     {
         return 'user_tr_stat';

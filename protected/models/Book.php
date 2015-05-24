@@ -235,14 +235,17 @@ class Book extends CActiveRecord
 
         return '/book/'.intval($this->id).($area != '' ? "/{$area}" : '');
     }
+
     public function getUrl($area = '')
     {
         return '/book/'.intval($this->id).($area != '' ? "/{$area}" : '');
     }
+
     public function getAhref($area = '')
     {
         return "<a href='".$this->getUrl($area)."'>{$this->fullTitle}</a>";
     }
+
     public function getFullTitle()
     {
         return $this->s_title.($this->t_title != '' ? " / {$this->t_title}" : '');

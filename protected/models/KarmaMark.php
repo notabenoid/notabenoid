@@ -6,10 +6,12 @@ class KarmaMark extends CActiveRecord
     {
         return parent::model($className);
     }
+
     public function tableName()
     {
         return 'karma_rates';
     }
+
     public function primaryKey()
     {
         return ['to_uid', 'from_uid'];

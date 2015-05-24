@@ -6,6 +6,7 @@ class TalkMessage extends CActiveRecord
     {
         return parent::model($className);
     }
+
     public function tableName()
     {
         return 'talk_messages';

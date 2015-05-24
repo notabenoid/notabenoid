@@ -13,6 +13,7 @@ class Chapter extends CActiveRecord
     {
         return parent::model($className);
     }
+
     public function tableName()
     {
         return 'chapters';

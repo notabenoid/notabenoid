@@ -16,6 +16,7 @@ class BookBanReason extends CActiveRecord
     {
         return parent::model($className);
     }
+
     public function tableName()
     {
         return 'book_ban_reasons';

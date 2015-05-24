@@ -6,10 +6,12 @@ class Seen extends CActiveRecord
     {
         return parent::model($className);
     }
+
     public function tableName()
     {
         return 'seen';
     }
+
     public function primaryKey()
     {
         return ['user_id', 'post_id'];

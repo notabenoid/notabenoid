@@ -26,6 +26,7 @@ class RemindToken extends CActiveRecord
     {
         return parent::model($className);
     }
+
     public function tableName()
     {
         return 'remind_tokens';

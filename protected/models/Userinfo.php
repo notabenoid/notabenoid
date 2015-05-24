@@ -6,6 +6,7 @@ class Userinfo extends CActiveRecord
     {
         return parent::model($className);
     }
+
     public function tableName()
     {
         return 'userinfo';

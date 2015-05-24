@@ -7,6 +7,7 @@ class ModerBookCat extends CActiveRecord
     {
         return parent::model($className);
     }
+
     public function tableName()
     {
         return 'moder_book_cat';

@@ -39,6 +39,7 @@ class BookEditor extends Book
             $this->addError($attr, $this->getAttributeLabel('typ').' можно указать только при создании перевода.');
         }
     }
+
     public function clean($attr, $params)
     {
         $this->$attr = trim(htmlspecialchars(strip_tags($this->$attr, ENT_QUOTES | ENT_HTML5)));

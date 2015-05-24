@@ -139,6 +139,7 @@ TTT;
     {
         return $this->ini[$offset];
     }
+
     public function offsetSet($key, $value)
     {
         if (!isset($this->ini[$key])) {
@@ -148,10 +149,12 @@ TTT;
         $this->ini[$key] = $this->clean($key, $value);
         $this->_modified = true;
     }
+
     public function offsetExists($offset)
     {
         return isset($this->ini[$offset]);
     }
+
     public function offsetUnset($offset)
     {
         unset($this->ini[$offset]);
@@ -239,6 +242,7 @@ class WebUser extends CWebUser
     {
         return '/users/'.$this->id.($area != '' ? "/{$area}" : '');
     }
+
     public function getAhref($area = '')
     {
         return "<a href='".$this->getUrl($area)."' class='user'>".$this->login.'</a>';

@@ -12,10 +12,12 @@ class Mark extends CActiveRecord
     {
         return parent::model($className);
     }
+
     public function tableName()
     {
         return 'marks';
     }
+
     public function primaryKey()
     {
         return ['tr_id', 'user_id'];

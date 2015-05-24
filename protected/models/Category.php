@@ -7,6 +7,7 @@ class Category extends CActiveRecord
     {
         return parent::model($className);
     }
+
     public function tableName()
     {
         return 'catalog';

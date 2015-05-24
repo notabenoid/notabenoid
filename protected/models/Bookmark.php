@@ -18,6 +18,7 @@ class Bookmark extends CActiveRecord
     {
         return parent::model($className);
     }
+
     public function tableName()
     {
         return 'bookmarks';
