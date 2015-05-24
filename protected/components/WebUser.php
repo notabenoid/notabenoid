@@ -110,9 +110,9 @@ TTT;
 
     public function serialize()
     {
-        $cookie = '2@';
+        $cookie = '';
         foreach ($this->ini as $k => $v) {
-            if ($cookie != '2@') {
+            if ($cookie != '') {
                 $cookie .= "\n";
             }
             $cookie .= $k."\t".$v;
@@ -123,7 +123,7 @@ TTT;
 
     public function unserialize($text)
     {
-        $A = explode("\n", substr($text, 2));
+        $A = explode("\n", $text);
         if (!is_array($A)) {
             return false;
         }
