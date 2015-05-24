@@ -12,7 +12,6 @@ class MyController extends Controller
         return [
             ['allow', 'users' => ['@'],
                 'actions' => [
-                    'info',
                     'notices', 'notices_rmseen',
                 ],
             ],
@@ -23,21 +22,6 @@ class MyController extends Controller
     public function actionIndex()
     {
         echo '/my';
-    }
-
-    public function actionInfo()
-    {
-        if (!Yii::app()->user->isPaid) {
-            echo '{}';
-
-            return;
-        }
-
-        echo json_encode([
-            'c' => Yii::app()->user->newComments,
-            'n' => Yii::app()->user->newNotices,
-            'm' => Yii::app()->user->newMail,
-        ]);
     }
 
     public function actionNotices()

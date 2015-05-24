@@ -72,10 +72,6 @@ class Controller extends CController
 
         CHtml::$afterRequiredLabel = '';
 
-        if (Yii::app()->user->isPaid) {
-            Yii::app()->clientScript->registerScriptFile('/js/paiduser.js');
-        }
-
         Yii::app()->clientScript->registerCss('user_ini_css', Yii::app()->user->ini->getCss());
     }
 

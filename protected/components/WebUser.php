@@ -312,15 +312,6 @@ class WebUser extends CWebUser
         return array_keys(self::$roles[$role]);
     }
 
-    public function getIsPaid()
-    {
-        if ($this->id == 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public function getNewComments()
     {
         if ($this->isGuest) {
