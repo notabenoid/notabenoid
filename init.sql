@@ -618,18 +618,6 @@ ALTER SEQUENCE dict_id_seq OWNED BY dict.id;
 
 
 --
--- Name: dima360; Type: TABLE; Schema: public; Owner: notabenoid; Tablespace: 
---
-
-CREATE TABLE dima360 (
-    id integer,
-    login text
-);
-
-
-ALTER TABLE dima360 OWNER TO notabenoid;
-
---
 -- Name: download_log; Type: TABLE; Schema: public; Owner: notabenoid; Tablespace: 
 --
 
@@ -1449,14 +1437,6 @@ COPY dict (id, book_id, cdate, user_id, term, descr) FROM stdin;
 --
 
 SELECT pg_catalog.setval('dict_id_seq', 1, false);
-
-
---
--- Data for Name: dima360; Type: TABLE DATA; Schema: public; Owner: notabenoid
---
-
-COPY dima360 (id, login) FROM stdin;
-\.
 
 
 --
