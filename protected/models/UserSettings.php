@@ -62,15 +62,12 @@ class UserSettings extends User
             return;
         }
 
-        echo '<h3>check old pass</h3>';
         $ui = new UserIdentity(Yii::app()->user->login, $this->old_pass);
         if (!$ui->authenticate()) {
             $this->addError('old_pass', "Неверный пароль. Если вы не можете его вспомнить, вам <a href='/register/remind'>сюда</a>.");
         } else {
-            echo '<p>check ok</p>';
-            $this->pass = self::hashPass($this->new_pass);
+            $this->pass = password_hash($this->new_pass, PASSWORD_DEFAULT, ['cost' => Yii::app()->params['hashCost']]);
         }
-        echo '<h3>/change_pass</h3>';
     }
 
     public function attributeLabels()

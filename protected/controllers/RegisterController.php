@@ -157,7 +157,7 @@ class RegisterController extends Controller
                 Yii::app()->user->setFlash('error', 'Пароли не совпадают, попробуйте ещё раз!');
             } else {
                 /* @todo: чувак, немножко отпустит - перепиши этот кусок, некрасиво */
-                $user->pass = User::hashPass($pass);
+                $user->pass = password_hash($pass, PASSWORD_DEFAULT, ['cost' => Yii::app()->params['hashCost']]);
                 $user->save();
 
                 $user->pass = $pass;

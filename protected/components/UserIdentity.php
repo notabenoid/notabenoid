@@ -17,7 +17,7 @@ class UserIdentity extends CUserIdentity
         $record = User::model()->byLogin($this->username)->find();
         if ($record === null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
-        } elseif ($record->pass !== User::hashPass($this->password)) {
+        } elseif (!password_verify($this->password, $record->pass)) {
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
         } elseif ($record->sex == '-') {
             $this->errorCode = self::ERROR_USER_DELETED;

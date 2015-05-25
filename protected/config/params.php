@@ -2,7 +2,7 @@
 
 return [
     'domain' => 'notabenoid.org',
-    'passwordSalt' => '------------------------------------>>> ПРИДУМАЙТЕ СЮДА ЧТО-НИБУДЬ !!! <<<------------------',
+    'hashCost' => 13,
     'adminEmail' => 'support@notabenoid.org',
     'commentEmail' => 'comment@notabenoid.org',
     'systemEmail' => 'no-reply@notabenoid.org',

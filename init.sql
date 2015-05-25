@@ -1145,7 +1145,7 @@ CREATE TABLE users (
     lastseen timestamp with time zone DEFAULT now() NOT NULL,
     can bit(16) DEFAULT B'0000000011110011'::"bit" NOT NULL,
     login character varying(16) NOT NULL,
-    pass character varying(32) NOT NULL,
+    pass character varying(255) NOT NULL,
     email character varying(255) NOT NULL,
     sex character(1) DEFAULT 'x'::bpchar NOT NULL,
     lang smallint NOT NULL,

@@ -185,18 +185,6 @@ class User extends CActiveRecord
     }
 
     /**
-     * Хеширует пароль.
-     *
-     * @param $value
-     *
-     * @return string
-     */
-    public static function hashPass($value)
-    {
-        return md5($value.Yii::app()->params['passwordSalt']);
-    }
-
-    /**
      * Если $this->ini не массив, то распаковывает его в массив.
      */
     private function bits_unpack()
@@ -236,7 +224,7 @@ class User extends CActiveRecord
         }
 
         if ($this->isNewRecord) {
-            $this->pass = self::hashPass($this->pass);
+            $this->pass = password_hash($this->pass, PASSWORD_DEFAULT, ['cost' => Yii::app()->params['hashCost']]);
         }
 
         $this->bits_pack();
