@@ -61,7 +61,7 @@ class SiteController extends Controller
                     Yii::app()->user->setFlash('error', $user->getError('pass'));
                 }
             }
-            if (p()['registerType'] == 'INVITE') {
+            if (p('registerType') == 'INVITE') {
                 $this->layout = 'empty';
                 $this->render('index_guest');
 

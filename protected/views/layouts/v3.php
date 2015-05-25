@@ -41,7 +41,7 @@ Yii::app()->bootstrap->registerModal();
 
 <header>
 <div class="<?=$containerClass; ?>" style="background-color:#fff;">
-	<a href="/" id="header-logo"><img src="/i/logo-v3.gif" width="124" height="130" alt="<?=CHtml::encode(Yii::app()->name); ?>" title="<?=p()['version']; ?>" /></a>
+	<a href="/" id="header-logo"><img src="/i/logo-v3.gif" width="124" height="130" alt="<?=CHtml::encode(Yii::app()->name); ?>" title="<?=p('version'); ?>" /></a>
 
 	<nav>
 	<ul id="header-menu">
@@ -163,8 +163,8 @@ if (!Yii::app()->user->isGuest):
             <a href="/site/help">Справка</a> |
             <a href="/blog?topic=65">Техподдержка</a> |
 
-            <a href="mailto:abuse@<?=p()['domain']; ?>?subj=<?=urlencode($_SERVER['REQUEST_URI']); ?>">Abuse</a> |
-            <a href="mailto:<?=p()['adminEmail']; ?>">E-mail для справок</a> |
+            <a href="mailto:abuse@<?=p('domain'); ?>?subj=<?=urlencode($_SERVER['REQUEST_URI']); ?>">Abuse</a> |
+            <a href="mailto:<?=p('adminEmail'); ?>">E-mail для справок</a> |
 			<a href="#" onclick="return Chat.toggle()" title="Ctrl + ~">Чат</a>
         </div>
         <div class="span4 sape">

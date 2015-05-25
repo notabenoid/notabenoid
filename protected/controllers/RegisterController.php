@@ -29,7 +29,7 @@ class RegisterController extends Controller
         $user = new User('register');
         $user->lang = 1;
 
-        if (p()['registerType'] == 'INVITE') {
+        if (p('registerType') == 'INVITE') {
             /* Магия с инвайтами */
             $invite = RegInvite::model()->findByAttributes([
                 'from_id' => (int) $u,
@@ -82,7 +82,7 @@ class RegisterController extends Controller
                 $duration = 3600 * 24 * 30;
                 Yii::app()->user->login($identity, $duration);
 
-                if (p()['registerType'] == 'INVITE') {
+                if (p('registerType') == 'INVITE') {
                     $invite->delete();
                 }
 
@@ -157,7 +157,7 @@ class RegisterController extends Controller
                 Yii::app()->user->setFlash('error', 'Пароли не совпадают, попробуйте ещё раз!');
             } else {
                 /* @todo: чувак, немножко отпустит - перепиши этот кусок, некрасиво */
-                $user->pass = password_hash($pass, PASSWORD_DEFAULT, ['cost' => Yii::app()->params['hashCost']]);
+                $user->pass = password_hash($pass, PASSWORD_DEFAULT, ['cost' => p('hashCost')]);
                 $user->save();
 
                 $user->pass = $pass;

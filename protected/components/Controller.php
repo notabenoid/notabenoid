@@ -78,7 +78,7 @@ class Controller extends CController
     public function beforeAction($action)
     {
         $user = Yii::app()->user;
-        if (p()['registerType'] == 'INVITE') {
+        if (p('registerType') == 'INVITE') {
             if (!$user->isGuest) {
                 if (!$user->model->can(User::CAN_LOGIN)) {
                     $user->logout();

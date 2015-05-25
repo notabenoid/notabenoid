@@ -66,7 +66,7 @@ class UserSettings extends User
         if (!$ui->authenticate()) {
             $this->addError('old_pass', "Неверный пароль. Если вы не можете его вспомнить, вам <a href='/register/remind'>сюда</a>.");
         } else {
-            $this->pass = password_hash($this->new_pass, PASSWORD_DEFAULT, ['cost' => Yii::app()->params['hashCost']]);
+            $this->pass = password_hash($this->new_pass, PASSWORD_DEFAULT, ['cost' => p('hashCost')]);
         }
     }
 

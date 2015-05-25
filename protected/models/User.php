@@ -224,7 +224,7 @@ class User extends CActiveRecord
         }
 
         if ($this->isNewRecord) {
-            $this->pass = password_hash($this->pass, PASSWORD_DEFAULT, ['cost' => Yii::app()->params['hashCost']]);
+            $this->pass = password_hash($this->pass, PASSWORD_DEFAULT, ['cost' => p('hashCost')]);
         }
 
         $this->bits_pack();

@@ -10,9 +10,13 @@ function prr($obj, $title = '')
     echo "\n<pre>".($title != '' ? "<b>{$title}</b>\n" : '').htmlspecialchars(print_r($obj, true))."</pre>\n";
 }
 
-function p()
+function p($name, $default = null)
 {
-    return Yii::app()->params;
+    if (isset(Yii::app()->params[$name])) {
+        return Yii::app()->params[$name];
+    } else {
+        return $default;
+    }
 }
 
 $yii = dirname(__FILE__).'/../yii/framework/yii.php';
