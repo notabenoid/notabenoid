@@ -46,7 +46,6 @@ class User extends CActiveRecord
     const INI_MAIL_COMMENTS = 6;  // слать на почту ответы на посты и комментарии
     const INI_MAIL_NEWS = 7;  // присылать новости сайта
 
-    const INI_AD_OFF = 8;
     const INI_ADDTHIS_OFF = 9;
 
     public $id, $cdate, $lastseen, $can;
