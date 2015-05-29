@@ -240,7 +240,7 @@ class ChapterController extends Controller
 
         foreach (['from', 'to', 'value'] as $k) {
             if ($_POST[$k] != '' && !preg_match('/^-?\d+:\d+:\d+\.\d+$/', $_POST[$k], $res)) {
-                Yii::app()->user->setFlash('error', 'Вы указали время в неправильном формате ('.CHtml::encode($_POST[$k]).'). Хотелось бы видеть что-то вроде 01:23:45.678 (что означает 1 час 23 минуты 45 целых 678 сотых секунды).');
+                Yii::app()->user->setFlash('error', 'Вы указали время в неправильном формате ('.CHtml::encode($_POST[$k]).'). Хотелось бы видеть что-то вроде 01:23:45.678 (что означает 1 час 23 минуты 45 целых 678 тысячных секунды).');
                 $this->redirect($chap->url);
             }
         }
