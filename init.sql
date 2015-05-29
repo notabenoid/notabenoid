@@ -785,22 +785,6 @@ CREATE TABLE moder_book_cat (
 ALTER TABLE moder_book_cat OWNER TO notabenoid;
 
 --
--- Name: moving; Type: TABLE; Schema: public; Owner: notabenoid; Tablespace: 
---
-
-CREATE TABLE moving (
-    ip inet NOT NULL,
-    cdate timestamp with time zone DEFAULT now() NOT NULL,
-    x smallint NOT NULL,
-    y smallint NOT NULL,
-    color smallint[] NOT NULL,
-    t character varying(120) NOT NULL
-);
-
-
-ALTER TABLE moving OWNER TO notabenoid;
-
---
 -- Name: notices; Type: TABLE; Schema: public; Owner: notabenoid; Tablespace: 
 --
 
@@ -1683,14 +1667,6 @@ COPY marks (user_id, tr_id, mark, cdate) FROM stdin;
 --
 
 COPY moder_book_cat (book_id, cdate) FROM stdin;
-\.
-
-
---
--- Data for Name: moving; Type: TABLE DATA; Schema: public; Owner: notabenoid
---
-
-COPY moving (ip, cdate, x, y, color, t) FROM stdin;
 \.
 
 

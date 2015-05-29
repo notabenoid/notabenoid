@@ -198,39 +198,4 @@ class SiteController extends Controller
             }
         }
     }
-
-    public function actionMoving()
-    {
-        $this->layout = 'offline';
-
-        if (isset($_POST['t'])) {
-            $t = trim(htmlspecialchars($_POST['t']));
-            if ($t == '') {
-                $this->redirect('/');
-            }
-            if (mb_strtolower($t) == 'хуй') {
-                $t = 'А я &ndash; большой оригинал!';
-            }
-
-            $ip = $_SERVER['HTTP_X_REAL_IP'] ?: $_SERVER['REMOTE_ADDR'];
-
-            if (Yii::app()->db->createCommand("SELECT 1 FROM moving WHERE ip = :ip AND cdate + INTERVAL '1 minute' > now()")->queryScalar([':ip' => $ip])) {
-                $this->redirect('/');
-            }
-
-            $p = [
-                ':ip' => $ip,
-                ':x' => (int) $_POST['x'],
-                ':y' => (int) $_POST['y'],
-                ':color' => '{'.implode(',', [rand(0, 128), rand(0, 128), rand(0, 128)]).'}',
-                ':t' => $t,
-            ];
-
-            Yii::app()->db->createCommand('INSERT INTO moving (ip, x, y, color, t) VALUES (:ip, :x, :y, :color, :t)')->execute($p);
-
-            $this->redirect('/');
-        };
-
-        $this->render('moving');
-    }
 }
