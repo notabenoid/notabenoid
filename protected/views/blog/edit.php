@@ -9,11 +9,11 @@
 </style>
 <script type="text/javascript">
 var E = {
-	rm: function() {
-		if(!confirm("Вы уверены?")) return false;
+    rm: function() {
+        if(!confirm("Вы уверены?")) return false;
 
-		$("#form-rm").submit();
-	}
+        $("#form-rm").submit();
+    }
 }
 $(E.init);
 </script>
@@ -43,7 +43,7 @@ $(E.init);
     echo $form->radioButtonListRow($post, 'topics', $topics);
 ?>
 <div class="form-actions">
-	<?php
+    <?php
         echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Сохранить", ['type' => 'submit', 'class' => 'btn btn-primary']).' ';
         if (!$post->isNewRecord) {
             echo CHtml::htmlButton("<i class='icon-ban-circle icon-white'></i> Удалить", ['onclick' => 'E.rm()', 'class' => 'btn btn-danger']).' ';

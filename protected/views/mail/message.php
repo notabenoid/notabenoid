@@ -6,16 +6,16 @@
 ?>
 <script type="text/javascript">
 var P = {
-	rm: function() {
-		if(!confirm("Вы уверены, что хотите удалить это письмо?")) return false;
-		$("#form-rm").submit();
-	},
-	unseen: function() {
-		$("#form-unseen").submit();
-	},
-	re: function() {
+    rm: function() {
+        if(!confirm("Вы уверены, что хотите удалить это письмо?")) return false;
+        $("#form-rm").submit();
+    },
+    unseen: function() {
+        $("#form-unseen").submit();
+    },
+    re: function() {
 
-	}
+    }
 }
 </script>
 
@@ -27,9 +27,9 @@ var P = {
 ?>
 
 <form id="form-rm" method="post" action="/my/mail/?folder=<?=$message->folder; ?>">
-	<input type="hidden" name="act" value="rm"><input type="hidden" name="id[]" value="<?=$message->id; ?>" />
+    <input type="hidden" name="act" value="rm"><input type="hidden" name="id[]" value="<?=$message->id; ?>" />
 </form>
 
 <form id="form-unseen" method="post" action="/my/mail/?folder=<?=$message->folder; ?>">
-	<input type="hidden" name="act" value="unseen"><input type="hidden" name="id[]" value="<?=$message->id; ?>" />
+    <input type="hidden" name="act" value="unseen"><input type="hidden" name="id[]" value="<?=$message->id; ?>" />
 </form>

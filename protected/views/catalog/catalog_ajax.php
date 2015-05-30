@@ -1,14 +1,14 @@
 <style type="text/css">
-	#Tree div.n {padding:1px 4px}
-	#Tree div.current {background:#444; color:#fff;}
-	#Tree div.current a {color:#fff;}
-	#Tree div a.c {display:none;}
-	#Tree div:hover a.c {display:inline;}
+    #Tree div.n {padding:1px 4px}
+    #Tree div.current {background:#444; color:#fff;}
+    #Tree div.current a {color:#fff;}
+    #Tree div a.c {display:none;}
+    #Tree div:hover a.c {display:inline;}
 </style>
 
 <div class="modal-header">
-	<a class="close" data-dismiss="modal">×</a>
-	<h3>Выберите раздел</h3>
+    <a class="close" data-dismiss="modal">×</a>
+    <h3>Выберите раздел</h3>
 </div>
 <div class="modal-body">
 
@@ -43,5 +43,5 @@
 
 </div>
 <div class="modal-footer">
-	<a href="#" class="btn" data-dismiss="modal">Отмена</a>
+    <a href="#" class="btn" data-dismiss="modal">Отмена</a>
 </div>

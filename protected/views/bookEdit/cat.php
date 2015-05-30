@@ -7,42 +7,42 @@
 ?>
 
 <style type="text/css">
-	#Tree div.n {padding:1px 4px}
-	#Tree div.current {background:#444; color:#fff;}
-	#Tree div.current a {color:#fff;}
-	#Tree div a.c {display:none;}
-	#Tree div:hover a.c {display:inline;}
+    #Tree div.n {padding:1px 4px}
+    #Tree div.current {background:#444; color:#fff;}
+    #Tree div.current a {color:#fff;}
+    #Tree div a.c {display:none;}
+    #Tree div:hover a.c {display:inline;}
 </style>
 
 <script type="text/javascript">
 var T = {
-	init: function() {
+    init: function() {
 
-	},
-	done: false,
-	s: function(id) {
-		if(T.done) return false;
-		T.done = true;
+    },
+    done: false,
+    s: function(id) {
+        if(T.done) return false;
+        T.done = true;
 
-		$("#Tree #n" + id).addClass("current");
+        $("#Tree #n" + id).addClass("current");
 
-		$("#form-edit [name=cat_id]").val(id);
-		$("#form-edit").submit();
+        $("#form-edit [name=cat_id]").val(id);
+        $("#form-edit").submit();
 
-		return false;
-	}
+        return false;
+    }
 }
 </script>
 
 <h1>Выберите раздел каталога</h1>
 
 <p>
-	Если не хотите, можете не выбирать никакой раздел, тогда ваш перевод не будет публиковаться в <a href="/catalog">каталоге</a>,
-	и найти его можно будет только через <a href='/search'>поисковую систему</a>. Модераторы могут изменить раздел каталога, если сочтут это нужным.
+    Если не хотите, можете не выбирать никакой раздел, тогда ваш перевод не будет публиковаться в <a href="/catalog">каталоге</a>,
+    и найти его можно будет только через <a href='/search'>поисковую систему</a>. Модераторы могут изменить раздел каталога, если сочтут это нужным.
 </p>
 
 <ul id="Tree">
-	<?php
+    <?php
         $branches = Yii::app()->params['catalog_branches'];
         $prev_indent = 0;
         $indent = 0;
@@ -77,7 +77,7 @@ var T = {
 </ul>
 
 <form method="post" action="<?=$book->getUrl('edit/cat'); ?>" id="form-edit">
-	<input type="hidden" name="cat_id" />
+    <input type="hidden" name="cat_id" />
 </form>
 
 <div class="form-actions">

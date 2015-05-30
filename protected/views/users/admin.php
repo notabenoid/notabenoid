@@ -16,24 +16,24 @@ $this->renderPartial('profile_head', ['user' => $user, 'h1' => 'редактир
 echo CHtml::errorSummary($user, "<div class='alert alert-box alert-danger'>", '</div>');
 ?>
 <form method="post" class="form-horizontal">
-	<div class="control-group">
-		<label class="control-label">E-mail:</label>
-		<div class="controls">
-			<?=CHtml::activeTextField($user, 'email', ['class' => 'span6']); ?>
-		</div>
-	</div>
+    <div class="control-group">
+        <label class="control-label">E-mail:</label>
+        <div class="controls">
+            <?=CHtml::activeTextField($user, 'email', ['class' => 'span6']); ?>
+        </div>
+    </div>
 
-	<div class="control-group">
-		<label class="control-label">Пол:</label>
-		<div class="controls">
-			<?=CHtml::activeDropDownList($user, 'sex', ['m' => 'мужчина', 'f' => 'женщина', 'x' => 'существо', '-' => 'удалён']); ?>
-		</div>
-	</div>
+    <div class="control-group">
+        <label class="control-label">Пол:</label>
+        <div class="controls">
+            <?=CHtml::activeDropDownList($user, 'sex', ['m' => 'мужчина', 'f' => 'женщина', 'x' => 'существо', '-' => 'удалён']); ?>
+        </div>
+    </div>
 
-	<div class="control-group">
-		<label class="control-label">Может:</label>
-		<div class="controls">
-			<?php
+    <div class="control-group">
+        <label class="control-label">Может:</label>
+        <div class="controls">
+            <?php
             $abilities = [
                 User::CAN_LOGIN => 'Логиниться',
                 User::CAN_RATE => 'Ставить оценки переводам',
@@ -51,21 +51,21 @@ echo CHtml::errorSummary($user, "<div class='alert alert-box alert-danger'>", '<
                 echo $title."</label>\n";
             }
             ?>
-		</div>
-	</div>
+        </div>
+    </div>
 
-	<div class="control-group">
-		<label class="control-label">Инвайтов:</label>
-		<div class="controls">
-			<?=CHtml::activeTextField($user, 'n_invites', ['class' => 'span1']); ?>
-		</div>
-	</div>
+    <div class="control-group">
+        <label class="control-label">Инвайтов:</label>
+        <div class="controls">
+            <?=CHtml::activeTextField($user, 'n_invites', ['class' => 'span1']); ?>
+        </div>
+    </div>
 
-	<?php if (count($sentInvites) > 0): ?>
-	<div class="control-group">
-		<label class="control-label">Инвайты для <?=$user->login; ?>:</label>
-		<div class="controls">
-		<?php
+    <?php if (count($sentInvites) > 0): ?>
+    <div class="control-group">
+        <label class="control-label">Инвайты для <?=$user->login; ?>:</label>
+        <div class="controls">
+        <?php
         foreach ($sentInvites as $invite) {
             echo CHtml::textField('', $invite->getUrlAccept(), ['class' => 'span6', 'onclick' => '$(this).select()']);
             echo "<span class='help-block'>";
@@ -73,25 +73,25 @@ echo CHtml::errorSummary($user, "<div class='alert alert-box alert-danger'>", '<
             echo '</span>';
         }
         ?>
-		</div>
-	</div>
-	<?php endif ?>
+        </div>
+    </div>
+    <?php endif ?>
 
-	<div class="control-group">
-		<label class='control-label'>Сброс пароля:</label>
-		<div class='controls'>
-			<?php
+    <div class="control-group">
+        <label class='control-label'>Сброс пароля:</label>
+        <div class='controls'>
+            <?php
             if ($remindToken) {
                 echo CHtml::textField('', $remindToken->url, ['class' => 'span6', 'onclick' => '$(this).select()']);
             } else {
                 echo "<a href='/users/{$user->id}/adminRemindToken' class='btn btn-warning'>Получить ссылку</a>";
             }
             ?>
-			</div>
-	</div>
+            </div>
+    </div>
 
-	<div class="form-actions">
-		<button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Сохранить</button>
-	</div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Сохранить</button>
+    </div>
 
 </form>

@@ -10,7 +10,7 @@ form.form-hide-errors .error span.help-block {display:none;}
 </style>
 <h1>Импортировать субтитры</h1>
 <p>
-	Перевод: <?=$chap->ahref; ?>
+    Перевод: <?=$chap->ahref; ?>
 </p>
 <?php
     if ($chap->n_verses != 0) {
@@ -36,14 +36,14 @@ form.form-hide-errors .error span.help-block {display:none;}
     echo $form->dropDownListRow($options, 'encoding', Yii::app()->params['encodings']);
 ?>
 <div class="form-actions">
-	<button type="submit" class="btn btn-primary">
-		<i class="icon-ok icon-white"></i>
-		Импортировать
-	</button>
-	<button type="button" class="btn btn-success" onclick="location.href='<?=$chap->book->url; ?>'">
-		<i class="icon-remove icon-white"></i>
-		Отмена
-	</button>
+    <button type="submit" class="btn btn-primary">
+        <i class="icon-ok icon-white"></i>
+        Импортировать
+    </button>
+    <button type="button" class="btn btn-success" onclick="location.href='<?=$chap->book->url; ?>'">
+        <i class="icon-remove icon-white"></i>
+        Отмена
+    </button>
 </div>
 <?php
     $this->endWidget();

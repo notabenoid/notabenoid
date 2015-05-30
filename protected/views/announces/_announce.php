@@ -4,22 +4,22 @@
  */
 ?>
 <div class='announce'>
-	<div class='a'>
-		<?php
+    <div class='a'>
+        <?php
             echo "<div class='img'";
             if ($announce->book->img->exists) {
                 echo " style=\"background-image:url('".$announce->book->img->getUrl('5050')."')\"";
             } // $announce->book->img->getTag("5050");
             echo '></div>';
         ?>
-		<div class='r'><?php echo $announce->book->ready; ?></div>
-	</div>
-	<div class='b'>
-		<h2 title="<?php echo Yii::app()->dateFormatter->formatDateTime($announce->cdate, 'medium', 'short'); ?>">
-			<?php echo $announce->book->ahref; ?>
-		</h2>
-		<p class='info'>
-			<?php
+        <div class='r'><?php echo $announce->book->ready; ?></div>
+    </div>
+    <div class='b'>
+        <h2 title="<?php echo Yii::app()->dateFormatter->formatDateTime($announce->cdate, 'medium', 'short'); ?>">
+            <?php echo $announce->book->ahref; ?>
+        </h2>
+        <p class='info'>
+            <?php
                 echo $announce->topicHtml.' ';
                 echo Yii::app()->params['book_types'][$announce->book->typ].' ';
                 echo Yii::app()->langs->from_to($announce->book->s_lang, $announce->book->t_lang).' ';
@@ -42,11 +42,11 @@
                 }
                 echo '</span> ';
             ?>
-		</p>
-		<div class='msg'><i class='v'></i>
-			<?php
+        </p>
+        <div class='msg'><i class='v'></i>
+            <?php
                 echo Yii::app()->parser->out($announce->body);
             ?>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>

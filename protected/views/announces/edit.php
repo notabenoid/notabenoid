@@ -6,20 +6,20 @@
     $this->pageTitle = $book->fullTitle.' - '.($post->isNewRecord ? 'Написать анонс' : 'Редактировать анонс');
 ?>
 <style type='text/css'>
-	#Announce_body {height:200px;}
+    #Announce_body {height:200px;}
 </style>
 <script type="text/javascript">
 $(function() {
-	$("#form-edit").submit(function(e) {
-		if(!confirm("Вы перечитали ваш анонс и уверены, что готовы опубликовать его на главной странице сайта, где его прочтёт неисчислимое количество людей?")) {
-			e.preventDefault();
-			return false;
-		}
-		return true;
-	});
-	$("#form-edit button.remove").click(function(e) {
-		if(confirm("Вы уверены?")) $("#form-rm").submit();
-	});
+    $("#form-edit").submit(function(e) {
+        if(!confirm("Вы перечитали ваш анонс и уверены, что готовы опубликовать его на главной странице сайта, где его прочтёт неисчислимое количество людей?")) {
+            e.preventDefault();
+            return false;
+        }
+        return true;
+    });
+    $("#form-edit button.remove").click(function(e) {
+        if(confirm("Вы уверены?")) $("#form-rm").submit();
+    });
 });
 </script>
 

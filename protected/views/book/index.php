@@ -25,39 +25,39 @@
 #Chapters .disabled {text-decoration: line-through; color:#aaa;}
 #Chapters td.editing {border-top:10px solid black; border-bottom:10px solid black; background:#fff; margin-right:-10px;}
 #Chapters td.loading {
-	padding:50px;
-	color:#444;
-	background:#d0d0d0 url("/i/pacman-d0d0d0.gif") no-repeat center center;
+    padding:50px;
+    color:#444;
+    background:#d0d0d0 url("/i/pacman-d0d0d0.gif") no-repeat center center;
 }
 #Chapters td, #Chapters th {white-space: nowrap; background:#fff;}
 #Chapters td.t {white-space: normal;}
 #Chapters .editing .b select {
-	height:24px;
-	font-size:14px;
+    height:24px;
+    font-size:14px;
 }
 #Status_Dropdown {
-	position:absolute;
-	width:150px;
-	border:1px solid black;
-	background:white;
-	padding:5px 15px;
-	white-space:normal;
-	z-index:7;
+    position:absolute;
+    width:150px;
+    border:1px solid black;
+    background:white;
+    padding:5px 15px;
+    white-space:normal;
+    z-index:7;
 }
 #Status_Dropdown ul {
-	margin:10px 0; padding:0;
+    margin:10px 0; padding:0;
 }
 #Status_Dropdown ul li {
-	list-style:none;
-	margin:5px 0;
+    list-style:none;
+    margin:5px 0;
 }
 </style>
 
 <ul class='nav nav-tabs'>
-	<li class='active'><a href='<?=$book->url; ?>/'>оглавление</a></li>
-	<li><a href='<?=$book->getUrl('members'); ?>'>переводчики</a></li>
-	<li><a href='<?=$book->getUrl('blog'); ?>'>блог</a></li>
-	<li><a href='<?=$book->getUrl('announces'); ?>'>анонсы</a></li>
+    <li class='active'><a href='<?=$book->url; ?>/'>оглавление</a></li>
+    <li><a href='<?=$book->getUrl('members'); ?>'>переводчики</a></li>
+    <li><a href='<?=$book->getUrl('blog'); ?>'>блог</a></li>
+    <li><a href='<?=$book->getUrl('announces'); ?>'>анонсы</a></li>
 </ul>
 
 <h1><?=$book->fullTitle; ?></h1>
@@ -67,7 +67,7 @@
     }
 ?>
 <div id='Info'>
-	<?php
+    <?php
         if ($book->img->exists) {
             echo $book->img->tag;
         }
@@ -152,22 +152,22 @@
 
 
 <?php if (count($chapters) == 0): ?>
-	<div class='alert alert-info' id="info_empty">
-		В этом переводе ещё не создано ни одной главы.
-		<?php if ($book->can('chap_edit')): ?><a href='#' onclick='return CE.add(0)' class='act'>Создайте первую главу перевода</a>.<?php endif; ?>
-	</div>
-	<table class="items" id="Chapters"></table>
+    <div class='alert alert-info' id="info_empty">
+        В этом переводе ещё не создано ни одной главы.
+        <?php if ($book->can('chap_edit')): ?><a href='#' onclick='return CE.add(0)' class='act'>Создайте первую главу перевода</a>.<?php endif; ?>
+    </div>
+    <table class="items" id="Chapters"></table>
 <?php else: ?>
 <table class="table table-condensed table-striped" id="Chapters">
 <thead><tr>
-	<?php if ($book->typ == 'S') {
+    <?php if ($book->typ == 'S') {
     echo '<td></td>';
 } ?>
-	<th class='t'>Название</th>
-	<th title='Устанавливается <?php echo $book->ac_chap_edit == 'm' ? 'модераторами' : 'владельцем'; ?>.' style='cursor:help;'>Статус</th>
-	<th title='Когда в последний раз была добавлена, удалена или отредактирована последняя версия перевода или изменился оригинальный текст.' style='cursor:help;'>Активность</th>
-	<th title='Фрагментов переведено / всего. Наведите курсор на цифры, чтобы узнать Коэффициент Плюрализма, среднее количество вариантов перевода одного фрагмента.' style='cursor:help; text-align:center;' colspan='2'>Готово</th>
-	<?php if ($book->can('chap_edit')) {
+    <th class='t'>Название</th>
+    <th title='Устанавливается <?php echo $book->ac_chap_edit == 'm' ? 'модераторами' : 'владельцем'; ?>.' style='cursor:help;'>Статус</th>
+    <th title='Когда в последний раз была добавлена, удалена или отредактирована последняя версия перевода или изменился оригинальный текст.' style='cursor:help;'>Активность</th>
+    <th title='Фрагментов переведено / всего. Наведите курсор на цифры, чтобы узнать Коэффициент Плюрализма, среднее количество вариантов перевода одного фрагмента.' style='cursor:help; text-align:center;' colspan='2'>Готово</th>
+    <?php if ($book->can('chap_edit')) {
     echo "<th class='e'></th>";
 } ?>
 </tr></thead>
@@ -187,7 +187,7 @@
 
         echo "<td class='t'>";
         echo $chap->ahref;
-//			if($chap->status) echo " &mdash; " . Yii::app()->params["translation_statuses"][$chap->status];
+//          if($chap->status) echo " &mdash; " . Yii::app()->params["translation_statuses"][$chap->status];
             foreach ($AC as $k) {
                 if ($chap->$k != '') {
                     echo "&nbsp;<i class='{$k} {$chap->$k}'></i>";

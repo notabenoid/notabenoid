@@ -10,58 +10,58 @@
 <style type="text/css">
 #Notices {margin:0; padding:0; list-style: none;}
 #Notices li {
-	margin:0 0 10px 0;
-	padding:10px;
-	border-radius: 5px;
-	border:1px solid #ccc;
+    margin:0 0 10px 0;
+    padding:10px;
+    border-radius: 5px;
+    border:1px solid #ccc;
 }
 #Notices li.new {
-	background:#eee;
-	border-color:#777;
+    background:#eee;
+    border-color:#777;
 }
 #Notices li.deleting {
-	color:#777;
-	background:#d0d0d0 url("/i/pacman-d0d0d0.gif") no-repeat center center;
+    color:#777;
+    background:#d0d0d0 url("/i/pacman-d0d0d0.gif") no-repeat center center;
 }
 #Notices li.deleting p.meta { border-top: none; }
 #Notices li.deleting a {color:#777;}
 #Notices li p.meta {
-	border-top:1px solid #ccc;
-	margin:5px 0 0 0;
-	padding:0;
-	font-size:11px;
+    border-top:1px solid #ccc;
+    margin:5px 0 0 0;
+    padding:0;
+    font-size:11px;
 }
 #Notices .u {
-	display:none;
-	float:right;
-	margin-top:4px;
+    display:none;
+    float:right;
+    margin-top:4px;
 }
 #Notices li:hover .u { display: block; }
 </style>
 
 <script type="text/javascript">
 var N = {
-	init: function() {
-		$("#Notices a.rm").attr("title", "Удалить это оповещение");
-		$("#Notices").delegate(".u a.rm", "click", N.rm_click);
-	},
-	rm_click: function(e) {
-		e.preventDefault();
-		var $li = $(this).parents("li");
-		var id = $li.attr("id").substr(1);
-		$li.addClass("deleting");
-		$(this).remove();
-		$.ajax({
-			url: "http://" + location.host + location.pathname + location.search,
-			type: "POST",
-			data: {rm: id},
-			dataType: "html",
-			success: function(data) {
-				$("#Notices").replaceWith(data);
-				N.init();
-			}
-		});
-	}
+    init: function() {
+        $("#Notices a.rm").attr("title", "Удалить это оповещение");
+        $("#Notices").delegate(".u a.rm", "click", N.rm_click);
+    },
+    rm_click: function(e) {
+        e.preventDefault();
+        var $li = $(this).parents("li");
+        var id = $li.attr("id").substr(1);
+        $li.addClass("deleting");
+        $(this).remove();
+        $.ajax({
+            url: "http://" + location.host + location.pathname + location.search,
+            type: "POST",
+            data: {rm: id},
+            dataType: "html",
+            success: function(data) {
+                $("#Notices").replaceWith(data);
+                N.init();
+            }
+        });
+    }
 };
 $(N.init);
 </script>
@@ -71,7 +71,7 @@ $(N.init);
 
 <?php if (!$ajax && $notices_dp->totalItemCount == 0): ?>
 <div class="alert alert-info">
-	У вас нет оповещений.
+    У вас нет оповещений.
 </div>
 <?php else: ?>
 

@@ -5,23 +5,23 @@
     $this->pageTitle = $book->isNewRecord ? 'Создать перевод: свойства' : 'Свойства перевода '.$book->fulltitle;
 ?>
 <style type='text/css'>
-	#Book_descr {height:200px;}
-	#img_preview a, #img_preview img {display:block; margin:5px 0;}
+    #Book_descr {height:200px;}
+    #img_preview a, #img_preview img {display:block; margin:5px 0;}
 </style>
 <script type="text/javascript">
 var E = {
-	init: function() {
-		$("#img_preview a").click(function() {
-			var html = "<img src='" + $(this).attr("href") + "' alt='' />";
-			$(this).replaceWith(html);
-			return false;
-		});
-	},
-	rm: function() {
-		if(!confirm("Вы абсолютно уверены, что хотите удалить этот перевод?\nОдним движением мышки вы сейчас можете\nуничтожить труд десятков людей!")) return;
+    init: function() {
+        $("#img_preview a").click(function() {
+            var html = "<img src='" + $(this).attr("href") + "' alt='' />";
+            $(this).replaceWith(html);
+            return false;
+        });
+    },
+    rm: function() {
+        if(!confirm("Вы абсолютно уверены, что хотите удалить этот перевод?\nОдним движением мышки вы сейчас можете\nуничтожить труд десятков людей!")) return;
 
-		$("#form-rm").submit();
-	}
+        $("#form-rm").submit();
+    }
 };
 $(E.init);
 </script>
@@ -60,9 +60,9 @@ $(E.init);
 
 ?>
 <div class="control-group <?=$book->hasErrors('new_img') ? ' error' : ''; ?>">
-	<?php echo $form->labelEx($book, 'new_img', ['class' => 'control-label']); ?>
-	<div class="controls">
-	<?php
+    <?php echo $form->labelEx($book, 'new_img', ['class' => 'control-label']); ?>
+    <div class="controls">
+    <?php
         if ($book->img->exists) {
             echo "<div id='img_preview'>";
             echo $book->img->tag;
@@ -72,8 +72,8 @@ $(E.init);
         echo $form->fileField($book, 'new_img');
         echo $form->error($book, 'new_img');
     ?>
-	<p class="help-block">Картинка будет уменьшена до нужных размеров автоматически.</p>
-	</div>
+    <p class="help-block">Картинка будет уменьшена до нужных размеров автоматически.</p>
+    </div>
 </div>
 
 <div class="form-actions">

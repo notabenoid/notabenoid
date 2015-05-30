@@ -17,44 +17,44 @@ FB;
     }
 ?>
 <div class='tools'>
-	<h5>Перевод</h5>
+    <h5>Перевод</h5>
 
-	<dl class='info'>
-		<dt>Перевод:</dt>
-		<dd><?=Yii::app()->params['book_types'][$book->typ].' '.Yii::app()->langs->from_to($book->s_lang, $book->t_lang); ?></dd>
+    <dl class='info'>
+        <dt>Перевод:</dt>
+        <dd><?=Yii::app()->params['book_types'][$book->typ].' '.Yii::app()->langs->from_to($book->s_lang, $book->t_lang); ?></dd>
 
-		<dt>Создан:</dt>
-		<dd><?php echo Yii::app()->dateFormatter->formatDateTime($book->cdate, 'medium', '').', владелец: '.$book->owner->ahref; ?></dd>
+        <dt>Создан:</dt>
+        <dd><?php echo Yii::app()->dateFormatter->formatDateTime($book->cdate, 'medium', '').', владелец: '.$book->owner->ahref; ?></dd>
 
-		<?php if ($book->n_dl > 0): ?>
-		<dt>Скачали:</dt>
-		<dd>
-			<span rel='popover' data-content='Учитываются только загрузки с уникальных IP-адресов. Иногда компьютеры из одной домашней или корпоративной сети имеют один и тот же IP-адрес, поэтому относитесь к этим цифрам как к примерной заниженной оценке.' data-title="Откуда берутся эти цифры?">
-			<?php
+        <?php if ($book->n_dl > 0): ?>
+        <dt>Скачали:</dt>
+        <dd>
+            <span rel='popover' data-content='Учитываются только загрузки с уникальных IP-адресов. Иногда компьютеры из одной домашней или корпоративной сети имеют один и тот же IP-адрес, поэтому относитесь к этим цифрам как к примерной заниженной оценке.' data-title="Откуда берутся эти цифры?">
+            <?php
                 echo "{$book->n_dl} чел.";
                 if ($book->n_dl_today > 0) {
                     echo " (сегодня &ndash; {$book->n_dl_today})";
                 }
             ?>
-			</span>
-			<script type='text/javascript'>$("span[rel=popover]").popover();</script>
-		</dd>
-		<?php endif; ?>
+            </span>
+            <script type='text/javascript'>$("span[rel=popover]").popover();</script>
+        </dd>
+        <?php endif; ?>
 
-		<dt>Права доступа:</dt>
-		<dd>
-			<div id="ac_icons">
-			<?php
+        <dt>Права доступа:</dt>
+        <dd>
+            <div id="ac_icons">
+            <?php
                 $ac_important = ['ac_read', 'ac_trread', 'ac_gen', 'ac_rate', 'ac_comment', 'ac_tr'];
                 foreach ($ac_important as $ac) {
                     echo "<i class='{$ac} {$book->$ac}'></i> ";
                 }
             ?>
-			<a href="#" class='more_btn' onclick="$('#side_ac_more').show(); $('#ac_icons').hide(); $(this.parentNode).hide(); return false;">подробнее...</a>
-			</div>
-			<div class="more" id="side_ac_more" style="display:none;">
-				<table class="t">
-				<?php
+            <a href="#" class='more_btn' onclick="$('#side_ac_more').show(); $('#ac_icons').hide(); $(this.parentNode).hide(); return false;">подробнее...</a>
+            </div>
+            <div class="more" id="side_ac_more" style="display:none;">
+                <table class="t">
+                <?php
                     foreach (Yii::app()->params['ac_areas'] as $ac => $title) {
                         echo '<tr><td>';
                         if (in_array($ac, $ac_important)) {
@@ -64,9 +64,9 @@ FB;
                         echo "</td><td class='d'>".Yii::app()->params['ac_roles'][$book->$ac].'</td></tr>';
                     }
                 ?>
-				<tr>
-					<td>Участие в группе</td>
-					<td class='d'><?php
+                <tr>
+                    <td>Участие в группе</td>
+                    <td class='d'><?php
                         if ($book->ac_membership == 'm') {
                             $A = [Book::FC_OPEN => 'нет группы', Book::FC_CONFIRM => 'после подтверждения модераторами', Book::FC_INVITE => 'по приглашению от модераторов'];
                         } else {
@@ -74,16 +74,16 @@ FB;
                         }
                         echo $A[$book->facecontrol];
                     ?></td>
-				</tr>
-				</table>
-				<?php if ($book->can('owner')) {
+                </tr>
+                </table>
+                <?php if ($book->can('owner')) {
     echo "<div style='text-align:right; margin-top:5px;'><a href='".$book->getUrl('edit/access')."' class='act'>Редактировать</a></div>";
 } ?>
-			</div>
-		</dd>
+            </div>
+        </dd>
 
-		<dt>Готово:</dt>
-		<dd><?php
+        <dt>Готово:</dt>
+        <dd><?php
             if ($book->n_vars == 0 || $book->n_verses == 0) {
                 echo '&mdash;';
             } else {
@@ -111,7 +111,7 @@ FB;
             }
         ?></dd>
 
-		<?php
+        <?php
             if (!Yii::app()->user->isGuest) {
                 $myStatus = '';
                 if ($book->membership->status == GroupMember::BANNED) {
@@ -148,8 +148,8 @@ FB;
     }
 ?>
 <div class='tools'>
-	<h5>Инструментарий</h5>
-	<?php if (!Yii::app()->user->isGuest):
+    <h5>Инструментарий</h5>
+    <?php if (!Yii::app()->user->isGuest):
         echo "<button class='btn btn-small' id='btn-bookmark' onclick='Book.bookmark({$book->id})'>";
         if ($book->bookmark->book_id) {
             echo "<i class='icon-star'></i> Изменить закладку";
@@ -158,9 +158,9 @@ FB;
         }
         echo '</button>';
     ?>
-	<?php endif; ?>
+    <?php endif; ?>
 
-	<ul style="margin-top:10px"><li><?=implode('</li><li>', $Tools); ?></li></ul>
+    <ul style="margin-top:10px"><li><?=implode('</li><li>', $Tools); ?></li></ul>
 
 
 <?php if (Yii::app()->user->isGuest || !Yii::app()->user->ini_get(User::INI_ADDTHIS_OFF)): ?>

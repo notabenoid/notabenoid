@@ -20,7 +20,7 @@ if ($groups_dp->totalItemCount):
     $groups = $groups_dp->getData();
 ?>
 <div class="pagination in-h2">
-	<?php $this->widget('bootstrap.widgets.TbPager', ['pages' => $groups_dp->pagination, 'maxButtonCount' => 5, 'header' => false, 'footer' => false]); ?>
+    <?php $this->widget('bootstrap.widgets.TbPager', ['pages' => $groups_dp->pagination, 'maxButtonCount' => 5, 'header' => false, 'footer' => false]); ?>
 </div>
 <h2><?php echo 'Участвует'.yii::t('app', ' в {n} переводе| в {n} переводах', $groups_dp->totalItemCount).':'; ?></h2>
 
@@ -28,13 +28,13 @@ if ($groups_dp->totalItemCount):
 <table id="people" class="table table-condensed table-striped">
 <thead>
 <tr>
-	<th></th>
-	<?php if ($order == 4): ?><th>Дата</th><?php endif; ?>
-	<th style='witdh:100%'>Перевод</th>
-	<th>Готово</th>
-	<th>Версий</th>
-	<th>Рейтинг</th>
-	<th>Средний рейтинг</th>
+    <th></th>
+    <?php if ($order == 4): ?><th>Дата</th><?php endif; ?>
+    <th style='witdh:100%'>Перевод</th>
+    <th>Готово</th>
+    <th>Версий</th>
+    <th>Рейтинг</th>
+    <th>Средний рейтинг</th>
 </tr>
 </thead>
 <tbody>
@@ -94,9 +94,9 @@ if ($groups_dp->totalItemCount):
     $this->widget('bootstrap.widgets.TbPager', ['pages' => $groups_dp->pagination]);
 else:
 ?>
-	<p class="alert alert-block alert-info">
-		<?php echo $user->login.' '.$statusOptions[$status][2];    ?>.
-	</p>
+    <p class="alert alert-block alert-info">
+        <?php echo $user->login.' '.$statusOptions[$status][2];    ?>.
+    </p>
 <?php
 endif;
 ?>

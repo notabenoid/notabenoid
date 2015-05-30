@@ -10,9 +10,9 @@
 #Lenta .orig {margin:0 0 15px 0}
 #Lenta .orig .t {color:#777; font-size:11px;}
 #Lenta .orig .meta {
-	background:#e5e5e5; 	 padding:2px 8px;
-	border-bottom:1px solid gray;
-	font-size:11px;
+    background:#e5e5e5;      padding:2px 8px;
+    border-bottom:1px solid gray;
+    font-size:11px;
 }
 #Lenta .orig .meta a.new {color:#c00; font-weight:bold;}
 </style>

@@ -16,8 +16,8 @@
     }
 ?>
 <div class="modal-header">
-	<a class="close" data-dismiss="modal">×</a>
-	<h3>Рейтинг версии перевода = <?=$tr->rating; ?></h3>
+    <a class="close" data-dismiss="modal">×</a>
+    <h3>Рейтинг версии перевода = <?=$tr->rating; ?></h3>
 </div>
 <div class="modal-body">
 <?php
@@ -32,9 +32,9 @@
 ?>
 </div>
 <div class="modal-footer">
-	<?php if ($my_mark && $chap->can('rate')): ?> <a href="#" class="btn btn-warning" onclick='T.rate.vote(<?=$tr->id; ?>, 0); return false;' data-dismiss="modal">
-		Удалить вашу оценку
-		(<?php echo($my_mark < 0 ? '&minus;' : '+').$my_mark; ?>)
-	</a> <?php endif; ?>
-	<a href="#" class="btn" data-dismiss="modal">Закрыть</a>
+    <?php if ($my_mark && $chap->can('rate')): ?> <a href="#" class="btn btn-warning" onclick='T.rate.vote(<?=$tr->id; ?>, 0); return false;' data-dismiss="modal">
+        Удалить вашу оценку
+        (<?php echo($my_mark < 0 ? '&minus;' : '+').$my_mark; ?>)
+    </a> <?php endif; ?>
+    <a href="#" class="btn" data-dismiss="modal">Закрыть</a>
 </div>

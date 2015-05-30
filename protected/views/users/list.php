@@ -3,8 +3,8 @@
 ?>
 
 <style type='text/css'>
-	.grid-view {padding-top:0 !important;}
-	.grid-view table.items td.r, .grid-view table.items th.r {background:#eee; font-weight:bold;} /* колонка, по которой идёт сортировка */
+    .grid-view {padding-top:0 !important;}
+    .grid-view table.items td.r, .grid-view table.items th.r {background:#eee; font-weight:bold;} /* колонка, по которой идёт сортировка */
 </style>
 
 <h1>Рейтинг переводчиков</h1>

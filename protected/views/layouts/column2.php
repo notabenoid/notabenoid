@@ -1,11 +1,11 @@
 <?php $this->beginContent('//layouts/'.$this->layout_layout); ?>
 <div class="row">
-	<div class="span8">
-		<?php echo $content; ?>
-	</div>
+    <div class="span8">
+        <?php echo $content; ?>
+    </div>
 
-	<div class="span4 sr">
-		<?php
+    <div class="span4 sr">
+        <?php
             if (is_array($this->side_view)) {
                 foreach ($this->side_view as $view => $params) {
                     if (is_string($params)) {
@@ -19,6 +19,6 @@
                 echo $this->renderPartial($this->side_view, $this->side_params);
             }
         ?>
-	</div>
+    </div>
 </div>
 <?php $this->endContent(); ?>

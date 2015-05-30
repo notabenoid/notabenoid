@@ -46,8 +46,8 @@
         </div>
         <div class="modal-body">
             <p>Аватар &ndash; ваше второе лицо. Он показывается в вашем профиле и рядом с каждым вашим комментарием. Люди ассоциируют его с вами.</p>
-			<p>Пожалуйста, выберите файл в формате JPEG, PNG или GIF не тяжелее 2 мегабайт.</p>
-			<p class="i"><input type="file" name="img" /></p>
+            <p>Пожалуйста, выберите файл в формате JPEG, PNG или GIF не тяжелее 2 мегабайт.</p>
+            <p class="i"><input type="file" name="img" /></p>
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Загрузить</button>

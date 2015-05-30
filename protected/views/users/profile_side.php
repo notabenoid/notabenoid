@@ -1,14 +1,14 @@
 <div class='tools'>
 <h5>Резюме</h5>
 <dl class='info'>
-	<dt>Пол:</dt>
-	<dd><?=Yii::app()->params['sex'][$user->sex]; ?></dd>
+    <dt>Пол:</dt>
+    <dd><?=Yii::app()->params['sex'][$user->sex]; ?></dd>
 
-	<dt>Родной язык:</dt>
-	<dd><?=Yii::app()->langs->inf($user->lang); ?></dd>
+    <dt>Родной язык:</dt>
+    <dd><?=Yii::app()->langs->inf($user->lang); ?></dd>
 
-	<dt>С нами:</dt>
-	<dd><?php
+    <dt>С нами:</dt>
+    <dd><?php
         echo 'с '.Yii::app()->dateFormatter->formatDateTime($user->cdate, 'long', '');
         $d1 = new DateTime();
         $siteAge = $d1->diff(date_create($user->cdate));
@@ -25,7 +25,7 @@
         }
         ?></dd>
 
-	<?php
+    <?php
         $A = [];
         if ($user->n_trs > 0) {
             $A[] =
@@ -50,9 +50,10 @@
 </dl>
 <?php if ($user->id == Yii::app()->user->id) {
     ?>
-	<div><i class="icon-pencil"></i> <a href='<?=$user->getUrl('edit');
+    <div><i class="icon-pencil"></i> <a href='<?=$user->getUrl('edit');
     ?>' class='act'>Редактировать</a></div>
-<?php 
+<?php
+
 } ?>
 
 <div><i class="icon-envelope"></i> <a href="/my/mail/write?to=<?=$user->login; ?>" class="act">Написать <?=$user->login; ?> личное сообщение</a></div>

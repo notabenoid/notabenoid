@@ -36,10 +36,10 @@ endif
 <table id="Mail" class="table table-stripped table-condensed">
 <thead>
 <tr>
-	<th><input type='checkbox' id='cb-check-all'></th>
-	<th>Дата</th>
-	<th>Собеседник</th>
-	<th>Тема</th>
+    <th><input type='checkbox' id='cb-check-all'></th>
+    <th>Дата</th>
+    <th>Собеседник</th>
+    <th>Тема</th>
 </tr>
 </thead>
 <?php
@@ -58,13 +58,13 @@ endif
 ?>
 </table>
 <div id="mass-actions">
-	Выбранные:
-	<select name="act">
-		<option value="seen">считать прочитанными</option>
-		<option value="rm">удалить</option>
-	</select>
+    Выбранные:
+    <select name="act">
+        <option value="seen">считать прочитанными</option>
+        <option value="rm">удалить</option>
+    </select>
 
-	<button type="submit" class="btn"><i class="icon-fire"></i> Ok</button>
+    <button type="submit" class="btn"><i class="icon-fire"></i> Ok</button>
 </div>
 </form>
 <?php $this->widget('bootstrap.widgets.TbPager', ['pages' => $mail_dp->pagination, 'header' => "<div class='pagination pagination-centered' style='margin-bottom:0'>"]); ?>

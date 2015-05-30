@@ -7,11 +7,11 @@
     $this->pageTitle = 'Каталог переводов';
 ?>
 <style type="text/css">
-	#Tree div.n {padding:1px 4px}
-	#Tree div.current {background:#444; color:#fff;}
-	#Tree div.current a {color:#fff;}
-	#Tree div a.c {display:none;}
-	#Tree div:hover a.c {display:inline;}
+    #Tree div.n {padding:1px 4px}
+    #Tree div.current {background:#444; color:#fff;}
+    #Tree div.current a {color:#fff;}
+    #Tree div a.c {display:none;}
+    #Tree div:hover a.c {display:inline;}
 </style>
 
 <h1>Каталог: <?=$cat->pathHtml; ?></h1>

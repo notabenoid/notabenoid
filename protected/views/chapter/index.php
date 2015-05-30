@@ -23,7 +23,7 @@
         ->registerScriptFile('/js/translate.js?17')
         ->registerScriptFile('/js/jquery.scrollTo.js')
         ->registerScriptFile('/js/jquery.elastic.mod.js')
-//		->registerScriptFile("/js/jquery.cookie.js")
+//      ->registerScriptFile("/js/jquery.cookie.js")
         ->registerScriptFile('/js/ff_comments.js?1');
 
     Yii::app()->bootstrap->registerModal();
@@ -36,57 +36,57 @@
 
 <?php if (0): ?>
 <pre>
-	<b>book:</b>
-	n_verses: <?=$chap->book->n_verses; ?>
-	n_vars: <?=$chap->book->n_vars; ?>
-	d_vars: <?=$chap->book->d_vars; ?>
+    <b>book:</b>
+    n_verses: <?=$chap->book->n_verses; ?>
+    n_vars: <?=$chap->book->n_vars; ?>
+    d_vars: <?=$chap->book->d_vars; ?>
 
-	<b>chap:</b>
-	n_verses: <?=$chap->n_verses; ?>
-	n_vars: <?=$chap->n_vars; ?>
-	d_vars: <?=$chap->d_vars; ?>
-	last_tr: <?=$chap->last_tr; ?>
+    <b>chap:</b>
+    n_verses: <?=$chap->n_verses; ?>
+    n_vars: <?=$chap->n_vars; ?>
+    d_vars: <?=$chap->d_vars; ?>
+    last_tr: <?=$chap->last_tr; ?>
 </pre>
 <?php endif; ?>
 
 <h1><?=$chap->book->ahref; ?>: <?=$chap->title; ?></h1>
 
 <div class="btn-toolbar" id='toolbar-main'>
-	<div class="btn-group">
-		<a href="<?=$chap->getUrl("go?to=prev&ord={$chap->ord}"); ?>" class="btn btn-small" title="Предыдущая глава"><i class="icon-arrow-left"></i></a>
-	</div>
-	<div class="btn-group">
-		<a href="<?=$chap->book->url; ?>" class="btn btn-small"><i class="icon-list"></i> Оглавление</a>
-		<a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#" onclick="T.loadChapters()"><span class="caret"></span></a>
-		<ul class="dropdown-menu" id="chapter-list">
-			<li><a href="<?=$chap->book->getUrl('members'); ?>">Переводчики</a></li>
-			<li><a href="<?=$chap->book->getUrl('blog'); ?>">Блог</a></li>
-		</ul>
-	</div>
+    <div class="btn-group">
+        <a href="<?=$chap->getUrl("go?to=prev&ord={$chap->ord}"); ?>" class="btn btn-small" title="Предыдущая глава"><i class="icon-arrow-left"></i></a>
+    </div>
+    <div class="btn-group">
+        <a href="<?=$chap->book->url; ?>" class="btn btn-small"><i class="icon-list"></i> Оглавление</a>
+        <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#" onclick="T.loadChapters()"><span class="caret"></span></a>
+        <ul class="dropdown-menu" id="chapter-list">
+            <li><a href="<?=$chap->book->getUrl('members'); ?>">Переводчики</a></li>
+            <li><a href="<?=$chap->book->getUrl('blog'); ?>">Блог</a></li>
+        </ul>
+    </div>
     <div class="btn-group">
         <a href="<?=$chap->getUrl("go?to=next&ord={$chap->ord}"); ?>" class="btn btn-small" title="Следующая глава"><i class="icon-arrow-right"></i></a>
     </div>
 
-	<div class="btn-group">
-		<a href="#" onclick="return T.dict.show()" class="btn btn-small" accesskey="V"><i class="icon-book"></i> Словарь</a>
-		<a href="#filter-modal" data-toggle="modal" class="btn btn-small">
-			<i class="icon-glass"></i> Фильтр:
-			<?php
+    <div class="btn-group">
+        <a href="#" onclick="return T.dict.show()" class="btn btn-small" accesskey="V"><i class="icon-book"></i> Словарь</a>
+        <a href="#filter-modal" data-toggle="modal" class="btn btn-small">
+            <i class="icon-glass"></i> Фильтр:
+            <?php
                 if ($show == 2) {
                     echo "от переводчика {$show_user}";
                 } else {
                     echo mb_strtolower($filters[$show]);
                 }
             ?>
-		</a>
-		<?php if ($chap->book->can('chap_edit')): ?>
-			<a href="<?=$chap->getUrl('0/edit'); ?>" class='btn btn-small'><i class='icon-plus-sign'></i> Добавить фрагмент</a>
-		<?php endif; ?>
-	</div>
+        </a>
+        <?php if ($chap->book->can('chap_edit')): ?>
+            <a href="<?=$chap->getUrl('0/edit'); ?>" class='btn btn-small'><i class='icon-plus-sign'></i> Добавить фрагмент</a>
+        <?php endif; ?>
+    </div>
 
-	<div class="btn-group pull-right" style='vertical-align: top'>
-		<div id='progress-info'>
-		<?php
+    <div class="btn-group pull-right" style='vertical-align: top'>
+        <div id='progress-info'>
+        <?php
             if ($chap->n_verses == 0) {
                 $procent = 0;
             } else {
@@ -102,11 +102,11 @@
 
             echo '</div>';
         ?>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
-	T.setStats(<?php echo "{$chap->n_vars}, {$chap->d_vars}, {$chap->n_verses}"; ?>);
+    T.setStats(<?php echo "{$chap->n_vars}, {$chap->d_vars}, {$chap->n_verses}"; ?>);
 </script>
 
 <?php $this->widget('bootstrap.widgets.TbPager', ['pages' => $orig_dp->pagination, 'header' => "<div class='pagination pagination-centered'>"]); ?>
@@ -128,17 +128,17 @@
 ?>
 
 <table id="Tr" class="translator">
-	<thead>
-	<tr>
-		<th style='border-top-left-radius: 10px;'>#</th>
-		<th>Оригинал (<?=Yii::app()->langs->Langs[$chap->book->s_lang][Langs::FORM_INF]; ?>)</th>
-		<th></th>
-		<th>Перевод (<?=Yii::app()->langs->Langs[$chap->book->t_lang][Langs::FORM_INF]; ?>)</th>
-		<th style='border-top-right-radius: 10px;'></th>
-	</tr>
-	</thead>
-	<tbody>
-	<?php
+    <thead>
+    <tr>
+        <th style='border-top-left-radius: 10px;'>#</th>
+        <th>Оригинал (<?=Yii::app()->langs->Langs[$chap->book->s_lang][Langs::FORM_INF]; ?>)</th>
+        <th></th>
+        <th>Перевод (<?=Yii::app()->langs->Langs[$chap->book->t_lang][Langs::FORM_INF]; ?>)</th>
+        <th style='border-top-right-radius: 10px;'></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
         $user = Yii::app()->user;
         $pos = $orig_dp->pagination->currentPage * $orig_dp->pagination->pageSize;
         // Опции Translate::render() для автора версии перевода
@@ -266,7 +266,7 @@
             echo "</tr>\n";
         }
     ?>
-	</tbody>
+    </tbody>
 </table>
 
 <?php
@@ -280,14 +280,14 @@
 <?php endif; ?>
 
 <div id="filter-modal" class="modal hide">
-	<form method="get" class="form-inline">
-	<div class="modal-header">
-		<a class="close" data-dismiss="modal">×</a>
-		<h3>Фильтр</h3>
-	</div>
-	<div class="modal-body">
-		<ul class='options'>
-		<?php
+    <form method="get" class="form-inline">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>Фильтр</h3>
+    </div>
+    <div class="modal-body">
+        <ul class='options'>
+        <?php
             foreach ($filters as $k => $v) {
                 echo "<li><label class='radio'><input type='radio' name='show' value='{$k}' ".($k == $show ? ' checked' : '')."/>{$v}</label>";
                 if ($k == 2) {
@@ -300,13 +300,13 @@
                 echo '</li>';
             }
         ?>
-		</ul>
-	</div>
-	<div class="modal-footer">
-		<button type="submit" class="btn btn-primary">Показать</button>
-		<a href="#" class="btn" data-dismiss="modal">Отмена</a>
-	</div>
-	</form>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Показать</button>
+        <a href="#" class="btn" data-dismiss="modal">Отмена</a>
+    </div>
+    </form>
 </div>
 
 <div id="oadd-modal" class="modal hide">
@@ -314,5 +314,5 @@
 </div>
 
 <div id="dict-dialog" title="Словарь" style="display:none;">
-	<p class="loading">Минуточку...</p>
+    <p class="loading">Минуточку...</p>
 </div>

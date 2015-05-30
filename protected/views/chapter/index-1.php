@@ -49,39 +49,39 @@
 
 <style type="text/css">
 <?php if ($user->ini['t.hlr'] == 1): ?>
-	.translator.has-best td.t .best .text { background-image: url(/i/corner-gray-t-r.png); background-repeat: no-repeat; background-position: right top; }
+    .translator.has-best td.t .best .text { background-image: url(/i/corner-gray-t-r.png); background-repeat: no-repeat; background-position: right top; }
 <?php else: ?>
-	.translator.has-best td.t .best .text { font-weight: bold; }
+    .translator.has-best td.t .best .text { font-weight: bold; }
 <?php endif; ?>
 </style>
 
 <h1><?=$chap->book->ahref; ?>: <?=$chap->title; ?></h1>
 
 <div id="tb-main"><div>
-	<div class='group'><a href="<?=$chap->getUrl('go?'.getQS(['nach' => 'prev', 'ord' => $chap->ord], ['Orig_page'])); ?>" title="Предыдущая глава"><i class="i icon-arrow-left"></i></a></div>
+    <div class='group'><a href="<?=$chap->getUrl('go?'.getQS(['nach' => 'prev', 'ord' => $chap->ord], ['Orig_page'])); ?>" title="Предыдущая глава"><i class="i icon-arrow-left"></i></a></div>
 
-	<div class="tb-index btn-group">
-		<a href="<?=$chap->book->url; ?>" class="btn btn-small"><i class="icon-list"></i> Оглавление</a>
-		<a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-		<ul class="dropdown-menu" id="tb-chapter-list">
-			<li><a href="<?=$chap->book->getUrl('members'); ?>">Переводчики</a></li>
-			<li><a href="<?=$chap->book->getUrl('blog'); ?>">Блог</a></li>
-		</ul>
-	</div>
+    <div class="tb-index btn-group">
+        <a href="<?=$chap->book->url; ?>" class="btn btn-small"><i class="icon-list"></i> Оглавление</a>
+        <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+        <ul class="dropdown-menu" id="tb-chapter-list">
+            <li><a href="<?=$chap->book->getUrl('members'); ?>">Переводчики</a></li>
+            <li><a href="<?=$chap->book->getUrl('blog'); ?>">Блог</a></li>
+        </ul>
+    </div>
 
-	<div class='group'><a href="<?=$chap->getUrl('go?'.getQS(['nach' => 'next', 'ord' => $chap->ord], ['Orig_page'])); ?>" title="Следующая глава"><i class="i icon-arrow-right"></i></a></div>
+    <div class='group'><a href="<?=$chap->getUrl('go?'.getQS(['nach' => 'next', 'ord' => $chap->ord], ['Orig_page'])); ?>" title="Следующая глава"><i class="i icon-arrow-right"></i></a></div>
 
-	<div class="btn-group">
-		<?php if (!$user->isGuest): ?>
+    <div class="btn-group">
+        <?php if (!$user->isGuest): ?>
         <button type="button" class="btn btn-small tb-chat" title="Ctrl + ~"><i class="icon-bullhorn"></i> Чат</button>
-		<?php endif; ?>
+        <?php endif; ?>
 
-		<a href="#" class="btn btn-small tb-dict" accesskey="V"><i class="icon-book"></i> Словарь</a>
+        <a href="#" class="btn btn-small tb-dict" accesskey="V"><i class="icon-book"></i> Словарь</a>
 
         <div id="tb-filter">
             <form method="get" class="form-inline" action="<?=$chap->url; ?>">
                 <ul class='options'>
-				<?php
+                <?php
                     foreach ($filter::$modes as $k => $v) {
                         if ($k == 0) {
                             continue;
@@ -110,30 +110,30 @@
             </form>
         </div>
 
-		<?php echo $filter->getButton($orig_dp); ?>
-	</div>
+        <?php echo $filter->getButton($orig_dp); ?>
+    </div>
 
-	<?php
+    <?php
         if ($filter->show) {
             echo "<div class='group'><a href='{$chap->url}' title='Сбросить фильтр'><i class='i icon-remove'></i></a></div>";
         }
     ?>
 
-	<?php if ($chap->book->typ == 'S' && $chap->book->can('chap_edit')): ?>
-	<div class="btn-group">
+    <?php if ($chap->book->typ == 'S' && $chap->book->can('chap_edit')): ?>
+    <div class="btn-group">
         <a href="javascript:void(0)" class="btn btn-small"><i class="icon-wrench"></i></a>
         <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
         <ul class="dropdown-menu" id="tools-list">
             <li><a href="#timeshift-modal" data-toggle="modal"><i class='icon-time'></i> Тайминг</a></li>
             <li><a href="#renum-modal" data-toggle="modal"><i class="icon-road"></i> Пронумеровать</a></li>
         </ul>
-	</div>
-	<?php endif; ?>
+    </div>
+    <?php endif; ?>
 
 
-	<div class="tb-progress group"></div>
+    <div class="tb-progress group"></div>
 
-	<?php
+    <?php
         $p = $orig_dp->pagination;
         if ($orig_dp->totalItemCount > $p->pageSize) {
             $g = $get;
@@ -213,29 +213,29 @@
     if (Yii::app()->user->ini['t.oe_hide']) {
         $tableClasses[] = 'translator-oe-hide';
     }
-//	if(!$chap->can("tr")) $tableClasses[] = "translator-te-hide";
+//  if(!$chap->can("tr")) $tableClasses[] = "translator-te-hide";
 ?>
 <table id="Tr" class="<?php echo implode(' ', $tableClasses); ?>">
     <thead>
     <tr>
         <?php if (!Yii::app()->user->isGuest): ?><th></th><?php endif; ?>
         <th>
-			<?php
+            <?php
                 $t = (Yii::app()->langs->Langs[$chap->book->s_lang][Langs::FORM_INF]);
                 echo mb_strtoupper(mb_substr($t, 0, 1)).mb_substr($t, 1);
             ?> оригинал
-		</th>
-		<?php if ($chap->can('tr')): ?><th></th><?php endif; ?>
+        </th>
+        <?php if ($chap->can('tr')): ?><th></th><?php endif; ?>
         <th>
-			Перевод  на <?=Yii::app()->langs->Langs[$chap->book->t_lang][Langs::FORM_INF]; ?>
-		</th>
+            Перевод  на <?=Yii::app()->langs->Langs[$chap->book->t_lang][Langs::FORM_INF]; ?>
+        </th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-	<?php
+    <?php
         if ($tableEmpty) {
-            //			echo "<tr id='o0'><td class='b'></td><td class='o'><div></div></td><td class='u'></td><td class='t'></td><td class='c'></td></tr>";
+            //          echo "<tr id='o0'><td class='b'></td><td class='o'><div></div></td><td class='u'></td><td class='t'></td><td class='c'></td></tr>";
         } else {
             $fixer = new OrigCountFixer();
             $can_tr_read = $chap->can('trread');
@@ -332,33 +332,33 @@
 
 
 <div id="tr-sidebar">
-	<div id="dict" <?php if ($chap->book->can('dict_edit')) {
+    <div id="dict" <?php if ($chap->book->can('dict_edit')) {
     echo "class='has-edit'";
 } ?>>
-		<div id="dict-search">
-			<input type="text" placeholder="Поиск по словарю" class="search" />
-			<a href="#" class="b"><i class="i icon-remove-sign"></i></a>
-		</div>
-		<div id="dict-body">
-			<div id="dict-body-content">
-				Минутку...
+        <div id="dict-search">
+            <input type="text" placeholder="Поиск по словарю" class="search" />
+            <a href="#" class="b"><i class="i icon-remove-sign"></i></a>
+        </div>
+        <div id="dict-body">
+            <div id="dict-body-content">
+                Минутку...
             </div>
-		</div>
-		<?php if ($chap->book->can('dict_edit')): ?>
-		<div id="dict-add">
-			<form method="post" action="<?=$chap->book->getUrl('dict'); ?>">
-				<input type="text" name="term" placeholder="Оригинал" />
-				<input type="text" name="descr" placeholder="Перевод" />
-				<button type="submit" class="btn btn-mini btn-primary">Добавить</button>
-				<button type="button" class="btn btn-mini cancel">Отмена</button>
-			</form>
-		</div>
-		<div id="dict-tools">
-			<i class="icon-plus"></i> <a href="#" class="add">Добавить слово</a>
-		</div>
-		<?php endif; ?>
-		<?php if (0): ?><div id="dict-pages"></div><?php endif; ?>
-	</div>
+        </div>
+        <?php if ($chap->book->can('dict_edit')): ?>
+        <div id="dict-add">
+            <form method="post" action="<?=$chap->book->getUrl('dict'); ?>">
+                <input type="text" name="term" placeholder="Оригинал" />
+                <input type="text" name="descr" placeholder="Перевод" />
+                <button type="submit" class="btn btn-mini btn-primary">Добавить</button>
+                <button type="button" class="btn btn-mini cancel">Отмена</button>
+            </form>
+        </div>
+        <div id="dict-tools">
+            <i class="icon-plus"></i> <a href="#" class="add">Добавить слово</a>
+        </div>
+        <?php endif; ?>
+        <?php if (0): ?><div id="dict-pages"></div><?php endif; ?>
+    </div>
 </div>
 
 <?php if ($chap->book->typ == 'S'): ?>
@@ -369,13 +369,13 @@
             <h3>Сдвинуть тайминг</h3>
         </div>
         <div class="modal-body">
-			<div class="control-group advanced">
-				<label class="control-label">Сдвинуть субтитры во временном промежутке</label>
-				<div class="controls">
+            <div class="control-group advanced">
+                <label class="control-label">Сдвинуть субтитры во временном промежутке</label>
+                <div class="controls">
                     <input type="text" name="from" placeholder="ЧЧ:ММ:СС.ммм" value="00:00:00.000" /> &mdash;
                     <input type="text" name="to" placeholder="ЧЧ:ММ:СС.ммм" value="23:59:59.999" />
-				</div>
-			</div>
+                </div>
+            </div>
             <div class="control-group">
                 <label class="control-label">Сдвинуть <a href="#" class="ajax advanced">все субтитры</a> на время:</label>
                 <div class="controls">
@@ -398,12 +398,12 @@
             <h3>Перенумеровать субтитры</h3>
         </div>
         <div class="modal-body">
-			Номер субтитра, серая циферка рядом с его таймингом, в сущности, ни на что не влияет, субтитры сортируются по времени.
-			Если вы добавляете новый титр, его номер может выбиваться из плавного течения номеров. Этот инструмент расставит всем
-			титрам номера в хронологическом порядке.
+            Номер субтитра, серая циферка рядом с его таймингом, в сущности, ни на что не влияет, субтитры сортируются по времени.
+            Если вы добавляете новый титр, его номер может выбиваться из плавного течения номеров. Этот инструмент расставит всем
+            титрам номера в хронологическом порядке.
         </div>
         <div class="modal-footer">
-			<input type="hidden" name="mode" value="1" />
+            <input type="hidden" name="mode" value="1" />
             <button type="submit" class="btn btn-primary">Поехали</button>
             <a href="#" class="btn" data-dismiss="modal">Отмена</a>
         </div>
@@ -411,8 +411,8 @@
 </div>
 
 <script type="text/javascript">
-	$("#Tr").find("td.o").each(function() {
-		var $this = $(this);
-		$this.children("div").css("min-height", $this.height());
-	});
+    $("#Tr").find("td.o").each(function() {
+        var $this = $(this);
+        $this.children("div").css("min-height", $this.height());
+    });
 </script>

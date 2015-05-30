@@ -28,25 +28,26 @@ $this->renderPartial('profile_head', ['user' => $user]);
 
 <?php if ($user->id == Yii::app()->user->id) {
     ?>
-	<div><i class="icon-pencil"></i> <a href='<?=$user->getUrl('edit');
+    <div><i class="icon-pencil"></i> <a href='<?=$user->getUrl('edit');
     ?>' class='act'>Редактировать свои данные</a></div>
-<?php 
+<?php
+
 } ?>
 
 <?php if (count($invited) > 0): ?>
-	<h2>По <?=$user->sexy('его', 'её', 'его'); ?> приглашению зарегистрированы переводчики:</h2>
-	<table class="items table table-condensed">
-		<thead>
-		<tr>
-			<th>Ник</th>
-			<th>Карма</th>
-			<th>Переводов</th>
-			<th>Суммарный рейтинг</th>
-			<th>Средний рейтинг</th>
-		</tr>
-		</thead>
-		<tbody>
-		<?php
+    <h2>По <?=$user->sexy('его', 'её', 'его'); ?> приглашению зарегистрированы переводчики:</h2>
+    <table class="items table table-condensed">
+        <thead>
+        <tr>
+            <th>Ник</th>
+            <th>Карма</th>
+            <th>Переводов</th>
+            <th>Суммарный рейтинг</th>
+            <th>Средний рейтинг</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
         foreach ($invited as $user) {
             echo '<tr>';
             echo '<td>'.$user->ahref.'</td>';
@@ -56,6 +57,6 @@ $this->renderPartial('profile_head', ['user' => $user]);
             echo '<td>'.($user->n_trs ? sprintf('%.02f', $user->rate_t / $user->n_trs) : '').'</td>';
         }
         ?>
-		</tbody>
-	</table>
+        </tbody>
+    </table>
 <?php endif; ?>

@@ -18,22 +18,22 @@ ul.search-results li .meta .cat {float:right;}
 </style>
 <script type="text/javascript">
 $(function() {
-	$("#search-ghost-form [name=t]").bind("change keyup", function() {
-		$("#form-search [name=t]").val($(this).val());
-	});
-	$("#search-ghost-form").submit(function(e) {
-		e.preventDefault();
-		$("#form-search").submit();
-		return false;
-	});
+    $("#search-ghost-form [name=t]").bind("change keyup", function() {
+        $("#form-search [name=t]").val($(this).val());
+    });
+    $("#search-ghost-form").submit(function(e) {
+        e.preventDefault();
+        $("#form-search").submit();
+        return false;
+    });
 });
 </script>
 
 <h1>Поиск переводов</h1>
 
 <form id="search-ghost-form" class="form-inline" action="/NOWHERE">
-	<input type="text" name="t" value="<?=CHtml::encode($filter->t); ?>" class="span7" />
-	<button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Найти</button>
+    <input type="text" name="t" value="<?=CHtml::encode($filter->t); ?>" class="span7" />
+    <button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Найти</button>
 </form>
 
 
@@ -44,9 +44,9 @@ $(function() {
     $books = $dp->getData();
     if ($dp->totalItemCount == 0) {
         echo <<<HTML
-			<p class="alert alert-block alert-info">
-				Ничего не найдено.
-			</p>
+            <p class="alert alert-block alert-info">
+                Ничего не найдено.
+            </p>
 HTML;
     } else {
         echo '<h3>'.Yii::t('app', 'Найден {n} перевод|Найдено {n} перевода|Найдено {n} переводов', $dp->totalItemCount).'</h3>';
@@ -61,7 +61,7 @@ HTML;
         foreach ($books as $book) {
             echo '<li>';
 
-//			if($book->img->exists) echo "<div class='th'>" . $book->img->tag . "</div>";
+//          if($book->img->exists) echo "<div class='th'>" . $book->img->tag . "</div>";
 
             echo '<p>';
             echo $book->ahref;
@@ -97,7 +97,7 @@ HTML;
     }
 ?>
 <?php else: ?>
-	<div class="alert alert-info">
-		Пожалуйста, выберите раздел каталога, язык или введите поисковый запрос.
-	</div>
+    <div class="alert alert-info">
+        Пожалуйста, выберите раздел каталога, язык или введите поисковый запрос.
+    </div>
 <?php endif; ?>

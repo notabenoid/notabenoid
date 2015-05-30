@@ -22,7 +22,7 @@
 ?>
 
 <div class="form-summary">
-	<?php echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Пригласить", ['type' => 'submit', 'class' => 'btn btn-primary']).' '; ?>
+    <?php echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Пригласить", ['type' => 'submit', 'class' => 'btn btn-primary']).' '; ?>
 </div>
 
 <?php $this->endWidget(); ?>

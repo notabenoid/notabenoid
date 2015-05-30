@@ -23,28 +23,28 @@
 ?>
 <script type="text/javascript">
 $(function() {
-	$('#thankyou').cycle({
-		fx: 'fade',
-		timeout:3333
-	}).click(function() {
-			$(this).cycle("toggle");
-	});
+    $('#thankyou').cycle({
+        fx: 'fade',
+        timeout:3333
+    }).click(function() {
+            $(this).cycle("toggle");
+    });
 });
 </script>
 <style type="text/css">
-	#thankyou { width:100%; margin:30px auto 20px; min-height:800px; }
+    #thankyou { width:100%; margin:30px auto 20px; min-height:800px; }
 </style>
 <h1>Большое спасибо!</h1>
 
 <p>
-	Вы здорово помогли науке. Учёные обещали проанализировать ваши ответы и, используя полученные данные,
-	поскорее изобрести телепортацию, холодный термоядерный синтез и бесплатное пиво.
+    Вы здорово помогли науке. Учёные обещали проанализировать ваши ответы и, используя полученные данные,
+    поскорее изобрести телепортацию, холодный термоядерный синтез и бесплатное пиво.
 </p>
 <p>
-	<a href="/">На главную</a>
+    <a href="/">На главную</a>
 </p>
 <div id="thankyou">
-	<?php
+    <?php
         $shift = rand(0, 14);
         for ($i = 1; $i <= 15; $i++) {
             $img = ($i + $shift) % 15 + 1;

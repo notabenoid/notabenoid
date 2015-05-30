@@ -31,7 +31,7 @@
 </style>
 <script type="text/javascript">
 var E = {
-	topics_html: {<?php
+    topics_html: {<?php
         $i = 0;
         foreach (array_keys(Yii::app()->params['book_types']) as $typ) {
             if ($i != 0) {
@@ -57,90 +57,90 @@ var E = {
         }
     ?>},
 
-	presets: {
-		1: {ac_read: "a", ac_gen: "a", ac_rate: "a", ac_comment: "a", ac_tr: "a", ac_blog_r: "a", ac_blog_c: "a", ac_blog_w: "a", ac_announce: "m", ac_chap_edit: "m", facecontrol: 0},
-		2: {ac_read: "a", ac_gen: "a", ac_rate: "a", ac_comment: "a", ac_tr: "g", ac_blog_r: "a", ac_blog_c: "a", ac_blog_w: "g", ac_announce: "m", ac_chap_edit: "m", facecontrol: 1},
-		3: {ac_read: "a", ac_gen: "a", ac_rate: "g", ac_comment: "g", ac_tr: "g", ac_blog_r: "a", ac_blog_c: "g", ac_blog_w: "g", ac_announce: "m", ac_chap_edit: "m", facecontrol: 1},
-		4: {ac_read: "g", ac_gen: "g", ac_rate: "g", ac_comment: "g", ac_tr: "g", ac_blog_r: "g", ac_blog_c: "g", ac_blog_w: "g", ac_announce: "m", ac_chap_edit: "m", facecontrol: 2}
-	},
+    presets: {
+        1: {ac_read: "a", ac_gen: "a", ac_rate: "a", ac_comment: "a", ac_tr: "a", ac_blog_r: "a", ac_blog_c: "a", ac_blog_w: "a", ac_announce: "m", ac_chap_edit: "m", facecontrol: 0},
+        2: {ac_read: "a", ac_gen: "a", ac_rate: "a", ac_comment: "a", ac_tr: "g", ac_blog_r: "a", ac_blog_c: "a", ac_blog_w: "g", ac_announce: "m", ac_chap_edit: "m", facecontrol: 1},
+        3: {ac_read: "a", ac_gen: "a", ac_rate: "g", ac_comment: "g", ac_tr: "g", ac_blog_r: "a", ac_blog_c: "g", ac_blog_w: "g", ac_announce: "m", ac_chap_edit: "m", facecontrol: 1},
+        4: {ac_read: "g", ac_gen: "g", ac_rate: "g", ac_comment: "g", ac_tr: "g", ac_blog_r: "g", ac_blog_c: "g", ac_blog_w: "g", ac_announce: "m", ac_chap_edit: "m", facecontrol: 2}
+    },
 
-	init: function() {
-		$("#img_preview a").click(function() {
-			var html = "<img src='" + $(this).attr("href") + "' alt='' />";
-			$(this).replaceWith(html);
-			return false;
-		});
+    init: function() {
+        $("#img_preview a").click(function() {
+            var html = "<img src='" + $(this).attr("href") + "' alt='' />";
+            $(this).replaceWith(html);
+            return false;
+        });
 
-		$("#form-edit [name=BookEditor\\[ac_read\\]]").click(E.ac_read_ch);
-//		E.ac_read_ch();
+        $("#form-edit [name=BookEditor\\[ac_read\\]]").click(E.ac_read_ch);
+//      E.ac_read_ch();
 
-		$("#ac_presets [name=preset]").click(E.preset);
-	},
+        $("#ac_presets [name=preset]").click(E.preset);
+    },
 
-	ac_read_ch: function() {
-		var v = $(this).val();
-		d = {a: false, g: false, m: false};
-		if(v == "g") d = {a: true, g: false, m: false};
-		else if(v == "m") d = {a: true, g: true, m: false};
-		else if(v == "o") d = {a: true, g: true, m: true};
-		for(var i in d) {
-			$("#form-edit :radio[value=" + i + "]").not("#form-edit [name=BookEditor\\[ac_read\\]]").attr("disabled", d[i]);
-		}
-	},
+    ac_read_ch: function() {
+        var v = $(this).val();
+        d = {a: false, g: false, m: false};
+        if(v == "g") d = {a: true, g: false, m: false};
+        else if(v == "m") d = {a: true, g: true, m: false};
+        else if(v == "o") d = {a: true, g: true, m: true};
+        for(var i in d) {
+            $("#form-edit :radio[value=" + i + "]").not("#form-edit [name=BookEditor\\[ac_read\\]]").attr("disabled", d[i]);
+        }
+    },
 
-	facecontrol_ch: function() {
-		var facecontrol = $("#BookEditor_facecontrol").val();
-		if(facecontrol == 0) {
-			$("#ac_details input[type=radio][value=g]").attr("disabled", true).each(function() {
-				var $r = $(this);
-				if($r.attr("checked")) {
-					var sel = "#ac_details [name=" + $r.attr("name").replace("[", "\\[").replace("]", "\\]") + "]";
-					$(sel + "[value=m]").prop("checked", true);
-					$(sel + "[value=a]").prop("checked", true);
+    facecontrol_ch: function() {
+        var facecontrol = $("#BookEditor_facecontrol").val();
+        if(facecontrol == 0) {
+            $("#ac_details input[type=radio][value=g]").attr("disabled", true).each(function() {
+                var $r = $(this);
+                if($r.attr("checked")) {
+                    var sel = "#ac_details [name=" + $r.attr("name").replace("[", "\\[").replace("]", "\\]") + "]";
+                    $(sel + "[value=m]").prop("checked", true);
+                    $(sel + "[value=a]").prop("checked", true);
 
-				}
-			});
-			if(Book.facecontrol != 0) $("#facecontrol-change-msg").show(100);
-		} else {
-			$("#ac_details input[type=radio][value=g]").attr("disabled", false);
-			if(Book.facecontrol != 0) $("#facecontrol-change-msg").hide(100);
-		}
-	},
+                }
+            });
+            if(Book.facecontrol != 0) $("#facecontrol-change-msg").show(100);
+        } else {
+            $("#ac_details input[type=radio][value=g]").attr("disabled", false);
+            if(Book.facecontrol != 0) $("#facecontrol-change-msg").hide(100);
+        }
+    },
 
-	typ_switch: function() {
-		// рубрик не будет, ура! :)
-		return true;
-		var typ = $("#BookEditor_typ").val();
-		var html = E.topics_html[typ];
-		if(!typ || html == "") {
-			$("#BookEditor_topics").parent().hide();
-		} else {
-			$("#BookEditor_topics").parent().show();
-		}
-		$("#BookEditor_topics_boxes").html(E.topics_html[typ]);
-	},
+    typ_switch: function() {
+        // рубрик не будет, ура! :)
+        return true;
+        var typ = $("#BookEditor_typ").val();
+        var html = E.topics_html[typ];
+        if(!typ || html == "") {
+            $("#BookEditor_topics").parent().hide();
+        } else {
+            $("#BookEditor_topics").parent().show();
+        }
+        $("#BookEditor_topics_boxes").html(E.topics_html[typ]);
+    },
 
-	preset: function() {
-		var preset = $("#ac_presets [name=preset]:checked").val();
-		var P = E.presets[preset];
-		for(var field in P) {
-			if(field == "facecontrol") {
-				$("#form-edit [name=BookEditor\\[facecontrol\\]]").val(P[field]);
-			}
-			var $radio = $("#form-edit [name=BookEditor\\[" + field + "\\]]");
+    preset: function() {
+        var preset = $("#ac_presets [name=preset]:checked").val();
+        var P = E.presets[preset];
+        for(var field in P) {
+            if(field == "facecontrol") {
+                $("#form-edit [name=BookEditor\\[facecontrol\\]]").val(P[field]);
+            }
+            var $radio = $("#form-edit [name=BookEditor\\[" + field + "\\]]");
 
-			$radio.each(function() {
-				if(this.value == P[field]) $(this).click();
-			})
-		}
-		E.facecontrol_ch();
-	},
+            $radio.each(function() {
+                if(this.value == P[field]) $(this).click();
+            })
+        }
+        E.facecontrol_ch();
+    },
 
-	rm: function() {
-		if(!confirm("Вы абсолютно уверены, что хотите удалить этот перевод? Одним движением мышки вы сейчас можете уничтожить труд десятков людей!")) return;
+    rm: function() {
+        if(!confirm("Вы абсолютно уверены, что хотите удалить этот перевод? Одним движением мышки вы сейчас можете уничтожить труд десятков людей!")) return;
 
-		$("#form-rm").submit();
-	}
+        $("#form-rm").submit();
+    }
 }
 $(E.init);
 </script>
@@ -164,9 +164,9 @@ $(E.init);
 ?>
 
 <div class="control-group <?=$model->hasErrors('typ') ? ' error' : ''; ?>">
-	<?php echo $form->labelEx($model, 'typ', ['class' => 'control-label required']); ?>
-	<div class="controls">
-	<?php
+    <?php echo $form->labelEx($model, 'typ', ['class' => 'control-label required']); ?>
+    <div class="controls">
+    <?php
         if ($model->isNewRecord) {
             echo $form->dropDownList($model, 'typ', Yii::app()->params['book_types'], ['onchange' => 'E.typ_switch()']);
             echo "<p class='help-block'><b>Внимание!</b> после создания перевода изменить его тип не получится!</p>";
@@ -175,7 +175,7 @@ $(E.init);
             echo "<p class='help-block' title='А мы предупреждали'>Изменить тип перевода уже нельзя.</p>";
         }
     ?>
-	</div>
+    </div>
 </div>
 <?php
     echo $form->dropDownListRow($model, 's_lang', Yii::app()->langs->select());
@@ -191,9 +191,9 @@ $(E.init);
     // echo $form->checkBoxListInlineRow($model, "topics", $topics); // <-- этому ряду нужен какой-нибудь ID
 ?>
 <div class="control-group <?=$model->hasErrors('new_img') ? ' error' : ''; ?>">
-	<?php echo $form->labelEx($model, 'new_img', ['class' => 'control-label']); ?>
-	<div class="controls">
-	<?php
+    <?php echo $form->labelEx($model, 'new_img', ['class' => 'control-label']); ?>
+    <div class="controls">
+    <?php
         if ($model->img[0]) {
             echo "<div id='img_preview'>";
             echo $model->imgTag;
@@ -203,7 +203,7 @@ $(E.init);
         echo $form->fileField($model, 'new_img');
         echo $form->error($model, 'new_img');
     ?>
-	</div>
+    </div>
 </div>
 
 
@@ -239,37 +239,37 @@ $(E.init);
 <h2>Права доступа</h2>
 
 <div id="ac_presets">
-	<div>
-		<label class="radio"><input type="radio" name="preset" value="1" id="preset_1"/> Полностью открытый перевод</label>
-		<p class="hint">
-			Переводят, оценивают, обсуждают все; Можно создать перевод, назначить пару толковых модераторов и забить.
-		</p>
-	</div>
+    <div>
+        <label class="radio"><input type="radio" name="preset" value="1" id="preset_1"/> Полностью открытый перевод</label>
+        <p class="hint">
+            Переводят, оценивают, обсуждают все; Можно создать перевод, назначить пару толковых модераторов и забить.
+        </p>
+    </div>
 
-	<div>
-		<label class="radio"><input type="radio" name="preset" value="2" id="preset_2" /> Перевод группой</label>
-		<p class="hint">
-			Группа переводчиков переводят, а все остальные - оценивают и обсуждают. Ещё есть модераторы, которые занимаются добавлением новых глав и анонсами.
-			Они же рассматривают заявки на вступление в группу. Хороший вариант, если у вас сколотилась компания переводчиков, но вы недостаточно круты,
-			чтобы наплевать на общественное мнение, и вы рады видеть новых людей в ваших рядах.
-		</p>
-	</div>
+    <div>
+        <label class="radio"><input type="radio" name="preset" value="2" id="preset_2" /> Перевод группой</label>
+        <p class="hint">
+            Группа переводчиков переводят, а все остальные - оценивают и обсуждают. Ещё есть модераторы, которые занимаются добавлением новых глав и анонсами.
+            Они же рассматривают заявки на вступление в группу. Хороший вариант, если у вас сколотилась компания переводчиков, но вы недостаточно круты,
+            чтобы наплевать на общественное мнение, и вы рады видеть новых людей в ваших рядах.
+        </p>
+    </div>
 
-	<div>
-		<label class="radio"><input type="radio" name="preset" value="3" id="preset_3"/> Перевод уверенной в себе группой</label>
-		<p class="hint">
-			Переводят, оценивают, обсуждают только члены группы. Простые смертные могут только скачать перевод. Членство в группе - по заявкам, которые рассматривают модераторы.
-			Отличный выбор для создания идеального перевода группой единомышленников.
-		</p>
-	</div>
+    <div>
+        <label class="radio"><input type="radio" name="preset" value="3" id="preset_3"/> Перевод уверенной в себе группой</label>
+        <p class="hint">
+            Переводят, оценивают, обсуждают только члены группы. Простые смертные могут только скачать перевод. Членство в группе - по заявкам, которые рассматривают модераторы.
+            Отличный выбор для создания идеального перевода группой единомышленников.
+        </p>
+    </div>
 
-	<div>
-		<label class="radio"><input type="radio" name="preset" value="4" id="preset_4"/> Закрытый перевод</label>
-		<p class="hint">
-			Весь перевод доступен только группе переводчиков. Участие в группе - строго по приглашениям.
-			Если вы хотите перевести что-то для себя - это ваш выбор.
-		</p>
-	</div>
+    <div>
+        <label class="radio"><input type="radio" name="preset" value="4" id="preset_4"/> Закрытый перевод</label>
+        <p class="hint">
+            Весь перевод доступен только группе переводчиков. Участие в группе - строго по приглашениям.
+            Если вы хотите перевести что-то для себя - это ваш выбор.
+        </p>
+    </div>
 
 </div>
 
@@ -283,20 +283,20 @@ $(E.init);
 
     if ($model->facecontrol != Book::FC_OPEN):
 ?>
-		<div id="facecontrol-change-msg" class="alert alert-block alert-warning">
-			<a class="close" data-dismiss="alert">×</a>
-			<h4 class="alert-heading">Внимание!</h4>
+        <div id="facecontrol-change-msg" class="alert alert-block alert-warning">
+            <a class="close" data-dismiss="alert">×</a>
+            <h4 class="alert-heading">Внимание!</h4>
             Вы собираетесь отменить группу перевода. То, что раньше могли делать только члены группы, смогут делать все, а сама
-			группа будет распущена, впрочем, модераторы и забаненные останутся в своём прежнем статусе. Статистика участия каждого переводчика также будет сохранена.
-		</div>
+            группа будет распущена, впрочем, модераторы и забаненные останутся в своём прежнем статусе. Статистика участия каждого переводчика также будет сохранена.
+        </div>
 <?php
     endif;
 ?>
 <table id="ac_details" class="table">
 <thead><tr>
-	<th>что могут:</th>
-	<th><?php echo implode('</th><th>', $who); ?></th>
-	<td class="hint"></td>
+    <th>что могут:</th>
+    <th><?php echo implode('</th><th>', $who); ?></th>
+    <td class="hint"></td>
 </tr></thead>
 <?php
     foreach ($ac as $role => $title) {
@@ -318,7 +318,7 @@ $(E.init);
             echo "<td><input type='radio' name='BookEditor[{$role}]' value='{$val}' ".($model->$role == $val ? 'checked' : '').'/></td>';
         };
 
-//		echo "<td class='hint'>{$title[1]}</td>";
+//      echo "<td class='hint'>{$title[1]}</td>";
         echo "</tr>\n";
     }
 ?>
@@ -328,7 +328,7 @@ $(E.init);
 </p>
 
 <div class="form-actions">
-	<?php
+    <?php
         echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Сохранить", ['type' => 'submit', 'class' => 'btn btn-primary']).' ';
         if (!$model->isNewRecord) {
             echo CHtml::htmlButton("<i class='icon-ban-circle icon-white'></i> Удалить", ['onclick' => 'E.rm()', 'class' => 'btn btn-danger']).' ';

@@ -8,7 +8,7 @@
     $user = Yii::app()->user;
 ?>
 <style type='text/css'>
-#E td {	padding:10px 10px 20px 0; }
+#E td { padding:10px 10px 20px 0; }
 #UserSettings_email {width:400px;}
 fieldset {margin-bottom:42px;}
 .jPicker {margin-left:5px;}
@@ -16,8 +16,8 @@ fieldset {margin-bottom:42px;}
 #nc-controls { float:left; }
 #nc-controls .controls {white-space: nowrap;}
 #nc-demo {
-	margin-left:50px;
-	float:left;
+    margin-left:50px;
+    float:left;
 }
 #nc-demo .comment {margin:6px 0 0 0;}
 <?php
@@ -29,19 +29,19 @@ fieldset {margin-bottom:42px;}
 
 <script type="text/javascript">
 function restore() {
-	var dflt = {bgcolor:"ffffff", color:"000000", fontsize:13, lineheight: 18};
-	for(var k in dflt) {
-		var v = dflt[k];
-		$("#form-settings [name=ini\\[l\\]\\[" + k + "\\]]").val(v);
-	}
+    var dflt = {bgcolor:"ffffff", color:"000000", fontsize:13, lineheight: 18};
+    for(var k in dflt) {
+        var v = dflt[k];
+        $("#form-settings [name=ini\\[l\\]\\[" + k + "\\]]").val(v);
+    }
 
 }
 
 $(function() {
-	$("#nc-controls :radio").click(function(e) {
-		var scheme_id = $(this).val();
-		$("#nc-demo").attr("class", "comments demo-" + scheme_id);
-	});
+    $("#nc-controls :radio").click(function(e) {
+        var scheme_id = $(this).val();
+        $("#nc-demo").attr("class", "comments demo-" + scheme_id);
+    });
     $("#UserSettings_old_pass").val('');
     $(".colorpicker").jPicker();
 });
@@ -75,53 +75,53 @@ $(function() {
 
 <h3>Внешний вид:</h3>
 <p>
-	Вы можете настроить цвет фона, текста и размер шрифта на страницах сайта. Это &ndash; экспериментальная функция,
-	используйте её на свой страх и риск. Все настройки сохраняются только на этом компьютере.
+    Вы можете настроить цвет фона, текста и размер шрифта на страницах сайта. Это &ndash; экспериментальная функция,
+    используйте её на свой страх и риск. Все настройки сохраняются только на этом компьютере.
 </p>
 <fieldset>
-	<div class="control-group">
-		<label class="control-label">Цвет фона страниц</label>
-		<div class="controls">
-			<input type="text" name="ini[l][bgcolor]" value="<?=htmlspecialchars($user->ini['l.bgcolor']); ?>" class="colorpicker" />
-			<button type="button" class="btn" onclick="restore()">Вернуть значения по умолчанию</button>
-		</div>
-	</div>
-	<div class="control-group">
-		<label class="control-label">Цвет текста</label>
-		<div class="controls">
-			<input type="text" name="ini[l][color]" value="<?=htmlspecialchars($user->ini['l.color']); ?>" class="colorpicker" />
-		</div>
-	</div>
-	<div class="control-group">
-		<label class="control-label">Подписи и тайминг</label>
-		<div class="controls">
-			<select name="ini[l][metascheme]" class="span4">
-			<?php
+    <div class="control-group">
+        <label class="control-label">Цвет фона страниц</label>
+        <div class="controls">
+            <input type="text" name="ini[l][bgcolor]" value="<?=htmlspecialchars($user->ini['l.bgcolor']); ?>" class="colorpicker" />
+            <button type="button" class="btn" onclick="restore()">Вернуть значения по умолчанию</button>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Цвет текста</label>
+        <div class="controls">
+            <input type="text" name="ini[l][color]" value="<?=htmlspecialchars($user->ini['l.color']); ?>" class="colorpicker" />
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Подписи и тайминг</label>
+        <div class="controls">
+            <select name="ini[l][metascheme]" class="span4">
+            <?php
                 $A = [0 => 'Светлые, сереют под курсором', 1 => 'Всегда серые', 2 => 'Серые, чернеют под курсором', 3 => 'Всегда чёрные'];
                 foreach ($A as $k => $v) {
                     echo "<option value='{$k}'".($user->ini['l.metascheme'] == $k ? ' selected' : '').">{$v}</option>";
                 }
             ?>
-			</select>
-		</div>
-	</div>
-	<div class="control-group">
-		<label class="control-label">Размер шрифта</label>
-		<div class="controls">
-			<input type="text" name="ini[l][fontsize]" value="<?=htmlspecialchars($user->ini['l.fontsize']); ?>" /> px
-		</div>
-	</div>
-	<div class="control-group">
-		<label class="control-label">Высота строки</label>
-		<div class="controls">
-			<input type="text" name="ini[l][lineheight]" value="<?=htmlspecialchars($user->ini['l.lineheight']); ?>" /> px
-		</div>
-	</div>
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Размер шрифта</label>
+        <div class="controls">
+            <input type="text" name="ini[l][fontsize]" value="<?=htmlspecialchars($user->ini['l.fontsize']); ?>" /> px
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Высота строки</label>
+        <div class="controls">
+            <input type="text" name="ini[l][lineheight]" value="<?=htmlspecialchars($user->ini['l.lineheight']); ?>" /> px
+        </div>
+    </div>
 
-		<div class="control-group" id="nc-controls">
-			<label class="control-label">Выделение новых комментариев</label>
-			<div class="controls">
-				<?php
+        <div class="control-group" id="nc-controls">
+            <label class="control-label">Выделение новых комментариев</label>
+            <div class="controls">
+                <?php
                     foreach (WebUserIni::$newCommentsSchemes as $id => $scheme) {
                         echo "<label class='radio'>";
                         echo "<input type='radio' name='ini[c][sc]' value='{$id}' ".($user->ini['c.sc'] == $id ? 'checked' : '').' />';
@@ -129,11 +129,11 @@ $(function() {
                         echo '</label>';
                     }
                 ?>
-			</div>
-		</div>
+            </div>
+        </div>
 
-		<div id="nc-demo" class="comments <?php echo "demo-{$user->ini['c.sc']}"; ?>">
-		<?php
+        <div id="nc-demo" class="comments <?php echo "demo-{$user->ini['c.sc']}"; ?>">
+        <?php
             $comments = [
                 ['text' => "Люк!\nЯ &mdash; твой отец!", 'login' => 'darth_vader'],
                 ['text' => 'Без булдырабыз!', 'login' => 'mintimer'],
@@ -151,20 +151,20 @@ $(function() {
             $comment->is_new = true;
             $this->renderPartial('//blog/_comment-1', ['comment' => $comment, 'disable_rating' => true]);
         ?>
-		</div>
+        </div>
 
-		<div class="control-group clear">
-			<div class="controls">
+        <div class="control-group clear">
+            <div class="controls">
                 <label class="checkbox"><input type="checkbox" name="ini[t][copy]" value="1" <?php if ($user->ini['t.copy'] == 1) {
     echo 'checked';
 } ?> />Копировать текст оригинала при добавлении версии перевода</label>
-			</div>
-		</div>
+            </div>
+        </div>
 
-		<div class="control-group">
-			<div class="control-label">Как выделять итоговые варианты перевода:</div>
-			<div class="controls">
-				<?php
+        <div class="control-group">
+            <div class="control-label">Как выделять итоговые варианты перевода:</div>
+            <div class="controls">
+                <?php
                     $A = [0 => 'Никак', 1 => 'Козявкой в правом верхнем углу', 2 => 'Жирным шрифтом'];
                     foreach ($A as $k => $v) {
                         echo "<label class='radio'>";
@@ -172,8 +172,8 @@ $(function() {
                         echo '</label>';
                     }
                 ?>
-			</div>
-		</div>
+            </div>
+        </div>
 
 </fieldset>
 

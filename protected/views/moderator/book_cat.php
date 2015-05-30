@@ -12,8 +12,8 @@
 </style>
 <script type="text/javascript">
 var T = {
-	init: function() {
-	}
+    init: function() {
+    }
 };
 $(T.init);
 </script>
@@ -37,9 +37,9 @@ $(T.init);
 <form method="post" id="form-cat">
 <table class="table table-bordered">
 <tr>
-	<th>Перевод</th>
-	<th>Старые разделы</th>
-	<th>Новый раздел</th>
+    <th>Перевод</th>
+    <th>Старые разделы</th>
+    <th>Новый раздел</th>
 </tr>
 <?php
     function topics($book)
@@ -101,7 +101,7 @@ $(T.init);
 </table>
 
 <div class="form-actions">
-	<button type="submit" class="btn btn-inverse"><i class="icon-ok icon-white"></i> Сохранить</button>
+    <button type="submit" class="btn btn-inverse"><i class="icon-ok icon-white"></i> Сохранить</button>
 </div>
 
 </form>

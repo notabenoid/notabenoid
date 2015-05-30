@@ -33,22 +33,22 @@
     echo $form->textFieldRow($model, 'city');
 ?>
 <div class="control-group">
-	<?php echo $form->labelEx($model, 'bdate', ['class' => 'control-label']); ?>
-	<div class="controls">
-	<?php
+    <?php echo $form->labelEx($model, 'bdate', ['class' => 'control-label']); ?>
+    <div class="controls">
+    <?php
         echo $form->textField($model, 'bdate_d');
         echo $form->dropDownList($model, 'bdate_m', Yii::app()->params['month_acc']);
         echo $form->textField($model, 'bdate_y');
         echo $form->error($model, 'bdate');
     ?>
-	</div>
+    </div>
 </div>
 <?php
     echo $form->textAreaRow($model, 'bio');
 ?>
 
 <div class="form-actions">
-	<?php
+    <?php
         echo CHtml::htmlButton("<i class='icon-ok icon-white'></i> Сохранить", ['type' => 'submit', 'class' => 'btn btn-primary']).' ';
         echo CHtml::htmlButton("<i class='icon-remove icon-white'></i> Отмена", ['onclick' => "location.href='".Yii::app()->user->url."'", 'class' => 'btn btn-success']).' ';
         echo CHtml::htmlButton("<i class='icon-ban-circle icon-white'></i> Удалить аккаунт", ['onclick' => "location.href='".Yii::app()->user->getUrl('delete')."'", 'class' => 'btn btn-danger']);

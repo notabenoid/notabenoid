@@ -33,48 +33,48 @@
     if ($user->can('blog_topic_moderate')):
 ?>
 <div id="moder-topic-menu">
-	<ul>
-		<?php
+    <ul>
+        <?php
             foreach (Yii::app()->params['blog_topics']['common'] as $k => $v) {
                 echo "<li><a href='#' rel='{$k}'>{$v}</a></li>";
             }
         ?>
-	</ul>
+    </ul>
 </div>
 <script type="text/javascript">
 (function() {
-	var post_id = 0, $topicMenu = $("#moder-topic-menu");
+    var post_id = 0, $topicMenu = $("#moder-topic-menu");
 
-	$("#Lenta").find(".post .info .moder-topic").attr("title", "Изменить раздел").click(function(e) {
-		e.preventDefault();
-		var $this = $(this), $info = $this.parents(".info"), id = parseInt($this.parents(".post").attr("id").substr(5));
-		if(id == post_id) {
-			post_id = 0;
-			$topicMenu.hide();
-		} else {
-			post_id = id;
+    $("#Lenta").find(".post .info .moder-topic").attr("title", "Изменить раздел").click(function(e) {
+        e.preventDefault();
+        var $this = $(this), $info = $this.parents(".info"), id = parseInt($this.parents(".post").attr("id").substr(5));
+        if(id == post_id) {
+            post_id = 0;
+            $topicMenu.hide();
+        } else {
+            post_id = id;
             $topicMenu.show().appendTo($info);
-		}
-	});
+        }
+    });
 
-	$topicMenu.delegate("a[rel]", "click", function(e) {
-		e.preventDefault();
-		var topic = parseInt($(this).attr("rel"));
-		console.log("Set topic %d to post %d", topic, post_id);
+    $topicMenu.delegate("a[rel]", "click", function(e) {
+        e.preventDefault();
+        var topic = parseInt($(this).attr("rel"));
+        console.log("Set topic %d to post %d", topic, post_id);
 
-		$.ajax({
-			url: "/moderator/blogTopic",
-			type: "post",
-			dataType: "json",
-			data: {post_id: post_id, topic: topic},
-			success: function(data) {
-				console.log(data);
+        $.ajax({
+            url: "/moderator/blogTopic",
+            type: "post",
+            dataType: "json",
+            data: {post_id: post_id, topic: topic},
+            success: function(data) {
+                console.log(data);
                 $topicMenu.hide();
-				if(data.error) return !!alert(data.error);
-				$("#post_" + data.id).find(".info span.topic").html(data.topicHtml);
-			}
-		});
-	})
+                if(data.error) return !!alert(data.error);
+                $("#post_" + data.id).find(".info span.topic").html(data.topicHtml);
+            }
+        });
+    })
 })();
 </script>
 <?php endif; ?>

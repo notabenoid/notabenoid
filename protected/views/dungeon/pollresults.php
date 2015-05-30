@@ -7,7 +7,7 @@
 ?>
 <style type="text/css">
 .question {
-	margin:20px 0 40px;
+    margin:20px 0 40px;
 }
 </style>
 <h1>Результаты опроса</h1>

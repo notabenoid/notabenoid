@@ -43,8 +43,8 @@
 
 <script type="text/javascript">
 (function() {
-	$("#topics").find(":checkbox").click(function() {
-		$("#topics").find("li.buttons").show(200);
-	});
+    $("#topics").find(":checkbox").click(function() {
+        $("#topics").find("li.buttons").show(200);
+    });
 })();
 </script>

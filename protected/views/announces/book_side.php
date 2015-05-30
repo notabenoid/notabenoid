@@ -1,8 +1,8 @@
 <div class="tools">
-	<h5>Анонсы перевода</h5>
-	<p>
-		Анонсы &mdash; это как бы лента новостей проекта перевода.
-		Анонсы <?php
+    <h5>Анонсы перевода</h5>
+    <p>
+        Анонсы &mdash; это как бы лента новостей проекта перевода.
+        Анонсы <?php
             $A = [
                 'g' => "пишут члены <a href='".$book->getUrl('members')."'>группы перевода</a>",
                 'm' => 'пишут модераторы перевода',
@@ -16,9 +16,9 @@
                 echo "Так как это &mdash; закрытый перевод, его анонсы не попадают в <a href='/announces'>общую ленту анонсов</a>.";
             }
         ?>
-	</p>
+    </p>
 
-	<?php if ($book->can('announce')): ?>
-		<a href="<?=$book->getUrl('announces/write'); ?>" class="btn btn-warning"><i class="icon-wrench icon-white"></i> Написать анонс</a>
-	<?php endif; ?>
+    <?php if ($book->can('announce')): ?>
+        <a href="<?=$book->getUrl('announces/write'); ?>" class="btn btn-warning"><i class="icon-wrench icon-white"></i> Написать анонс</a>
+    <?php endif; ?>
 </div>

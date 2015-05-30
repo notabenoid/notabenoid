@@ -10,16 +10,16 @@
 </style>
 <script type="text/javascript">
 var W = {
-	is_reply: false,
-	init: function() {
-		$("#form-write " + (W.is_reply ? "#Mail_body" : "#Mail_sendTo")).focus();
+    is_reply: false,
+    init: function() {
+        $("#form-write " + (W.is_reply ? "#Mail_body" : "#Mail_sendTo")).focus();
 
-		$("#form-write #Mail_body").keyup(function(e) {
-			if(e.ctrlKey && e.which == 13) {
-				if(confirm("Отправить письмо?")) $("#form-write").submit();
-			}
-		});
-	}
+        $("#form-write #Mail_body").keyup(function(e) {
+            if(e.ctrlKey && e.which == 13) {
+                if(confirm("Отправить письмо?")) $("#form-write").submit();
+            }
+        });
+    }
 };
 <?php
     if ($reply) {

@@ -16,7 +16,7 @@ $(function() {
             x1 = $form.find("[name=x]").val(), y1 = $form.find("[name=y]").val(),
             x2 = x1 + $form.find("[name=w]").val(), y2 = x1 + $form.find("[name=h]").val();
 
-	function showPreview(coords) {
+    function showPreview(coords) {
         var rx = 50 / coords.w;
         var ry = 50 / coords.h;
 
@@ -27,25 +27,25 @@ $(function() {
             marginTop: '-' + Math.round(ry * coords.y) + 'px'
         });
 
-		$form.find("[name=x]").val(coords.x);
-		$form.find("[name=y]").val(coords.y);
-		$form.find("[name=w]").val(coords.w);
-		$form.find("[name=h]").val(coords.h);
-	}
+        $form.find("[name=x]").val(coords.x);
+        $form.find("[name=y]").val(coords.y);
+        $form.find("[name=w]").val(coords.w);
+        $form.find("[name=h]").val(coords.h);
+    }
 
-	$("#ava").Jcrop({
+    $("#ava").Jcrop({
         onChange: showPreview,
         onSelect: showPreview,
-		setSelect: [x1, y1, x2, y2],
-		minSize: [50, 50],
-		aspectRatio: 1
-	});
+        setSelect: [x1, y1, x2, y2],
+        minSize: [50, 50],
+        aspectRatio: 1
+    });
 })
 </script>
 
 <style type="text/css">
-	#preview { width:50px; height:50px; overflow:hidden; border-radius: 5px; margin:0 0 15px;}
-	#preview img {max-width:none;}
+    #preview { width:50px; height:50px; overflow:hidden; border-radius: 5px; margin:0 0 15px;}
+    #preview img {max-width:none;}
 </style>
 
 <h1>Вырежьте квадратную аватарку из картинки</h1>

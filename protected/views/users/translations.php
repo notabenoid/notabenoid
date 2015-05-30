@@ -14,47 +14,47 @@
 
 <style type="text/css">
 .verse {
-	padding:20px 0 20px 0;
-	border-bottom:1px solid #777;
+    padding:20px 0 20px 0;
+    border-bottom:1px solid #777;
 }
 .verse:hover {
-	background:#f0f0f0;
+    background:#f0f0f0;
 }
 .verse .orig {
-	padding:0 0 0 24px;
+    padding:0 0 0 24px;
 }
 .verse .tr {
 }
 .verse .x {
-	display:block;
-	float:right;
-	font-size:20px;
-	font-weight:bold;
-	color:#777;
+    display:block;
+    float:right;
+    font-size:20px;
+    font-weight:bold;
+    color:#777;
 }
 .verse .rate {
-	margin-left:10px;
+    margin-left:10px;
 }
 
 </style>
 
 <script type="text/javascript">
 $(function() {
-	$(".rate").attr("title", "Рейтинг");
+    $(".rate").attr("title", "Рейтинг");
 });
 </script>
 
 <?php if ($translations->totalItemCount == 0): ?>
 
 <p>
-	<?=$user->login; ?> не предложил<?=$user->sexy(); ?> ни одного варианта перевода.
+    <?=$user->login; ?> не предложил<?=$user->sexy(); ?> ни одного варианта перевода.
 </p>
 
 <?php else: ?>
 
 <h2><?php
     echo $book->ahref.' ';
-//	echo Yii::t("app", "{n} перевод|{n} перевода|{n} переводов", $translations->totalItemCount);
+//  echo Yii::t("app", "{n} перевод|{n} перевода|{n} переводов", $translations->totalItemCount);
 ?></h2>
 <?php
     if ($cache_time) {

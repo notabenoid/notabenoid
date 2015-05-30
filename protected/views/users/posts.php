@@ -15,7 +15,7 @@ $this->renderPartial('profile_head', ['user' => $user, 'h1' => 'посты']);
 <?php if ($posts->totalItemCount == 0): ?>
 
 <p>
-	<?=$user->login; ?> не написал<?=$user->sexy(); ?> ни одного поста в блогах.
+    <?=$user->login; ?> не написал<?=$user->sexy(); ?> ни одного поста в блогах.
 </p>
 
 <?php else: ?>

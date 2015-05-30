@@ -8,27 +8,27 @@
 ?>
 <script type="text/javascript">
 var KarmaSet = {
-	init: function() {
-		$("#form-karma [name=KarmaMark\\[mark\\]]").click(function() {
-			$("#form-karma [name=KarmaMark\\[note\\]]").attr("disabled", $(this).val() == 0);
-		});
+    init: function() {
+        $("#form-karma [name=KarmaMark\\[mark\\]]").click(function() {
+            $("#form-karma [name=KarmaMark\\[note\\]]").attr("disabled", $(this).val() == 0);
+        });
         $("#form-karma [name=KarmaMark\\[note\\]]").attr("disabled", $("#form-karma [name=KarmaMark\\[mark\\]]:checked").val() == 0);
-	}
+    }
 }
 $(KarmaSet.init);
 </script>
 
 <?php if ($dir != 'out'): ?>
 <?php if (Yii::app()->user->isGuest): ?>
-	<p class="alert alert-block alert-info fade in">
-		Чтобы оценивать других переводчиков, нужно <a href="/register">зарегистрироваться</a> или <a href="#" onclick="return Global.login()">войти на сайт</a>.
-	</p>
+    <p class="alert alert-block alert-info fade in">
+        Чтобы оценивать других переводчиков, нужно <a href="/register">зарегистрироваться</a> или <a href="#" onclick="return Global.login()">войти на сайт</a>.
+    </p>
 <?php elseif (!Yii::app()->user->can('karma')): ?>
-	<p class="alert alert-block alert-info fade in">
-		Ставить оценки в карму могут только пользователи, зарегистрировавшиеся не позднее, чем 180 дней тому назад.
-	</p>
+    <p class="alert alert-block alert-info fade in">
+        Ставить оценки в карму могут только пользователи, зарегистрировавшиеся не позднее, чем 180 дней тому назад.
+    </p>
 <?php elseif (Yii::app()->user->id != $user->id): ?>
-	<?php
+    <?php
         /** @var TbActiveForm $form */
         $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
             'id' => 'form-karma',
@@ -36,18 +36,18 @@ $(KarmaSet.init);
             'inlineErrors' => false,
         ]);
     ?>
-	<div class="row">
-		<div class="span3">
-			<h3>Ваша оценка</h3>
-			<?php echo $form->radioButtonList($my_mark, 'mark', [1 => 'Положительно', 0 => 'Никак', -1 => 'Отрицательно'], ['uncheckValue' => null]); ?>
-			<button type="submit" class="btn btn-success"><i class="icon-ok icon-white"></i> Поставить оценку</button>
-		</div>
-		<div class="span5">
-			<h3>Комментарий</h3>
-			<?php echo $form->textArea($my_mark, 'note', ['class' => 'span5', 'style' => 'height:85px;']); ?>
-		</div>
-	</div>
-	<?php
+    <div class="row">
+        <div class="span3">
+            <h3>Ваша оценка</h3>
+            <?php echo $form->radioButtonList($my_mark, 'mark', [1 => 'Положительно', 0 => 'Никак', -1 => 'Отрицательно'], ['uncheckValue' => null]); ?>
+            <button type="submit" class="btn btn-success"><i class="icon-ok icon-white"></i> Поставить оценку</button>
+        </div>
+        <div class="span5">
+            <h3>Комментарий</h3>
+            <?php echo $form->textArea($my_mark, 'note', ['class' => 'span5', 'style' => 'height:85px;']); ?>
+        </div>
+    </div>
+    <?php
         $this->endWidget();
     ?>
 <?php endif; ?>

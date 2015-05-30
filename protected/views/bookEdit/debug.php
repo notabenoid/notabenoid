@@ -1,11 +1,11 @@
 <style type="text/css">
 .debug-model-dump li {
-	font-size:11px;
-	color:#777;
+    font-size:11px;
+    color:#777;
 }
 .debug-model-dump li.changed {
-	font-weight:bold;
-	color:#000;
+    font-weight:bold;
+    color:#000;
 }
 </style>
 <ul class='debug-model-dump'>
@@ -25,5 +25,5 @@
 </ul>
 IMG:
 <?php
-//	echo $_SESSION["book_for_edit"];
+//  echo $_SESSION["book_for_edit"];
 ?>

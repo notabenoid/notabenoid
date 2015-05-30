@@ -19,11 +19,11 @@
 
 ?>
 <div class="tools">
-	<h5>Что получится</h5>
+    <h5>Что получится</h5>
 
-	<div id="preview">
+    <div id="preview">
         <img src="/i/tmp/upiccut/<?=$Img['name']; ?>" width="<?=$Img['w']; ?>" height="<?=$Img['h']; ?>" alt="" />
-	</div>
+    </div>
 
     <form method="post" id="cropData">
         <input type="hidden" name="x" value="<?=$ini_x; ?>" /> <input type="hidden" name="y" value="<?=$ini_y; ?>" />

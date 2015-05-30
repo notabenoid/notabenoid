@@ -5,8 +5,8 @@
  */
 ?>
 <div class="tools">
-	<h5>Написать письмо</h5>
-	<?php
+    <h5>Написать письмо</h5>
+    <?php
         if (count($buddies) > 0) {
             echo 'Вы уже переписывались с:';
             echo '<ul>';

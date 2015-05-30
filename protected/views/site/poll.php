@@ -10,23 +10,23 @@
 </style>
 <script type="text/javascript">
 $(function() {
-	var $poll = $("#poll");
-	$poll.find("input.custom").keyup(function(e) {
-		var $this = $(this);
-		if($.trim($this.val()) != "") {
-			$this.parents(".control-group").find(":radio").attr("checked", false);
-		}
-	});
-	$poll.find(":radio").click(function(e) {
-		$(this).parents(".control-group").find("input.custom").val("");
-	});
+    var $poll = $("#poll");
+    $poll.find("input.custom").keyup(function(e) {
+        var $this = $(this);
+        if($.trim($this.val()) != "") {
+            $this.parents(".control-group").find(":radio").attr("checked", false);
+        }
+    });
+    $poll.find(":radio").click(function(e) {
+        $(this).parents(".control-group").find("input.custom").val("");
+    });
 });
 </script>
 <h1>Опрос для науки</h1>
 <p>
-	Дорогие друзья! Настал тот день, когда мы все можем лично поучаствовать в развитии научной мысли человечества и помочь учёным
-	совершить массу удивительных открытий. Для этого им срочно нужны некоторые статистические данные. Пожалуйста, честно ответьте на
-	девять несложных вопросов.
+    Дорогие друзья! Настал тот день, когда мы все можем лично поучаствовать в развитии научной мысли человечества и помочь учёным
+    совершить массу удивительных открытий. Для этого им срочно нужны некоторые статистические данные. Пожалуйста, честно ответьте на
+    девять несложных вопросов.
 </p>
 
 <form method="post" id="poll" action="/site/poll">
@@ -59,6 +59,6 @@ $(function() {
     }
 ?>
 <div class="form-actions">
-	<button type="submit" class="btn btn-primary">Готово!</button>
+    <button type="submit" class="btn btn-primary">Готово!</button>
 </div>
 </form>

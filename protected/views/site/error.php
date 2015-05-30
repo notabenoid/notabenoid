@@ -8,8 +8,8 @@
     ];
 ?>
 <div class="errorpage">
-	<h1><?php echo isset($codes[$code]) ? $codes[$code] : "Ошибка {$code}"; ?></h1>
-	<?php
+    <h1><?php echo isset($codes[$code]) ? $codes[$code] : "Ошибка {$code}"; ?></h1>
+    <?php
         $p = new CHtmlPurifier();
         $p->options = Yii::app()->params['HTMLPurifierOptions'];
         echo $p->purify($message);

@@ -1,12 +1,12 @@
 <div class='tools'>
-	<h5>Настройки</h5>
+    <h5>Настройки</h5>
 
-	<?php
-//		echo "<ul>";
-//		foreach(array("format", "algorithm", "skip_neg", "untr", "enc", "crlf") as $k) {
-//			echo "<li>{$k} = '<b>{$options->$k}</b>'</li>";
-//		}
-//		echo "</ul>";
+    <?php
+//      echo "<ul>";
+//      foreach(array("format", "algorithm", "skip_neg", "untr", "enc", "crlf") as $k) {
+//          echo "<li>{$k} = '<b>{$options->$k}</b>'</li>";
+//      }
+//      echo "</ul>";
     ?>
 
     <p><strong>Готово:</strong></p>
@@ -40,11 +40,11 @@
         ?></p>
 
 
-	<form method="get" action="<?=$chap->getUrl('ready'); ?>" class="form-vertical">
-		<div class="control-group">
-			<label class="control-label">Использовать:</label>
-			<div class="controls">
-				<?php
+    <form method="get" action="<?=$chap->getUrl('ready'); ?>" class="form-vertical">
+        <div class="control-group">
+            <label class="control-label">Использовать:</label>
+            <div class="controls">
+                <?php
                 foreach (GenOptions::$algorithm_options as $k => $v) {
                     echo "<label class='radio'>";
                     echo "<input type='radio' name='algorithm' value='$k'".($k == $options->algorithm ? ' checked' : '').' />';
@@ -52,40 +52,40 @@
                     echo '</label>';
                 }
                 ?>
-			</div>
-		</div>
+            </div>
+        </div>
 
-		<div class="control-group">
-			<label class="control-label">От автора:</label>
-			<div class="controls">
-				<select name="author_id">
-					<option value="0">Не важно</option>
-					<optgroup label="* * * * * * * * * *"></optgroup>
-					<?php
+        <div class="control-group">
+            <label class="control-label">От автора:</label>
+            <div class="controls">
+                <select name="author_id">
+                    <option value="0">Не важно</option>
+                    <optgroup label="* * * * * * * * * *"></optgroup>
+                    <?php
                     foreach ($authors as $author) {
                         echo "<option value='{$author['id']}'".($options->author_id == $author['id'] ? ' selected' : '').">{$author['login']}</option>";
                     }
                     ?>
-				</select>
-			</div>
-		</div>
+                </select>
+            </div>
+        </div>
 
-		<div class="control-group">
-			<div class="controls">
-				<label class="checkbox">
-					<input type="hidden" name="skip_neg" value="0" />
-					<input type="checkbox" name="skip_neg" value="1" <?php if ($options->skip_neg) {
+        <div class="control-group">
+            <div class="controls">
+                <label class="checkbox">
+                    <input type="hidden" name="skip_neg" value="0" />
+                    <input type="checkbox" name="skip_neg" value="1" <?php if ($options->skip_neg) {
     echo ' checked';
 } ?> />
-					Пропускать варианты с отрицательным рейтингом
-				</label>
-			</div>
-		</div>
-		<?php if ($chap->can('gen_untr')): ?>
-		<div class="control-group">
-			<label class="control-label">Непереведённые фрагменты:</label>
-			<div class="controls">
-				<?php
+                    Пропускать варианты с отрицательным рейтингом
+                </label>
+            </div>
+        </div>
+        <?php if ($chap->can('gen_untr')): ?>
+        <div class="control-group">
+            <label class="control-label">Непереведённые фрагменты:</label>
+            <div class="controls">
+                <?php
                 foreach (GenOptions::$untr_options as $k => $v) {
                     echo "<label class='radio'>";
                     echo "<input type='radio' name='untr' value='$k'".($k == $options->untr ? ' checked' : '').' />';
@@ -93,19 +93,19 @@
                     echo '</label>';
                 }
                 ?>
-			</div>
-		</div>
-		<?php else: ?>
-		<p style="color:#888" title="Подставлять оригинальный текст вместо непереведённых фрагментов можно, если вы являетесь владельцем перевода, либо он закрыт для общего доступа, либо он готов более, чем на 95%.">
-			Непереведённые фрагменты будут пропущены.
-		</p>
-		<?php endif; ?>
+            </div>
+        </div>
+        <?php else: ?>
+        <p style="color:#888" title="Подставлять оригинальный текст вместо непереведённых фрагментов можно, если вы являетесь владельцем перевода, либо он закрыт для общего доступа, либо он готов более, чем на 95%.">
+            Непереведённые фрагменты будут пропущены.
+        </p>
+        <?php endif; ?>
 
-		<button type="submit" class="btn btn-primary btn-mini">Обновить</button>
-	</form>
+        <button type="submit" class="btn btn-primary btn-mini">Обновить</button>
+    </form>
 
-	<a href="<?=$chap->getUrl('download?format=t&enc=UTF-8'); ?>"><i class="icon-download-alt"></i> Скачать как .txt файл</a><br />
-	<a href="<?=$chap->getUrl('ready?'.$_SERVER['QUERY_STRING']); ?>" title="Чтобы поделиться ей, нажмите правой кнопкой мыши и выберите &quot;Скопировать адрес ссылки&quot;"><i class="icon-share"></i> Ссылка на эту страницу</a><br />
-	<a href="<?=$chap->book->url; ?>"><i class="icon-list"></i> Оглавление перевода</a><br />
-	<a href="<?=$chap->getUrl(); ?>"><i class="icon-fire"></i> Интерфейс перевода</a>
+    <a href="<?=$chap->getUrl('download?format=t&enc=UTF-8'); ?>"><i class="icon-download-alt"></i> Скачать как .txt файл</a><br />
+    <a href="<?=$chap->getUrl('ready?'.$_SERVER['QUERY_STRING']); ?>" title="Чтобы поделиться ей, нажмите правой кнопкой мыши и выберите &quot;Скопировать адрес ссылки&quot;"><i class="icon-share"></i> Ссылка на эту страницу</a><br />
+    <a href="<?=$chap->book->url; ?>"><i class="icon-list"></i> Оглавление перевода</a><br />
+    <a href="<?=$chap->getUrl(); ?>"><i class="icon-fire"></i> Интерфейс перевода</a>
 </div>
