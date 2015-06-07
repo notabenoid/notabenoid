@@ -26,7 +26,7 @@ class MailController extends Controller
 
     public function actionIndex()
     {
-        if ($_POST['act'] == 'rm' || $_POST['act'] == 'seen' || $_POST['act'] == 'unseen') {
+        if (in_array($_POST['act'], ['rm', 'seen', 'unseen'])) {
             if (!is_array($_POST['id'])) {
                 $this->redirect('/my/mail');
             }
