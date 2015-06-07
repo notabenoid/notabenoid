@@ -34,11 +34,12 @@ class MailController extends Controller
             $in = '';
             $params = [':user_id' => Yii::app()->user->id];
             foreach ($_POST['id'] as $k => $v) {
+                $p = ':id'.(int) $k;
                 if ($in) {
                     $in .= ', ';
                 }
-                $in .= ":id{$k}";
-                $params[":id{$k}"] = (int) $v;
+                $in .= $p;
+                $params[$p] = (int) $v;
             }
 
             if ($_POST['act'] == 'rm') {
