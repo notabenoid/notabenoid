@@ -130,6 +130,13 @@
     </div>
     <?php endif; ?>
 
+    <div class="btn-group">
+        <a href="<?=$chap->getUrl('export'); ?>" class="btn btn-small"><i class="icon-file"></i> Экспорт</a>
+        <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+        <ul class="dropdown-menu" id="export-formats">
+            <li><a href="<?=$chap->getUrl('export'); ?>">CSV</a></li>
+        </ul>
+    </div>
 
     <div class="tb-progress group"></div>
 

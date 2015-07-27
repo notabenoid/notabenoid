@@ -45,7 +45,7 @@ class ChapterController extends Controller
     {
         return [
             ['allow',
-                'actions' => ['index', 'dict', 'rating_describe', 'rating_explain', 'ready', 'download', 'orig', 'orig_download', 'go'],
+                'actions' => ['index', 'dict', 'rating_describe', 'rating_explain', 'ready', 'download', 'export', 'orig', 'orig_download', 'go'],
                 'users' => ['*'],
             ],
             ['allow',
@@ -472,9 +472,123 @@ class ChapterController extends Controller
         }
     }
 
+    public function actionExport($book_id, $chap_id)
+    {
+        $chap = $this->loadChapter($book_id, $chap_id);
+        if (!$chap->can('gen')) {
+            throw new CHttpException(403, 'Вы не можете скачивать готовый перевод. '.$chap->getWhoCanDoIt('gen'));
+        }
+
+        $f = Orig::model()->with('trs')->chapter($chap_id);
+        $crit = new CDbCriteria([
+            'order' => 't.ord, trs.rating desc, trs.cdate desc',
+        ]);
+        $orig = $f->findAll($crit);
+
+        function isspace($c)
+        {
+            if (ctype_space($c)) {
+                return true;
+            }
+
+            return $c === ' ';
+        }
+
+        function needQuotes($s)
+        {
+            if (strlen($s) === 0 || strpbrk($s, "\"\n,") !== false) {
+                return true;
+            }
+
+            return isspace(mb_substr($s, 0, 1));
+        }
+
+        function quote($s)
+        {
+            if (needQuotes($s)) {
+                return '"'.str_replace('"', '""', $s).'"';
+            }
+
+            return $s;
+        }
+
+        $data = '';
+        foreach ($orig as $o) {
+            $t = '';
+            if (count($o->trs) > 0) {
+                $t = $o->trs[0]->body;
+            }
+            $data .= quote($o->body).','.quote($t)."\n";
+        }
+
+        $fname = str_replace('"', '', $chap->title);
+        $fname = str_replace(' ', '_', $fname).'.csv';
+        Yii::app()->request->sendFile($fname, $data, 'text/csv', false);
+    }
+
     public function actionImport($book_id, $chap_id)
     {
         $chap = $this->loadChapter($book_id, $chap_id);
+
+        if (!empty($_FILES['csvfile']['tmp_name'])) {
+            $chap->clean();
+            $n_verses = 0;
+            $writer = new OrigWriter();
+
+            $csv = [];
+            if (($handle = fopen($_FILES['csvfile']['tmp_name'], 'r')) !== false) {
+                while (($data = fgetcsv($handle)) !== false) {
+                    $csv[] = $data;
+                }
+                fclose($handle);
+            }
+
+            foreach ($csv as $ord => $row) {
+                $orig = new Orig();
+                $orig->chap = $chap;
+                $orig->chap_id = $chap->id;
+                $orig->ord = $ord + 1;
+                $orig->setAttributes(['body' => $row[0]]);
+
+                $n_verses++;
+                $writer->push($orig);
+            }
+            $writer->flush();
+
+            $chap->n_verses += $n_verses;
+            $chap->book->n_verses += $n_verses;
+            $chap->save(false, ['n_verses']);
+            $chap->book->save(false, ['n_verses']);
+
+            $query = Yii::app()->db->createCommand('SELECT id FROM orig WHERE chap_id = :id ORDER BY ord');
+            $query->bindValue(':id', $chap->id);
+            $orig_ids = $query->queryAll();
+
+            foreach ($csv as $ord => $row) {
+                if ($row[1] == '') {
+                    continue;
+                }
+                $tr = new Translation();
+                $tr->orig_id = $orig_ids[$ord]['id'];
+                $tr->chap_id = $chap->id;
+                $tr->book_id = $chap->book->id;
+                $tr->user_id = Yii::app()->user->id;
+                $tr->setAttributes(['body' => $row[1]]);
+
+                if (!$tr->save()) {
+                    if ($ajax) {
+                        echo json_encode(['error' => $tr->getErrorsString()]);
+                        Yii::app()->end();
+                    } else {
+                        Yii::app()->user->setFlash('error', $tr->getErrorsString());
+                    }
+                }
+            }
+
+            $this->redirect($chap->url);
+
+            return;
+        }
 
         if ($chap->book->typ == 'A') {
             $options = new TextSource();

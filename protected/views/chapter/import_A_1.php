@@ -14,6 +14,11 @@
 <script type="text/javascript">
 var I = {
     src_type: function(type) {
+        if (type === 3) {
+            $('#form-prepare-text > .control-group').hide();
+        } else {
+            $('#form-prepare-text > .control-group').show();
+        }
         $("#form-prepare-text [name=TextSource\\[src_type\\]]").val(type);
         return false;
     }
@@ -48,9 +53,7 @@ var I = {
         <ul class="nav nav-tabs">
             <li <?=$options->src_type == 1 ? "class='active'" : ''; ?>><a href="#1" data-toggle="tab" onclick='return I.src_type(1)'>Вставить или набрать</a></li>
             <li <?=$options->src_type == 2 ? "class='active'" : ''; ?>><a href="#2" data-toggle="tab" onclick='return I.src_type(2)'>Из файла</a></li>
-<?php if (0) : // NOT IMPLEMENTED, TODO Импорт оригинала из HTML ?>
-    <li <?=$options->src_type == 3 ? "class='active'" : ''; ?>><a href="#3" data-toggle="tab" onclick='return I.src_type(3)'>Из интернета</a></li>
-<?php endif; ?>
+            <li <?=$options->src_type == 3 ? "class='active'" : ''; ?>><a href="#3" data-toggle="tab" onclick='return I.src_type(3)'>CSV</a></li>
         </ul>
         <div class="tab-content">
             <div id="1" class="tab-pane <?=$options->src_type == 1 ? 'active' : ''; ?>">
@@ -63,11 +66,12 @@ var I = {
                 <?php echo $form->fileFieldRow($options, 'file', ['hint' => 'Пожалуйста, только файлы .TXT не тяжелее 500 килобайт. Тексты большего размера разбейте на отдельные главы.']); ?>
                 <?php echo $form->dropDownListRow($options, 'encoding', Yii::app()->params['encodings']); ?>
             </div>
-<?php if (0) : // NOT IMPLEMENTED, TODO Импорт оригинала из HTML ?>
             <div id="3" class="tab-pane <?=$options->src_type == 3 ? 'active' : ''; ?>">
-                <?php echo $form->textFieldRow($options, 'url', ['placeholder' => 'http://', 'class' => 'span7', 'hint' => 'Из страницы будет загружено не более 500 КБ. Если вы хотите перевести более длинную страницу, сохраните её себе на диск, откройте в браузере и скопируйте содержимое частями через буфер обмена.']); ?>
+                <div class="control-group">
+                    <p class='help-block'>CSV в кодировке UTF-8, разделитель - запятая.</p>
+                    <input type="file" id="csvfile" name="csvfile">
+                </div>
             </div>
-            <?php endif; ?>
         </div>
     </div>
     <?php
