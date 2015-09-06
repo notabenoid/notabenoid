@@ -68,6 +68,3 @@
     <?php $this->endWidget(); ?>
 
 </div>
-
-<!-- Вставьте эту строчку туда, где планируется показывать рекламный блок Яндекс.Маркета -->
-<script type="text/javascript">yandex_market_print()</script>

@@ -53,9 +53,6 @@ HTML;
         $this->widget('bootstrap.widgets.TbPager', ['pages' => $dp->pagination, 'header' => "<div class='pagination' style='margin-bottom:0'>"]);
         ?>
 
-    <!-- Яндекс.Директ должен быть размещен на первом экране страницы с результатами поиска -->
-    <script type="text/javascript">yandex_direct_print()</script>
-
 <?php
         echo "<ul class='search-results'>";
         foreach ($books as $book) {
