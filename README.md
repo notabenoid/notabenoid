@@ -8,7 +8,7 @@ The simplest way to run the application is to use Docker. Install Docker using y
 
     docker run --rm -p 127.0.0.1:8080:80 opennota/notabenoid
 
-Docker will download the prebuilt image from the Docker Hub, create a container, and start it. After it is running go to the following link: [http://localhost:8080](http://localhost:8080). Register the first user (use the name 'admin').
+Docker will download the prebuilt image from the Docker Hub, create a container, and start it. After it is running go to the following link: [http://localhost:8080](http://localhost:8080). Log in as admin/admin and change the password.
 
 `--rm` means that the container will be removed after it is stopped.
 
